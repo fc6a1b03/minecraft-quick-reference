@@ -1,6 +1,9 @@
 :80 {
     root * /usr/share/caddy
-    gzip
-    gzip_static
     file_server
+    gzip_static
+    header /assets/* {
+        Content-Type application/javascript
+        Content-Encoding gzip
+    }
 }
