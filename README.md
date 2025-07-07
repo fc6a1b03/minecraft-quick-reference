@@ -24,7 +24,7 @@ Minecraft 原版、Fabric 和 Forge 的服务器版本信息，帮助玩家轻�
 ## 环境要求
 
 - **Node.js**：>= 22
-- **npm**：用于安装依赖
+- **bun**：用于安装依赖
 - **现代浏览器**：支持 ES6+ 和 Vue 3 的运行环境
 
 ## 安装与运行
@@ -40,9 +40,8 @@ Minecraft 原版、Fabric 和 Forge 的服务器版本信息，帮助玩家轻�
 
    ```bash
    curl -fsSL https://fnm.vercel.app/install | bash
-   fnm install
-   fnm use
-   npm i
+   fnm i && fnm use
+   bun i
    ```
 
 推荐使用 [fnm](https://github.com/Schniz/fnm) (Fast Node Manager) 来管理 Node.js 版本
@@ -50,7 +49,7 @@ Minecraft 原版、Fabric 和 Forge 的服务器版本信息，帮助玩家轻�
 ### 3. **运行开发环境**
 
    ```bash
-   npm run dev
+   bun run dev
    ```
 
 打开浏览器访问 http://localhost:5173，即可查看应用。
@@ -58,7 +57,7 @@ Minecraft 原版、Fabric 和 Forge 的服务器版本信息，帮助玩家轻�
 ### 4. **运行开发环境**
 
    ```bash
-   npm run build
+   bun run build
    ```
 
 构建完成后，生成的静态文件将位于 dist 目录下，可以直接部署到静态服务器或 CDN。

@@ -57,7 +57,8 @@
               <n-data-table
                   :columns="columns"
                   :data="getPaginatedData(type)"
-                  v-bind="theme.table"
+                  :size="'small'"
+                  :striped="true"
               />
               <div style="margin-top: 1rem; text-align: center">
                 <n-button
@@ -91,7 +92,7 @@
 }
 </style>
 <script lang="tsx" setup>
-import {onMounted, ref} from 'vue';
+import {h, onMounted, ref} from 'vue'
 import {
   createDiscreteApi,
   darkTheme,
@@ -103,7 +104,7 @@ import {
   NSpin,
   NTabPane,
   NTabs
-} from 'naive-ui';
+} from 'naive-ui'
 // 错误信息
 const errorMessage = ref('');
 // 类型数组
@@ -166,26 +167,34 @@ const columns = [
     key: 'name',
     minWidth: 60,
     fixed: 'center',
-    render: (row: any) => (
-        <a class="cool-link"
-           onClick={(e: MouseEvent) => handleDownload(e, row.name, row.url, row.type)}>
-          {row.name}
-        </a>
-    )
+    render(row: any) {
+      return h(
+          'a',
+          {
+            class: 'cool-link',
+            onClick: (e: MouseEvent) => handleDownload(e, row.name, row.url, row.type)
+          },
+          row.name
+      );
+    }
   },
   {
     title: '版本',
     key: 'version',
     minWidth: 50,
     fixed: 'center',
-    render: (row: any) => row.version || ''
+    render(row: any) {
+      return row.version || '';
+    }
   },
   {
     title: '日期',
     key: 'date',
     minWidth: 50,
     fixed: 'center',
-    render: (row: any) => row.date || ''
+    render(row: any) {
+      return row.date || '';
+    }
   }
 ];
 // 获取原版信息

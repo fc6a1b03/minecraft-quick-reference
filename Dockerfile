@@ -1,10 +1,12 @@
-FROM node:lts-alpine as builder
-WORKDIR /usr/src
+FROM oven/bun:1-alpine AS builder
+WORKDIR /app
 COPY . .
-RUN npm i && npm run update && npm run build
+RUN bun i && bun run build
+
+################################
 
 FROM caddy:alpine
 WORKDIR /usr/share/caddy
-COPY --from=builder /usr/src/dist .
+COPY --from=builder /app/dist .
 COPY Caddyfile /etc/caddy/Caddyfile
 EXPOSE 80
