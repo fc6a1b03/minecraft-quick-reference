@@ -5,14 +5,7 @@ import vueJsx from "@vitejs/plugin-vue-jsx"
 import compression from "vite-plugin-compression"
 
 export default defineConfig({
-    plugins: [vue(), vueJsx(), compression({
-        ext: ".gz",
-        verbose: false,
-        disable: false,
-        threshold: 1024,
-        algorithm: "gzip",
-        deleteOriginFile: true
-    })],
+    plugins: [vue(), vueJsx()],
     resolve: {
         alias: {
             '@': path.resolve(__dirname, './src'),
