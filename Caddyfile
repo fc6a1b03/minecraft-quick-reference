@@ -1,6 +1,6 @@
 :80 {
     root * /usr/share/caddy
-    file_server
     gzip
     gzip_static
+    file_server
 }
