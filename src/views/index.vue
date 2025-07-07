@@ -93,6 +93,7 @@
 </style>
 <script lang="tsx" setup>
 import {h, onMounted, ref} from 'vue'
+import type {DataTableColumns} from 'naive-ui'
 import {
   createDiscreteApi,
   darkTheme,
@@ -161,12 +162,11 @@ const isCorsError = ref({
   forge: false
 });
 // 表格列配置
-const columns = [
+const columns: DataTableColumns = [
   {
     title: '服务',
     key: 'name',
     minWidth: 60,
-    fixed: 'center',
     render(row: any) {
       return h(
           'a',
@@ -182,7 +182,6 @@ const columns = [
     title: '版本',
     key: 'version',
     minWidth: 50,
-    fixed: 'center',
     render(row: any) {
       return row.version || '';
     }
@@ -191,7 +190,6 @@ const columns = [
     title: '日期',
     key: 'date',
     minWidth: 50,
-    fixed: 'center',
     render(row: any) {
       return row.date || '';
     }
