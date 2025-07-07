@@ -1,24 +1,26 @@
 {
   "name": "minecraft-quick-reference",
   "private": true,
-  "version": "0.1.5",
   "type": "module",
+  "version": "0.1.6",
   "scripts": {
-    "dev": "vite --open",
+    "dev": "vite --host",
     "build": "rimraf dist && vite build",
-    "update": "npm outdated && npm update"
+    "update": "bun update && bun i"
   },
   "dependencies": {
-    "@vitejs/plugin-vue-jsx": "^4.1.2",
-    "naive-ui": "^2.41.0",
+    "vue": "^3.5.17",
+    "vue-tsc": "^3.0.1",
+    "naive-ui": "^2.42.0",
     "node-fetch": "^3.3.2",
-    "vue": "^3.5.13",
-    "vue-router": "^4.5.0"
+    "vue-router": "^4.5.1"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.2.3",
+    "vite": "^6.3.5",
     "rimraf": "^6.0.1",
-    "typescript": "~5.8.2",
-    "vite": "^6.2.4"
+    "@types/node": "^22.16.0",
+    "@vitejs/plugin-vue": "^6.0.0",
+    "@vitejs/plugin-vue-jsx": "^5.0.1",
+    "vite-plugin-compression": "^0.5.1"
   }
 }

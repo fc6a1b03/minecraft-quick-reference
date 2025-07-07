@@ -1,7 +1,7 @@
-FROM node:lts-alpine as builder
+FROM oven/bun:latest as builder
 WORKDIR /usr/src
 COPY . .
-RUN npm i && npm run update && npm run build
+RUN bun i && bun run build
 
 FROM caddy:alpine
 WORKDIR /usr/share/caddy
