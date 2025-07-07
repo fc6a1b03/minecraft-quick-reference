@@ -11,7 +11,7 @@ export default defineConfig({
         disable: false,
         threshold: 1024,
         algorithm: "gzip",
-        deleteOriginFile: false
+        deleteOriginFile: true
     })],
     resolve: {
         alias: {
