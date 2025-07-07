@@ -1,12 +1,4 @@
 :80 {
     root * /usr/share/caddy
-    file_server {
-        precompressed gzip
-    }
-    header /assets/*.js {
-        Content-Type application/javascript
-    }
-    encode gzip {
-        min_length 256
-    }
+    file_server
 }
