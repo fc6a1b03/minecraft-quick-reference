@@ -1,78 +1,150 @@
-<!--suppress ExceptionCaughtLocallyJS, JSValidateTypes -->
+<!--suppress ExceptionCaughtLocallyJS, JSValidateTypes, JSUnresolvedReference -->
 <template>
-  <n-config-provider :theme="darkTheme" :theme-overrides="theme.themeOverrides">
-    <n-layout style="padding: 0 5%;height: 100vh;overflow-y: auto;">
-      <n-tabs animated justify-content="center" size="large" type="line" @update:value="handleTabChange">
-        <n-tab-pane v-for="type in types" :key="type" :name="type"
-                    :tab="`${type.charAt(0).toUpperCase()}${type.slice(1)}`">
-          <n-spin :show="loading[type]" stroke="rgba(255,255,255, 0.4)">
-            <template v-if="hasError[type]">
-              <n-alert show-icon title="加载失败！" type="error">
-                <template #default>
-                  <div>
-                    <div v-if="isCorsError[type]">
-                      <p><strong>加载数据时发生 CORS 错误。</strong></p>
-                      <p>您可以尝试以下解决方法：</p>
-                      <ul>
-                        <li>
-                          安装<a class="cool-link"
-                                 href="https://webextension.org/listing/access-control.html"
-                                 target="_blank">CORS Unblock</a>浏览器插件并对该网站激活后刷新页面
-                        </li>
-                        <li>
-                          下载地址：
-                          <n-space vertical>
-                            <n-button class="cool-link"
-                                      href="https://chromewebstore.google.com/detail/cors-unblock/lfhmikememgdcahcdlaciloancbhjino"
-                                      tag="a"
-                                      target="_blank"
-                                      text>
-                              Google Chrome
-                            </n-button>
-                            <n-button class="cool-link"
-                                      href="https://microsoftedge.microsoft.com/addons/detail/cors-unblock/hkjklmhkbkdhlgnnfbbcihcajofmjgbh"
-                                      tag="a"
-                                      target="_blank"
-                                      text>
-                              Microsoft Edge
-                            </n-button>
-                            <n-button class="cool-link"
-                                      href="https://addons.mozilla.org/zh-CN/firefox/addon/cors-unblock/" tag="a"
-                                      target="_blank"
-                                      text>
-                              Mozilla Firefox
-                            </n-button>
-                          </n-space>
-                        </li>
-                      </ul>
+  <div class="main-center-wrapper">
+    <n-config-provider :theme="darkTheme" :theme-overrides="theme.themeOverrides">
+      <n-layout class="main-center-content" style="height: 900px; width: 1200px;">
+        <n-tabs animated justify-content="center" size="large" type="line" @update:value="handleTabChange">
+          <n-tab-pane v-for="type in types" :key="type" :name="type"
+                      :tab="`${type.charAt(0).toUpperCase()}${type.slice(1)}`">
+            <n-spin :show="loading[type]" stroke="rgba(255,255,255, 0.4)">
+              <template v-if="hasError[type]">
+                <n-alert show-icon title="加载失败！" type="error">
+                  <template #default>
+                    <div>
+                      <div v-if="isCorsError[type]">
+                        <p><strong>加载数据时发生 CORS 错误。</strong></p>
+                        <p>您可以尝试以下解决方法：</p>
+                        <ul>
+                          <li>
+                            安装<a class="cool-link"
+                                   href="https://webextension.org/listing/access-control.html"
+                                   target="_blank">CORS Unblock</a>浏览器插件并对该网站激活后刷新页面
+                          </li>
+                          <li>
+                            下载地址：
+                            <n-space vertical>
+                              <n-button class="cool-link"
+                                        href="https://chromewebstore.google.com/detail/cors-unblock/lfhmikememgdcahcdlaciloancbhjino"
+                                        tag="a"
+                                        target="_blank"
+                                        text>
+                                Google Chrome
+                              </n-button>
+                              <n-button class="cool-link"
+                                        href="https://microsoftedge.microsoft.com/addons/detail/cors-unblock/hkjklmhkbkdhlgnnfbbcihcajofmjgbh"
+                                        tag="a"
+                                        target="_blank"
+                                        text>
+                                Microsoft Edge
+                              </n-button>
+                              <n-button class="cool-link"
+                                        href="https://addons.mozilla.org/zh-CN/firefox/addon/cors-unblock/" tag="a"
+                                        target="_blank"
+                                        text>
+                                Mozilla Firefox
+                              </n-button>
+                            </n-space>
+                          </li>
+                        </ul>
+                      </div>
+                      <div v-else>
+                        {{ errorMessage }}
+                      </div>
                     </div>
-                    <div v-else>
-                      {{ errorMessage }}
-                    </div>
+                  </template>
+                </n-alert>
+              </template>
+              <template v-else>
+                <template v-if="type === 'purpur'">
+                  <div style="max-width: 600px; margin: 0 auto;">
+                    <n-space vertical size="large">
+                      <n-space align="center">
+                        <span>选择 Minecraft 版本：</span>
+                        <n-select
+                          style="min-width: 160px"
+                          :options="purpurMinecraftVersions.map(v => ({ label: v, value: v }))"
+                          v-model:value="purpurSelectedMcVersion"
+                          @update:value="handlePurpurMcVersionChange"
+                          :loading="loading.purpur"
+                        />
+                        <span>选择 Purpur 构建：</span>
+                        <n-select
+                          style="min-width: 120px"
+                          :options="purpurBuilds.map(b => ({ label: b, value: b }))"
+                          v-model:value="purpurSelectedBuild"
+                          @update:value="handlePurpurBuildChange"
+                          :loading="loading.purpur"
+                        />
+                      </n-space>
+                      <n-card v-if="purpurBuildDetail" size="small" :bordered="false" style="background:rgba(255,255,255,0.04);">
+                        <template #header>
+                          <span>构建详情</span>
+                        </template>
+                        <div>
+                          <div>项目: {{ purpurBuildDetail.project }}</div>
+                          <div>MC版本: {{ purpurBuildDetail.version }}</div>
+                          <div>构建号: {{ purpurBuildDetail.build }}</div>
+                          <div>构建时间: {{ purpurBuildDetail.timestamp ? new Date(purpurBuildDetail.timestamp).toLocaleString() : '' }}</div>
+                          <div>提交数: {{ purpurBuildDetail.commits?.length || 0 }}</div>
+                          <div v-if="purpurBuildDetail.commits && purpurBuildDetail.commits.length">
+                            <n-collapse>
+                              <n-collapse-item title="提交记录" name="commits">
+                                <ul style="padding-left: 1em;">
+                                  <li v-for="c in purpurBuildDetail.commits" :key="c.hash">
+                                    <div><b>{{ c.author }}</b> ({{ c.email }})</div>
+                                    <div style="font-size:12px;white-space:pre-line;">{{ c.description }}</div>
+                                    <div style="font-size:12px;color:#aaa;">{{ c.hash }} | {{ c.timestamp ? new Date(c.timestamp).toLocaleString() : '' }}</div>
+                                  </li>
+                                </ul>
+                              </n-collapse-item>
+                            </n-collapse>
+                          </div>
+                        </div>
+                        <template #footer>
+                          <n-button type="primary" @click="handlePurpurDownload" :disabled="!purpurSelectedMcVersion || !purpurSelectedBuild">
+                            下载 purpur-{{ purpurSelectedMcVersion }}-{{ purpurSelectedBuild }}.jar
+                          </n-button>
+                        </template>
+                      </n-card>
+                    </n-space>
                   </div>
                 </template>
-              </n-alert>
-            </template>
-            <template v-else>
-              <n-data-table
-                  :columns="columns"
-                  :data="getPaginatedData(type)"
-                  :size="'small'"
-                  :striped="true"
-              />
-              <div style="margin-top: 1rem; text-align: center">
-                <n-button
-                    :disabled="pager[type].pageNum * pager[type].pageSize > pager[type].total" ghost type="info"
-                    @click="loadMore(type)">
-                  加载更多
-                </n-button>
-              </div>
-            </template>
-          </n-spin>
-        </n-tab-pane>
-      </n-tabs>
-    </n-layout>
-  </n-config-provider>
+                <template v-else>
+                  <div class="card-grid" ref="cardGridRef">
+                    <div
+                      v-for="row in getPaginatedData(type)"
+                      :key="row.name"
+                      class="modern-card"
+                    >
+                      <div class="modern-card-title">{{ row.name }}</div>
+                      <div v-if="row.version" class="modern-card-meta">版本：{{ row.version }}</div>
+                      <div v-if="row.date && row.date !== '无' && row.date !== '--'" class="modern-card-meta">日期：{{ row.date }}</div>
+                      <n-button type="primary" size="small" class="modern-card-btn" @click="handleDownload($event, row.name, row.url, row.type)">
+                        下载
+                      </n-button>
+                    </div>
+                    <div
+                      v-for="n in emptyCardCount(type)"
+                      :key="'empty-'+n+'-'+pager[type].pageNum"
+                      class="modern-card empty-card"
+                      aria-hidden="true"
+                    ></div>
+                  </div>
+                  <div style="text-align: center">
+                    <n-button
+                        :disabled="pager[type].pageNum * pager[type].pageSize > pager[type].total" ghost type="info"
+                        @click="loadMore(type)">
+                      加载更多
+                    </n-button>
+                  </div>
+                </template>
+              </template>
+            </n-spin>
+          </n-tab-pane>
+        </n-tabs>
+      </n-layout>
+    </n-config-provider>
+  </div>
 </template>
 <style>
 .cool-link {
@@ -90,9 +162,78 @@
   text-decoration: underline;
   transform: translateX(2px);
 }
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.modern-card {
+  border-radius: 14px;
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.10);
+  padding: 18px 18px 14px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 90px;
+  border: 1px solid rgba(80,80,80,0.18);
+  transition: box-shadow 0.2s, border 0.2s;
+}
+.modern-card:hover {
+  box-shadow: 0 4px 16px 0 rgba(0,0,0,0.18);
+  border: 1.5px solid #6298ff;
+}
+.modern-card-title {
+  font-weight: 600;
+  font-size: 15px;
+  color: #d0d6e0;
+  margin-bottom: 6px;
+  word-break: break-all;
+  letter-spacing: 0.01em;
+  transition: color 0.2s;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.10);
+}
+.modern-card:hover .modern-card-title {
+  color: #7fb3ff;
+}
+.modern-card-meta {
+  font-size: 13px;
+  color: #b0b6c3;
+  margin-bottom: 2px;
+}
+.modern-card-btn {
+  margin-top: 10px;
+  align-self: flex-end;
+}
+.empty-card {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  pointer-events: none;
+  min-height: 90px;
+}
+.main-center-wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #181a20;
+}
+.main-center-content {
+  box-shadow: 0 4px 32px 0 rgba(0,0,0,0.18);
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(24,26,32,0.98);
+}
+.n-tabs {
+  padding: 0 32px;
+  box-sizing: border-box;
+  margin-bottom: 0;
+}
 </style>
 <script lang="tsx" setup>
-import {h, onMounted, ref} from 'vue'
+import {h, onMounted, ref, watch, nextTick, onBeforeUnmount} from 'vue'
 import type {DataTableColumns} from 'naive-ui'
 import {
   createDiscreteApi,
@@ -109,7 +250,7 @@ import {
 // 错误信息
 const errorMessage = ref('');
 // 类型数组
-const types = ['native', 'fabric', 'forge'];
+const types = ['native', 'fabric', 'forge', 'purpur'];
 // 主题配置
 const theme = {
   // 主题覆盖
@@ -135,32 +276,43 @@ const {notification} = createDiscreteApi(['notification'], {
 const versionData = ref({
   native: [],
   fabric: [],
-  forge: []
+  forge: [],
+  purpur: []
 });
 // 分页信息
 const pager = ref({
   native: {pageNum: 1, pageSize: 15, total: 0},
   fabric: {pageNum: 1, pageSize: 15, total: 0},
-  forge: {pageNum: 1, pageSize: 15, total: 0}
+  forge: {pageNum: 1, pageSize: 15, total: 0},
+  purpur: {pageNum: 1, pageSize: 15, total: 0}
 });
 // 加载状态
 const loading = ref({
   native: false,
   fabric: false,
-  forge: false
+  forge: false,
+  purpur: false
 });
 // 错误状态
 const hasError = ref({
   native: false,
   fabric: false,
-  forge: false
+  forge: false,
+  purpur: false
 });
 // `Cors`错误状态
 const isCorsError = ref({
   native: false,
   fabric: false,
-  forge: false
+  forge: false,
+  purpur: false
 });
+// Purpur 相关状态
+const purpurMinecraftVersions = ref<string[]>([]);
+const purpurSelectedMcVersion = ref<string>('');
+const purpurBuilds = ref<string[]>([]);
+const purpurSelectedBuild = ref<string>('');
+const purpurBuildDetail = ref<any>(null);
 // 表格列配置
 const columns: DataTableColumns = [
   {
@@ -281,6 +433,87 @@ const fetchForgeVersions = async () => {
   versionData.value.forge = forgeVersions;
   pager.value.forge.total = forgeVersions.length;
 }
+// 获取 Purpur 支持的 Minecraft 版本
+const fetchPurpurMinecraftVersions = async () => {
+  loading.value.purpur = true;
+  hasError.value.purpur = false;
+  isCorsError.value.purpur = false;
+  try {
+    const resp = await fetch('https://api.purpurmc.org/v2/purpur');
+    if (!resp.ok) throw new Error('无法加载 Purpur 版本列表');
+    const data = await resp.json();
+    purpurMinecraftVersions.value = data.versions || [];
+    purpurSelectedMcVersion.value = data.metadata?.current || (data.versions?.[0] || '');
+    await fetchPurpurBuilds();
+  } catch (e: any) {
+    hasError.value.purpur = true;
+    errorMessage.value = e.message || '未知错误';
+    isCorsError.value.purpur = e.message?.includes('CORS');
+  } finally {
+    loading.value.purpur = false;
+  }
+};
+// 获取 Purpur 构建号
+const fetchPurpurBuilds = async () => {
+  if (!purpurSelectedMcVersion.value) return;
+  loading.value.purpur = true;
+  hasError.value.purpur = false;
+  isCorsError.value.purpur = false;
+  try {
+    const resp = await fetch(`https://api.purpurmc.org/v2/purpur/${purpurSelectedMcVersion.value}`);
+    if (!resp.ok) throw new Error('无法加载 Purpur 构建号');
+    const data = await resp.json();
+    purpurBuilds.value = data.builds?.all || [];
+    purpurSelectedBuild.value = data.builds?.latest || (data.builds?.all?.[0] || '');
+    await fetchPurpurBuildDetail();
+  } catch (e: any) {
+    hasError.value.purpur = true;
+    errorMessage.value = e.message || '未知错误';
+    isCorsError.value.purpur = e.message?.includes('CORS');
+  } finally {
+    loading.value.purpur = false;
+  }
+};
+// 获取 Purpur 构建详情
+const fetchPurpurBuildDetail = async () => {
+  if (!purpurSelectedMcVersion.value || !purpurSelectedBuild.value) return;
+  loading.value.purpur = true;
+  hasError.value.purpur = false;
+  isCorsError.value.purpur = false;
+  try {
+    const resp = await fetch(`https://api.purpurmc.org/v2/purpur/${purpurSelectedMcVersion.value}/${purpurSelectedBuild.value}`);
+    if (!resp.ok) throw new Error('无法加载 Purpur 构建详情');
+    purpurBuildDetail.value = await resp.json();
+  } catch (e: any) {
+    hasError.value.purpur = true;
+    errorMessage.value = e.message || '未知错误';
+    isCorsError.value.purpur = e.message?.includes('CORS');
+  } finally {
+    loading.value.purpur = false;
+  }
+};
+// Purpur 下载
+const handlePurpurDownload = () => {
+  if (!purpurSelectedMcVersion.value || !purpurSelectedBuild.value) return;
+  const url = `https://api.purpurmc.org/v2/purpur/${purpurSelectedMcVersion.value}/${purpurSelectedBuild.value}/download`;
+  const filename = `purpur-${purpurSelectedMcVersion.value}-${purpurSelectedBuild.value}.jar`;
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.target = '_blank';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+};
+// Purpur 选择变化
+const handlePurpurMcVersionChange = async (val: string) => {
+  purpurSelectedMcVersion.value = val;
+  await fetchPurpurBuilds();
+};
+const handlePurpurBuildChange = async (val: string) => {
+  purpurSelectedBuild.value = val;
+  await fetchPurpurBuildDetail();
+};
 // 处理下载
 const handleDownload = async (e: MouseEvent, name: string, versionUrl: string, type: string) => {
   if (!versionUrl) return;
@@ -347,7 +580,8 @@ const fetchData = async (type: string) => {
     await {
       native: fetchNativeVersions,
       fabric: fetchFabricVersions,
-      forge: fetchForgeVersions
+      forge: fetchForgeVersions,
+      purpur: fetchPurpurMinecraftVersions
     }[type]();
   } catch (error) {
     hasError.value[type] = true;
@@ -369,7 +603,7 @@ const getPaginatedData = (type: string) => {
 }
 // 处理标签页切换
 const handleTabChange = (activeTab: string) => {
-  const type = activeTab as 'native' | 'fabric' | 'forge';
+  const type = activeTab as 'native' | 'fabric' | 'forge' | 'purpur';
   if (!versionData.value[type].length && !loading.value[type]) {
     fetchData(type);
   }
@@ -380,6 +614,63 @@ const loadMore = (type: string) => {
     pager.value[type].pageNum += 1;
   }
 }
-// 初始化
-onMounted(() => fetchData('native'));
+// 卡片分页自适应
+const rowsPerPage = 3;
+const cardsPerRow = ref(4);
+let cardGridObserver: MutationObserver | null = null;
+const cardGridRef = ref<HTMLElement | null>(null);
+const updateCardsPerRow = () => {
+  nextTick(() => {
+    const grid = cardGridRef.value;
+    if (!grid || !(grid instanceof HTMLElement)) return;
+    const style = window.getComputedStyle(grid);
+    const colCount = style.gridTemplateColumns.split(' ').length;
+    if (colCount > 0) {
+      cardsPerRow.value = colCount;
+      // 动态调整每页数量
+      types.forEach(type => {
+        pager.value[type].pageSize = colCount * rowsPerPage;
+        pager.value[type].pageNum = 1;
+      });
+    }
+  });
+};
+// 监听窗口变化和 DOM 变化
+onMounted(() => {
+  fetchData('native');
+  fetchPurpurMinecraftVersions();
+  window.addEventListener('resize', updateCardsPerRow);
+  nextTick(() => {
+    if (cardGridRef.value && cardGridRef.value instanceof HTMLElement) {
+      cardGridObserver = new MutationObserver(() => updateCardsPerRow());
+      cardGridObserver.observe(cardGridRef.value, { childList: true, subtree: false });
+    }
+  });
+});
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', updateCardsPerRow);
+  if (cardGridObserver) {
+    cardGridObserver.disconnect();
+    cardGridObserver = null;
+  }
+});
+watch(cardGridRef, (val) => {
+  updateCardsPerRow();
+  if (cardGridObserver) {
+    cardGridObserver.disconnect();
+    cardGridObserver = null;
+  }
+  if (val && val instanceof HTMLElement) {
+    cardGridObserver = new MutationObserver(() => updateCardsPerRow());
+    cardGridObserver.observe(val, { childList: true, subtree: false });
+  }
+});
+
+// 计算每页需要补齐的空卡片数，避免 RangeError
+function emptyCardCount(type: string) {
+  const len = getPaginatedData(type).length;
+  if (!cardsPerRow.value || len === 0) return 0;
+  const mod = len % cardsPerRow.value;
+  return mod === 0 ? 0 : cardsPerRow.value - mod;
+}
 </script>
