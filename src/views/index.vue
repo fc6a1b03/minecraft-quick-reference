@@ -147,7 +147,7 @@
   </div>
 </template>
 <script lang="tsx" setup>
-import "./index.css";
+import "@/common/css/index.css";
 import {onMounted, ref, watch, nextTick, onBeforeUnmount} from 'vue'
 import {
   createDiscreteApi,
