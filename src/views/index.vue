@@ -1,4 +1,4 @@
-<!--suppress ExceptionCaughtLocallyJS, JSValidateTypes, JSUnresolvedReference -->
+<!--suppress ExceptionCaughtLocallyJS, JSValidateTypes, JSUnresolvedReference, SpellCheckingInspection -->
 <template>
   <div class="main-center-wrapper">
     <n-config-provider :theme="darkTheme" :theme-overrides="theme.themeOverrides">
@@ -148,18 +148,8 @@
 </template>
 <script lang="tsx" setup>
 import "@/common/css/index.css";
-import {onMounted, ref, watch, nextTick, onBeforeUnmount} from 'vue'
-import {
-  createDiscreteApi,
-  darkTheme,
-  NAlert,
-  NButton,
-  NConfigProvider,
-  NLayout,
-  NSpin,
-  NTabPane,
-  NTabs
-} from 'naive-ui'
+import {nextTick, onBeforeUnmount, onMounted, ref, watch} from 'vue'
+import {createDiscreteApi, darkTheme, NAlert, NButton, NConfigProvider, NLayout, NSpin, NTabPane, NTabs} from 'naive-ui'
 // 错误信息
 const errorMessage = ref('');
 // 类型数组
@@ -546,7 +536,7 @@ watch(cardGridRef, (val) => {
 });
 
 // 计算每页需要补齐的空卡片数，避免 RangeError
-function emptyCardCount(type: string) {
+const emptyCardCount = (type: string) => {
   const len = getPaginatedData(type).length;
   if (!cardsPerRow.value || len === 0) return 0;
   const mod = len % cardsPerRow.value;
