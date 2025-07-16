@@ -146,102 +146,15 @@
     </n-config-provider>
   </div>
 </template>
-<style>
-.cool-link {
-  color: #6298ff;
-  cursor: pointer;
-  font-size: 14px;
-  display: inline;
-  font-weight: 500;
-  text-decoration: none;
-  transition: color 0.2s ease, transform 0.2s ease;
-}
-
-.cool-link:hover {
-  color: #4a76e6;
-  text-decoration: underline;
-  transform: translateX(2px);
-}
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
-  margin-bottom: 20px;
-}
-.modern-card {
-  border-radius: 14px;
-  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.10);
-  padding: 18px 18px 14px 18px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  min-height: 90px;
-  border: 1px solid rgba(80,80,80,0.18);
-  transition: box-shadow 0.2s, border 0.2s;
-}
-.modern-card:hover {
-  box-shadow: 0 4px 16px 0 rgba(0,0,0,0.18);
-  border: 1.5px solid #6298ff;
-}
-.modern-card-title {
-  font-weight: 600;
-  font-size: 15px;
-  color: #d0d6e0;
-  margin-bottom: 6px;
-  word-break: break-all;
-  letter-spacing: 0.01em;
-  transition: color 0.2s;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.10);
-}
-.modern-card:hover .modern-card-title {
-  color: #7fb3ff;
-}
-.modern-card-meta {
-  font-size: 13px;
-  color: #b0b6c3;
-  margin-bottom: 2px;
-}
-.modern-card-btn {
-  margin-top: 10px;
-  align-self: flex-end;
-}
-.empty-card {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  pointer-events: none;
-  min-height: 90px;
-}
-.main-center-wrapper {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #181a20;
-}
-.main-center-content {
-  box-shadow: 0 4px 32px 0 rgba(0,0,0,0.18);
-  border-radius: 18px;
-  overflow: hidden;
-  background: rgba(24,26,32,0.98);
-}
-.n-tabs {
-  padding: 0 32px;
-  box-sizing: border-box;
-  margin-bottom: 0;
-}
-</style>
 <script lang="tsx" setup>
-import {h, onMounted, ref, watch, nextTick, onBeforeUnmount} from 'vue'
-import type {DataTableColumns} from 'naive-ui'
+import "./index.css";
+import {onMounted, ref, watch, nextTick, onBeforeUnmount} from 'vue'
 import {
   createDiscreteApi,
   darkTheme,
   NAlert,
   NButton,
   NConfigProvider,
-  NDataTable,
   NLayout,
   NSpin,
   NTabPane,
@@ -313,40 +226,6 @@ const purpurSelectedMcVersion = ref<string>('');
 const purpurBuilds = ref<string[]>([]);
 const purpurSelectedBuild = ref<string>('');
 const purpurBuildDetail = ref<any>(null);
-// 表格列配置
-const columns: DataTableColumns = [
-  {
-    title: '服务',
-    key: 'name',
-    minWidth: 60,
-    render(row: any) {
-      return h(
-          'a',
-          {
-            class: 'cool-link',
-            onClick: (e: MouseEvent) => handleDownload(e, row.name, row.url, row.type)
-          },
-          row.name
-      );
-    }
-  },
-  {
-    title: '版本',
-    key: 'version',
-    minWidth: 50,
-    render(row: any) {
-      return row.version || '';
-    }
-  },
-  {
-    title: '日期',
-    key: 'date',
-    minWidth: 50,
-    render(row: any) {
-      return row.date || '';
-    }
-  }
-];
 // 获取原版信息
 const fetchNativeVersions = async () => {
   const response = await fetch('https://launchermeta.mojang.com/mc/game/version_manifest.json');
