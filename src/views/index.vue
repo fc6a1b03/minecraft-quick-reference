@@ -102,7 +102,7 @@
                         </div>
                         <template #footer>
                           <n-button type="primary" @click="handlePurpurDownload" :disabled="!purpurSelectedMcVersion || !purpurSelectedBuild">
-                            下载 purpur-{{ purpurSelectedMcVersion }}-{{ purpurSelectedBuild }}.jar
+                            下载
                           </n-button>
                         </template>
                       </n-card>
