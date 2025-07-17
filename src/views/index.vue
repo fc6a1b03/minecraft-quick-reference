@@ -91,7 +91,7 @@
                           </div>
                           <div>提交数: {{ purpurBuildDetail.commits?.length || 0 }}</div>
                           <div v-if="purpurBuildDetail.commits && purpurBuildDetail.commits.length">
-                            <n-collapse  :default-expanded-names="['commits']">
+                            <n-collapse  :default-expanded-names="['commits']" arrow-placement="right">
                               <n-collapse-item title="提交记录" name="commits">
                                 <ul style="padding-left: 1em;">
                                   <li v-for="c in purpurBuildDetail.commits" :key="c.hash">
