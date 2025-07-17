@@ -1,8 +1,8 @@
-<!--suppress ExceptionCaughtLocallyJS, JSValidateTypes, JSUnresolvedReference, SpellCheckingInspection -->
+<!--suppress ExceptionCaughtLocallyJS, JSUnresolvedReference -->
 <template>
   <div class="main-center-wrapper">
     <n-config-provider :theme="darkTheme" :theme-overrides="theme.themeOverrides">
-      <n-layout class="main-center-content" style="height: 900px; width: 1200px;">
+      <n-layout class="main-center-content" style="height: 900px; width: 1200px; margin: 0 auto; min-width: 1200px;">
         <n-tabs animated justify-content="center" size="large" type="line" @update:value="handleTabChange">
           <n-tab-pane v-for="type in types" :key="type" :name="type"
                       :tab="`${type.charAt(0).toUpperCase()}${type.slice(1)}`">
@@ -56,84 +56,97 @@
               </template>
               <template v-else>
                 <template v-if="type === 'purpur'">
-                  <div style="max-width: 600px; margin: 0 auto;">
+                  <div style="max-width: 610px; margin: 0 auto;">
                     <n-space vertical size="large">
                       <n-space align="center">
                         <span>选择 Minecraft 版本：</span>
                         <n-select
-                          style="min-width: 160px"
-                          :options="purpurMinecraftVersions.map(v => ({ label: v, value: v }))"
-                          v-model:value="purpurSelectedMcVersion"
-                          @update:value="handlePurpurMcVersionChange"
-                          :loading="loading.purpur"
+                            style="min-width: 160px"
+                            :options="purpurMinecraftVersions.map(v => ({ label: v, value: v }))"
+                            v-model:value="purpurSelectedMcVersion"
+                            @update:value="handlePurpurMcVersionChange"
+                            :loading="loading.purpur"
                         />
                         <span>选择 Purpur 构建：</span>
                         <n-select
-                          style="min-width: 120px"
-                          :options="purpurBuilds.map(b => ({ label: b, value: b }))"
-                          v-model:value="purpurSelectedBuild"
-                          @update:value="handlePurpurBuildChange"
-                          :loading="loading.purpur"
+                            style="min-width: 120px; white-space: nowrap"
+                            :options="purpurBuilds.map(b => ({ label: b, value: b }))"
+                            v-model:value="purpurSelectedBuild"
+                            @update:value="handlePurpurBuildChange"
+                            :loading="loading.purpur"
                         />
                       </n-space>
-                      <n-card v-if="purpurBuildDetail" size="small" :bordered="false" style="background:rgba(255,255,255,0.04);">
-                        <template #header>
+                      <div class="pixel-card">
+                        <div class="pixel-card-header">
                           <span>构建详情</span>
-                        </template>
-                        <div>
+                        </div>
+                        <div class="pixel-card-content">
                           <div>项目: {{ purpurBuildDetail.project }}</div>
                           <div>MC版本: {{ purpurBuildDetail.version }}</div>
                           <div>构建号: {{ purpurBuildDetail.build }}</div>
-                          <div>构建时间: {{ purpurBuildDetail.timestamp ? new Date(purpurBuildDetail.timestamp).toLocaleString() : '' }}</div>
+                          <div>
+                            构建时间: {{
+                              purpurBuildDetail.timestamp ? new Date(purpurBuildDetail.timestamp).toLocaleString() : ''
+                            }}
+                          </div>
                           <div>提交数: {{ purpurBuildDetail.commits?.length || 0 }}</div>
                           <div v-if="purpurBuildDetail.commits && purpurBuildDetail.commits.length">
-                            <n-collapse>
+                            <n-collapse  :default-expanded-names="['commits']">
                               <n-collapse-item title="提交记录" name="commits">
                                 <ul style="padding-left: 1em;">
                                   <li v-for="c in purpurBuildDetail.commits" :key="c.hash">
                                     <div><b>{{ c.author }}</b> ({{ c.email }})</div>
                                     <div style="font-size:12px;white-space:pre-line;">{{ c.description }}</div>
-                                    <div style="font-size:12px;color:#aaa;">{{ c.hash }} | {{ c.timestamp ? new Date(c.timestamp).toLocaleString() : '' }}</div>
+                                    <div style="font-size:12px;color:#aaa;">{{ c.hash }} |
+                                      {{ c.timestamp ? new Date(c.timestamp).toLocaleString() : '' }}
+                                    </div>
                                   </li>
                                 </ul>
                               </n-collapse-item>
                             </n-collapse>
                           </div>
                         </div>
-                        <template #footer>
-                          <n-button type="primary" @click="handlePurpurDownload" :disabled="!purpurSelectedMcVersion || !purpurSelectedBuild">
+                        <div class="pixel-card-footer">
+                          <button class="pixel-button" @click="handlePurpurDownload"
+                                  :disabled="!purpurSelectedMcVersion || !purpurSelectedBuild">
                             下载
-                          </n-button>
-                        </template>
-                      </n-card>
+                          </button>
+                        </div>
+                      </div>
                     </n-space>
                   </div>
                 </template>
                 <template v-else>
                   <div class="card-grid" ref="cardGridRef">
                     <div
-                      v-for="row in getPaginatedData(type)"
-                      :key="row.name"
-                      class="modern-card"
+                        v-for="row in getPaginatedData(type)"
+                        :key="row.name"
+                        class="modern-card"
                     >
                       <div class="modern-card-title">{{ row.name }}</div>
                       <div v-if="row.version" class="modern-card-meta">版本：{{ row.version }}</div>
-                      <div v-if="row.date && row.date !== '无' && row.date !== '--'" class="modern-card-meta">日期：{{ row.date }}</div>
-                      <n-button type="primary" size="small" class="modern-card-btn" @click="handleDownload($event, row.name, row.url, row.type)">
+                      <div v-if="row.date && row.date !== '无' && row.date !== '--'" class="modern-card-meta">
+                        日期：{{ row.date }}
+                      </div>
+                      <n-button type="primary" size="small" class="modern-card-btn"
+                                @click="handleDownload($event, row.name, row.url, row.type)">
                         下载
                       </n-button>
                     </div>
                     <div
-                      v-for="n in emptyCardCount(type)"
-                      :key="'empty-'+n+'-'+pager[type].pageNum"
-                      class="modern-card empty-card"
-                      aria-hidden="true"
+                        v-for="n in emptyCardCount(type)"
+                        :key="`empty-${n}-${pager[type].pageNum}`"
+                        class="modern-card empty-card"
+                        aria-hidden="true"
                     ></div>
                   </div>
-                  <div style="text-align: center">
+                  <div style="text-align: center;margin-bottom: 20px;">
                     <n-button
-                        :disabled="pager[type].pageNum * pager[type].pageSize > pager[type].total" ghost type="info"
-                        @click="loadMore(type)">
+                        :disabled="pager[type].pageNum * pager[type].pageSize > pager[type].total"
+                        ghost
+                        type="info"
+                        @click="loadMore(type)"
+                    >
                       加载更多
                     </n-button>
                   </div>
@@ -147,9 +160,19 @@
   </div>
 </template>
 <script lang="tsx" setup>
-import "@/common/css/index.css";
-import {nextTick, onBeforeUnmount, onMounted, ref, watch} from 'vue'
-import {createDiscreteApi, darkTheme, NAlert, NButton, NConfigProvider, NLayout, NSpin, NTabPane, NTabs} from 'naive-ui'
+import {nextTick, onBeforeUnmount, onMounted, ref, watch} from 'vue';
+import {
+  createDiscreteApi,
+  darkTheme,
+  NAlert,
+  NButton,
+  NConfigProvider,
+  NLayout,
+  NSpin,
+  NTabPane,
+  NTabs
+} from 'naive-ui';
+import '@/common/css/index.css';
 // 错误信息
 const errorMessage = ref('');
 // 类型数组
@@ -161,11 +184,6 @@ const theme = {
     common: {
       primaryColor: '#1866B6'
     }
-  },
-  // 表格配置
-  table: {
-    size: 'small',
-    striped: true,
   }
 };
 // 通知组件
@@ -211,11 +229,11 @@ const isCorsError = ref({
   purpur: false
 });
 // Purpur 相关状态
-const purpurMinecraftVersions = ref<string[]>([]);
-const purpurSelectedMcVersion = ref<string>('');
 const purpurBuilds = ref<string[]>([]);
-const purpurSelectedBuild = ref<string>('');
 const purpurBuildDetail = ref<any>(null);
+const purpurSelectedBuild = ref<string>('');
+const purpurSelectedMcVersion = ref<string>('');
+const purpurMinecraftVersions = ref<string[]>([]);
 // 获取原版信息
 const fetchNativeVersions = async () => {
   const response = await fetch('https://launchermeta.mojang.com/mc/game/version_manifest.json');
@@ -237,7 +255,7 @@ const fetchNativeVersions = async () => {
       }));
   versionData.value.native = versions;
   pager.value.native.total = versions.length;
-}
+};
 // 获取 Fabric 信息
 const fetchFabricVersions = async () => {
   const versionsResponse = await fetch('https://meta.fabricmc.net/v2/versions/');
@@ -272,7 +290,7 @@ const fetchFabricVersions = async () => {
       }));
   versionData.value.fabric = fabricVersions;
   pager.value.fabric.total = fabricVersions.length;
-}
+};
 // 获取 Forge 信息
 const fetchForgeVersions = async () => {
   const response = await fetch('https://files.minecraftforge.net/net/minecraftforge/forge/promotions_slim.json');
@@ -301,7 +319,7 @@ const fetchForgeVersions = async () => {
       .sort((a: any, b: any) => b.version.localeCompare(a.version, undefined, {numeric: true, sensitivity: 'base'}));
   versionData.value.forge = forgeVersions;
   pager.value.forge.total = forgeVersions.length;
-}
+};
 // 获取 Purpur 支持的 Minecraft 版本
 const fetchPurpurMinecraftVersions = async () => {
   loading.value.purpur = true;
@@ -387,7 +405,7 @@ const handlePurpurBuildChange = async (val: string) => {
 const handleDownload = async (e: MouseEvent, name: string, versionUrl: string, type: string) => {
   if (!versionUrl) return;
   e.preventDefault();
-  loading.value[type] = true
+  loading.value[type] = true;
   try {
     if (type === 'native') {
       // 第一步：获取版本`JSON`数据
@@ -412,18 +430,18 @@ const handleDownload = async (e: MouseEvent, name: string, versionUrl: string, t
       duration: 4000,
       content: '下载成功',
       keepAliveOnHover: true
-    })
+    });
   } catch (error) {
     notification.error({
       duration: 4000,
       content: '下载出错',
       meta: error.message,
       keepAliveOnHover: true
-    })
+    });
   } finally {
-    loading.value[type] = false
+    loading.value[type] = false;
   }
-}
+};
 // 下载文件
 const blob = async (name: string, url: string) => {
   const response = await fetch(url);
@@ -469,20 +487,20 @@ const fetchData = async (type: string) => {
 const getPaginatedData = (type: string) => {
   const {pageNum, pageSize} = pager.value[type];
   return versionData.value[type].slice(0, pageNum * pageSize);
-}
+};
 // 处理标签页切换
 const handleTabChange = (activeTab: string) => {
   const type = activeTab as 'native' | 'fabric' | 'forge' | 'purpur';
   if (!versionData.value[type].length && !loading.value[type]) {
     fetchData(type);
   }
-}
+};
 // 加载更多
 const loadMore = (type: string) => {
   if (pager.value[type].pageNum * pager.value[type].pageSize < pager.value[type].total) {
     pager.value[type].pageNum += 1;
   }
-}
+};
 // 卡片分页自适应
 const rowsPerPage = 3;
 const cardsPerRow = ref(4);
@@ -509,10 +527,14 @@ onMounted(() => {
   fetchData('native');
   fetchPurpurMinecraftVersions();
   window.addEventListener('resize', updateCardsPerRow);
+  const resizeObserver = new ResizeObserver(() => {
+    updateCardsPerRow();
+  });
   nextTick(() => {
     if (cardGridRef.value && cardGridRef.value instanceof HTMLElement) {
+      resizeObserver.observe(cardGridRef.value);
       cardGridObserver = new MutationObserver(() => updateCardsPerRow());
-      cardGridObserver.observe(cardGridRef.value, { childList: true, subtree: false });
+      cardGridObserver.observe(cardGridRef.value, {childList: true, subtree: false});
     }
   });
 });
@@ -531,15 +553,14 @@ watch(cardGridRef, (val) => {
   }
   if (val && val instanceof HTMLElement) {
     cardGridObserver = new MutationObserver(() => updateCardsPerRow());
-    cardGridObserver.observe(val, { childList: true, subtree: false });
+    cardGridObserver.observe(val, {childList: true, subtree: false});
   }
 });
-
 // 计算每页需要补齐的空卡片数，避免 RangeError
 const emptyCardCount = (type: string) => {
   const len = getPaginatedData(type).length;
   if (!cardsPerRow.value || len === 0) return 0;
   const mod = len % cardsPerRow.value;
   return mod === 0 ? 0 : cardsPerRow.value - mod;
-}
+};
 </script>

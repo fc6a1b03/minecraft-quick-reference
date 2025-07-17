@@ -1,4 +1,9 @@
-/* 独立样式文件：index.css */
+body {
+    font-family: monospace;
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+}
+
 .cool-link {
     color: #78c64a;
     cursor: pointer;
@@ -7,6 +12,7 @@
     font-weight: 500;
     text-decoration: none;
     transition: color 0.2s ease, transform 0.2s ease;
+    font-family: monospace;
 }
 
 .cool-link:hover {
@@ -17,19 +23,20 @@
 
 .card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
     gap: 16px;
     margin-bottom: 20px;
+    padding: 0 5vw;
 }
 
 .modern-card {
     border-radius: 0;
     box-shadow: none;
-    padding: 16px;
+    padding: 12px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    min-height: 90px;
+    min-height: 80px;
     border: 2px solid #444;
     background-color: #262626;
     color: #f0f0f0;
@@ -42,9 +49,9 @@
 
 .modern-card-title {
     font-weight: 600;
-    font-size: 15px;
+    font-size: 14px;
     color: #8dd35f;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     word-break: break-all;
     letter-spacing: 0.01em;
     transition: color 0.2s;
@@ -55,17 +62,17 @@
 }
 
 .modern-card-meta {
-    font-size: 13px;
+    font-size: 12px;
     color: #aaa;
     margin-bottom: 2px;
 }
 
 .modern-card-btn {
-    margin-top: 10px;
+    margin-top: 8px;
     align-self: flex-end;
     font-family: monospace;
-    font-size: 12px;
-    padding: 4px 8px;
+    font-size: 11px;
+    padding: 3px 6px;
     background-color: #3e3e3e;
     color: #dcdcdc;
     border: 2px solid #555;
@@ -78,32 +85,94 @@
     border-color: #78c64a;
 }
 
+/* 移除空卡片样式 */
 .empty-card {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    pointer-events: none;
-    min-height: 90px;
+    display: none;
 }
 
-.main-center-wrapper {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #111;
+.load-more-container {
+    margin-top: 16px;
+    text-align: center;
+    clear: both;
 }
 
-.main-center-content {
-    box-shadow: none;
+.load-more-button {
+    font-size: 13px;
+    padding: 6px 16px;
+    border: 2px solid #555;
+    background-color: #3e3e3e;
+    color: #dcdcdc;
+    transition: all 0.2s ease;
+}
+
+.load-more-button:hover {
+    border-color: #78c64a;
+    background-color: #4a4a4a;
+}
+
+.pixel-card {
+    border: 2px solid #444;
+    background: #262626;
     border-radius: 0;
-    overflow: hidden;
-    background: #1a1a1a;
+    padding: 12px;
+    margin: 16px 0;
+    transition: border-color 0.2s;
 }
 
-.n-tabs {
-    padding: 0 24px;
-    box-sizing: border-box;
-    margin-bottom: 0;
+.pixel-card:hover {
+    border-color: #78c64a;
+}
+
+.pixel-card-header {
+    font-weight: bold;
+    color: #8dd35f;
+    margin-bottom: 8px;
+    font-size: 14px;
+    border-bottom: 2px solid #444;
+    padding-bottom: 4px;
+}
+
+.pixel-card-content {
+    font-size: 12px;
+    color: #f0f0f0;
+    margin-bottom: 12px;
+}
+
+.pixel-card-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.pixel-button {
+    font-family: 'Minecraft', monospace;
+    font-size: 12px;
+    padding: 4px 8px;
+    background-color: #3e3e3e;
+    color: #dcdcdc;
+    border: 2px solid #555;
+    border-radius: 0;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.pixel-button:hover {
+    border-color: #78c64a;
+    background-color: #4a4a4a;
+}
+
+.pixel-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .card-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .main-center-content {
+        border: 2px solid #333;
+    }
 }
