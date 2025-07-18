@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "vue": "^3.5.17",
-    "vue-tsc": "^3.0.1",
+    "vue-tsc": "^3.0.2",
     "naive-ui": "^2.42.0",
     "node-fetch": "^3.3.2",
     "vue-router": "^4.5.1"

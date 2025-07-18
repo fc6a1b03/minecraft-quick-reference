@@ -29,6 +29,19 @@ body {
     padding: 0 5vw;
 }
 
+@media (max-width: 768px) {
+    .card-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 0 4vw;
+    }
+
+    .modern-card {
+        max-width: 100%;
+        width: 100%;
+    }
+}
+
 .modern-card {
     border-radius: 0;
     box-shadow: none;
@@ -41,6 +54,35 @@ body {
     background-color: #262626;
     color: #f0f0f0;
     transition: border-color 0.2s;
+}
+
+@media (max-width: 768px) {
+    .modern-card {
+        padding: 8px;
+        word-break: break-word;
+        overflow-wrap: break-word;
+        max-height: 200px; /* 添加最大高度 */
+        overflow-y: auto; /* 添加垂直滚动条 */
+    }
+
+    .modern-card-title {
+        font-size: 13px;
+    }
+
+    .modern-card-meta {
+        font-size: 11px; /* 调整字体大小 */
+    }
+
+    .modern-card-btn {
+        width: 100%;
+        text-align: center;
+        font-size: 12px;
+        padding: 4px 0;
+    }
+
+    .load-more-container {
+        margin-top: 12px;
+    }
 }
 
 .modern-card:hover {
