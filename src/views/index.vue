@@ -2,11 +2,11 @@
 <template>
   <div class="main-center-wrapper">
     <n-config-provider :theme="darkTheme" :theme-overrides="theme.themeOverrides">
-      <n-layout class="main-center-content" style="min-height: 900px; width: 100%; max-width: 1200px; margin: 0 auto;">
-        <n-tabs animated justify-content="center" size="large" type="line" @update:value="handleTabChange">
+      <n-layout class="main-center-content">
+        <n-tabs animated justify-content="space-evenly" size="large" type="bar" @update:value="handleTabChange">
           <n-tab-pane v-for="type in types" :key="type" :name="type"
                       :tab="`${type.charAt(0).toUpperCase()}${type.slice(1)}`">
-            <n-spin :show="loading[type]" stroke="rgba(255,255,255, 0.4)">
+            <n-spin :show="loading[type]" stroke="rgba(76, 201, 240, 0.7)">
               <template v-if="hasError[type]">
                 <n-alert show-icon title="加载失败！" type="error">
                   <template #default>
@@ -56,13 +56,13 @@
               </template>
               <template v-else>
                 <template v-if="type === 'purpur'">
-                  <div style="width: 100%; max-width: 610px; margin: 0 auto; padding: 0 10px; box-sizing: border-box;">
-                    <n-space vertical size="large" style="width: 103%;">
+                  <div style="width: 100%; max-width: 700px; margin: 0 auto; padding: 0 20px; box-sizing: border-box;">
+                    <n-space vertical size="large">
                       <n-space class="purpur-select-row" align="center">
                         <span>选择 Minecraft 版本：</span>
                         <n-select
                             class="purpur-select"
-                            style="min-width: 160px; width: 100%; max-width: 240px;"
+                            style="min-width: 180px; width: 100%; max-width: 280px;"
                             :options="purpurMinecraftVersions.map(v => ({ label: v, value: v }))"
                             v-model:value="purpurSelectedMcVersion"
                             @update:value="handlePurpurMcVersionChange"
@@ -71,34 +71,37 @@
                         <span>选择 Purpur 构建：</span>
                         <n-select
                             class="purpur-select"
-                            style="min-width: 120px; white-space: nowrap; width: 100%; max-width: 180px;"
+                            style="min-width: 150px; white-space: nowrap; width: 100%; max-width: 220px;"
                             :options="purpurBuilds.map(b => ({ label: b, value: b }))"
                             v-model:value="purpurSelectedBuild"
                             @update:value="handlePurpurBuildChange"
                             :loading="loading.purpur"
                         />
                       </n-space>
-                      <div class="pixel-card" style="box-sizing: border-box;">
+                      <div class="pixel-card">
                         <div class="pixel-card-header">
                           <span>构建详情</span>
                         </div>
                         <div class="pixel-card-content">
-                          <div>项目: {{ purpurBuildDetail.project }}</div>
-                          <div>MC版本: {{ purpurBuildDetail.version }}</div>
-                          <div>构建号: {{ purpurBuildDetail.build }}</div>
+                          <div><strong>项目:</strong> {{ purpurBuildDetail.project }}</div>
+                          <div><strong>MC版本:</strong> {{ purpurBuildDetail.version }}</div>
+                          <div><strong>构建号:</strong> {{ purpurBuildDetail.build }}</div>
                           <div>
-                            构建时间: {{
-                              purpurBuildDetail.timestamp ? new Date(purpurBuildDetail.timestamp).toLocaleString() : ''
+                            <strong>构建时间:</strong> {{
+                              purpurBuildDetail.timestamp ? new Date(purpurBuildDetail.timestamp).toLocaleString() : 'N/A'
                             }}
                           </div>
-                          <div>提交数: {{ purpurBuildDetail.commits?.length || 0 }}</div>
+                          <div><strong>提交数:</strong> {{ purpurBuildDetail.commits?.length || 0 }}</div>
                           <div v-if="purpurBuildDetail.commits && purpurBuildDetail.commits.length">
                             <n-collapse :default-expanded-names="['commits']" arrow-placement="right">
                               <n-collapse-item title="提交记录" name="commits">
                                 <ul style="padding-left: 1em;">
                                   <li v-for="c in purpurBuildDetail.commits" :key="c.hash">
-                                    <div><b>{{ c.author }}</b> ({{ c.email }})</div>
-                                    <div style="font-size:12px;white-space:pre-line;">{{ c.description }}</div>
+                                    <div><b>{{ c.author }}</b> &lt;{{ c.email }}&gt;</div>
+                                    <div style="font-size:13px;white-space:pre-line;margin:5px 0;">{{
+                                        c.description
+                                      }}
+                                    </div>
                                     <div style="font-size:12px;color:#aaa;">{{ c.hash }} |
                                       {{ c.timestamp ? new Date(c.timestamp).toLocaleString() : '' }}
                                     </div>
@@ -144,10 +147,11 @@
                   </div>
                   <div class="load-more-container">
                     <n-button
-                        :disabled="pager[type].pageNum * pager[type].pageSize > pager[type].total"
+                        :disabled="pager[type].pageNum * pager[type].pageSize >= pager[type].total"
                         ghost
                         type="info"
                         @click="loadMore(type)"
+                        class="load-more-button"
                     >
                       加载更多
                     </n-button>
