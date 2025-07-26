@@ -2,7 +2,7 @@
 <template>
   <div class="main-center-wrapper">
     <n-config-provider :theme="darkTheme" :theme-overrides="theme.themeOverrides">
-      <n-layout class="main-center-content" style="height: 900px; width: 1200px; margin: 0 auto; min-width: 1200px;">
+      <n-layout class="main-center-content" style="min-height: 900px; width: 100%; max-width: 1200px; margin: 0 auto;">
         <n-tabs animated justify-content="center" size="large" type="line" @update:value="handleTabChange">
           <n-tab-pane v-for="type in types" :key="type" :name="type"
                       :tab="`${type.charAt(0).toUpperCase()}${type.slice(1)}`">
@@ -56,12 +56,13 @@
               </template>
               <template v-else>
                 <template v-if="type === 'purpur'">
-                  <div style="max-width: 610px; margin: 0 auto;">
-                    <n-space vertical size="large">
-                      <n-space align="center">
+                  <div style="width: 100%; max-width: 610px; margin: 0 auto; padding: 0 10px; box-sizing: border-box;">
+                    <n-space vertical size="large" style="width: 103%;">
+                      <n-space class="purpur-select-row" align="center">
                         <span>选择 Minecraft 版本：</span>
                         <n-select
-                            style="min-width: 160px"
+                            class="purpur-select"
+                            style="min-width: 160px; width: 100%; max-width: 240px;"
                             :options="purpurMinecraftVersions.map(v => ({ label: v, value: v }))"
                             v-model:value="purpurSelectedMcVersion"
                             @update:value="handlePurpurMcVersionChange"
@@ -69,14 +70,15 @@
                         />
                         <span>选择 Purpur 构建：</span>
                         <n-select
-                            style="min-width: 120px; white-space: nowrap"
+                            class="purpur-select"
+                            style="min-width: 120px; white-space: nowrap; width: 100%; max-width: 180px;"
                             :options="purpurBuilds.map(b => ({ label: b, value: b }))"
                             v-model:value="purpurSelectedBuild"
                             @update:value="handlePurpurBuildChange"
                             :loading="loading.purpur"
                         />
                       </n-space>
-                      <div class="pixel-card">
+                      <div class="pixel-card" style="box-sizing: border-box;">
                         <div class="pixel-card-header">
                           <span>构建详情</span>
                         </div>
@@ -91,7 +93,7 @@
                           </div>
                           <div>提交数: {{ purpurBuildDetail.commits?.length || 0 }}</div>
                           <div v-if="purpurBuildDetail.commits && purpurBuildDetail.commits.length">
-                            <n-collapse  :default-expanded-names="['commits']" arrow-placement="right">
+                            <n-collapse :default-expanded-names="['commits']" arrow-placement="right">
                               <n-collapse-item title="提交记录" name="commits">
                                 <ul style="padding-left: 1em;">
                                   <li v-for="c in purpurBuildDetail.commits" :key="c.hash">
@@ -140,7 +142,7 @@
                         aria-hidden="true"
                     ></div>
                   </div>
-                  <div style="text-align: center;margin-bottom: 20px;">
+                  <div class="load-more-container">
                     <n-button
                         :disabled="pager[type].pageNum * pager[type].pageSize > pager[type].total"
                         ghost
@@ -504,7 +506,7 @@ const loadMore = (type: string) => {
 // 卡片分页自适应
 const rowsPerPage = 3;
 const cardsPerRow = ref(4);
-let cardGridObserver: MutationObserver | null = null;
+let cardGridObserver: ResizeObserver | null = null;
 const cardGridRef = ref<HTMLElement | null>(null);
 const updateCardsPerRow = () => {
   nextTick(() => {
@@ -527,14 +529,12 @@ onMounted(() => {
   fetchData('native');
   fetchPurpurMinecraftVersions();
   window.addEventListener('resize', updateCardsPerRow);
-  const resizeObserver = new ResizeObserver(() => {
-    updateCardsPerRow();
-  });
   nextTick(() => {
     if (cardGridRef.value && cardGridRef.value instanceof HTMLElement) {
-      resizeObserver.observe(cardGridRef.value);
-      cardGridObserver = new MutationObserver(() => updateCardsPerRow());
-      cardGridObserver.observe(cardGridRef.value, {childList: true, subtree: false});
+      cardGridObserver = new ResizeObserver(() => {
+        updateCardsPerRow();
+      });
+      cardGridObserver.observe(cardGridRef.value);
     }
   });
 });
@@ -546,16 +546,16 @@ onBeforeUnmount(() => {
   }
 });
 watch(cardGridRef, (val) => {
-  updateCardsPerRow();
   if (cardGridObserver) {
     cardGridObserver.disconnect();
-    cardGridObserver = null;
   }
   if (val && val instanceof HTMLElement) {
-    cardGridObserver = new MutationObserver(() => updateCardsPerRow());
-    cardGridObserver.observe(val, {childList: true, subtree: false});
+    cardGridObserver = new ResizeObserver(() => {
+      updateCardsPerRow();
+    });
+    cardGridObserver.observe(val);
   }
-});
+}, {flush: 'post'});
 // 计算每页需要补齐的空卡片数，避免 RangeError
 const emptyCardCount = (type: string) => {
   const len = getPaginatedData(type).length;

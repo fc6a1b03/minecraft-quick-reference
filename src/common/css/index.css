@@ -23,22 +23,43 @@ body {
 
 .card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-    gap: 16px;
-    margin-bottom: 20px;
-    padding: 0 5vw;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+    padding: 0 30px;
+}
+
+/* 平板设备优化 */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .card-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 22px;
+        padding: 0 25px;
+    }
 }
 
 @media (max-width: 768px) {
     .card-grid {
         grid-template-columns: 1fr;
-        gap: 12px;
-        padding: 0 4vw;
+        gap: 20px;
+        padding: 0 20px;
     }
 
     .modern-card {
-        max-width: 100%;
-        width: 100%;
+        width: 96%;
+    }
+}
+
+/* 小屏幕设备优化 */
+@media (max-width: 480px) {
+    .card-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding: 0 10px;
+    }
+
+    .modern-card {
+        width: 96%;
     }
 }
 
@@ -54,6 +75,27 @@ body {
     background-color: #262626;
     color: #f0f0f0;
     transition: border-color 0.2s;
+    width: 96%;
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+    .modern-card {
+        padding: 10px;
+        min-height: 70px;
+    }
+
+    .modern-card-title {
+        font-size: 13px;
+    }
+
+    .modern-card-meta {
+        font-size: 11px;
+    }
+
+    .modern-card-btn {
+        font-size: 10px;
+        padding: 2px 5px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -63,6 +105,7 @@ body {
         overflow-wrap: break-word;
         max-height: 200px; /* 添加最大高度 */
         overflow-y: auto; /* 添加垂直滚动条 */
+        min-height: 60px;
     }
 
     .modern-card-title {
@@ -81,7 +124,33 @@ body {
     }
 
     .load-more-container {
-        margin-top: 12px;
+        margin-top: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modern-card {
+        padding: 6px;
+        word-break: break-word;
+        overflow-wrap: break-word;
+        max-height: 180px;
+        overflow-y: auto;
+        min-height: 50px;
+    }
+
+    .modern-card-title {
+        font-size: 12px;
+    }
+
+    .modern-card-meta {
+        font-size: 10px;
+    }
+
+    .modern-card-btn {
+        width: 100%;
+        text-align: center;
+        font-size: 11px;
+        padding: 3px 0;
     }
 }
 
@@ -97,6 +166,7 @@ body {
     word-break: break-all;
     letter-spacing: 0.01em;
     transition: color 0.2s;
+    width: 100%;
 }
 
 .modern-card:hover .modern-card-title {
@@ -107,6 +177,7 @@ body {
     font-size: 12px;
     color: #aaa;
     margin-bottom: 2px;
+    width: 100%;
 }
 
 .modern-card-btn {
@@ -121,6 +192,7 @@ body {
     border-radius: 0;
     cursor: pointer;
     outline: none;
+    width: auto;
 }
 
 .modern-card-btn:focus {
@@ -133,7 +205,8 @@ body {
 }
 
 .load-more-container {
-    margin-top: 16px;
+    margin-top: 25px;
+    margin-bottom: 25px;
     text-align: center;
     clear: both;
 }
@@ -157,8 +230,42 @@ body {
     background: #262626;
     border-radius: 0;
     padding: 12px;
-    margin: 16px 0;
+    margin: 20px 0;
     transition: border-color 0.2s;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .pixel-card {
+        padding: 10px;
+        margin: 16px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .pixel-card {
+        padding: 8px;
+        margin: 12px 0;
+    }
+
+    .pixel-card-header {
+        font-size: 12px;
+        margin-bottom: 4px;
+    }
+
+    .pixel-card-content {
+        font-size: 10px;
+        margin-bottom: 8px;
+    }
+
+    .pixel-card-content > div {
+        margin-bottom: 4px;
+    }
+
+    .pixel-button {
+        font-size: 10px;
+        padding: 2px 4px;
+    }
 }
 
 .pixel-card:hover {
@@ -174,10 +281,28 @@ body {
     padding-bottom: 4px;
 }
 
+@media (max-width: 768px) {
+    .pixel-card-header {
+        font-size: 13px;
+        margin-bottom: 6px;
+    }
+}
+
 .pixel-card-content {
     font-size: 12px;
     color: #f0f0f0;
     margin-bottom: 12px;
+}
+
+@media (max-width: 768px) {
+    .pixel-card-content {
+        font-size: 11px;
+        margin-bottom: 10px;
+    }
+
+    .pixel-card-content > div {
+        margin-bottom: 6px;
+    }
 }
 
 .pixel-card-footer {
@@ -186,7 +311,7 @@ body {
 }
 
 .pixel-button {
-    font-family: 'Minecraft', monospace;
+    font-family: monospace;
     font-size: 12px;
     padding: 4px 8px;
     background-color: #3e3e3e;
@@ -196,6 +321,13 @@ body {
     cursor: pointer;
     outline: none;
     transition: all 0.2s;
+}
+
+@media (max-width: 768px) {
+    .pixel-button {
+        font-size: 11px;
+        padding: 3px 6px;
+    }
 }
 
 .pixel-button:hover {
@@ -208,13 +340,58 @@ body {
     cursor: not-allowed;
 }
 
+/* 大屏幕优化 */
+@media (min-width: 1400px) {
+    .card-grid {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 40px;
+        gap: 30px;
+    }
+}
+
 @media (max-width: 768px) {
     .card-grid {
         grid-template-columns: 1fr;
-        gap: 12px;
+        gap: 20px;
     }
 
     .main-center-content {
         border: 2px solid #333;
+    }
+}
+
+/* Purpur 选择器响应式优化 */
+.purpur-select-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+@media (max-width: 768px) {
+    .purpur-select-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .purpur-select-row > span {
+        margin-bottom: 4px;
+    }
+
+    .purpur-select {
+        width: 100%;
+        min-width: auto !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .purpur-select-row {
+        gap: 8px;
+    }
+
+    .purpur-select {
+        width: 100%;
     }
 }
