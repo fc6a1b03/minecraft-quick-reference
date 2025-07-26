@@ -1,7 +1,7 @@
-FROM oven/bun:1-alpine AS builder
+FROM oven/bun AS builder
 WORKDIR /app
 COPY . .
-RUN bun i && bun run build
+RUN bun update && bun run build
 
 ################################
 

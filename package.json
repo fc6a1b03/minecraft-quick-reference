@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --host",
     "build": "rimraf dist && vite build",
-    "update": "bun update && bun i"
+    "update": "bun i && bun update && bun i"
   },
   "dependencies": {
     "bun": "^1.2.19",
