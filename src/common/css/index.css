@@ -1,3 +1,17 @@
+img {
+    display: block;
+    height: auto;
+    border-style: none;
+    -webkit-user-drag: none;
+    user-select: none;
+}
+
+@media (max-width: 768px) {
+    img {
+        max-width: 100%;
+    }
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -143,6 +157,7 @@ body {
     border: 1px solid rgba(92, 92, 120, 0.4);
     position: relative;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .modern-card::before {
@@ -168,81 +183,21 @@ body {
     transform: scaleX(1);
 }
 
-@media (max-width: 1024px) and (min-width: 769px) {
-    .modern-card {
-        padding: 10px;
-        min-height: 70px;
-    }
-
-    .modern-card-title {
-        font-size: 13px;
-    }
-
-    .modern-card-meta {
-        font-size: 11px;
-    }
-
-    .modern-card-btn {
-        font-size: 10px;
-        padding: 2px 5px;
-    }
+.modern-card-image {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    overflow: hidden;
+    border-radius: 5px;
 }
 
-@media (max-width: 768px) {
-    .modern-card {
-        padding: 8px;
-        word-break: break-word;
-        overflow-wrap: break-word;
-        max-height: 200px;
-        overflow-y: auto;
-        min-height: 60px;
-    }
-
-    .modern-card-title {
-        font-size: 13px;
-    }
-
-    .modern-card-meta {
-        font-size: 11px;
-    }
-
-    .modern-card-btn {
-        width: 100%;
-        text-align: center;
-        font-size: 12px;
-        padding: 4px 0;
-    }
-
-}
-
-@media (max-width: 480px) {
-    .modern-card {
-        padding: 6px;
-        word-break: break-word;
-        overflow-wrap: break-word;
-        max-height: 180px;
-        overflow-y: auto;
-        min-height: 50px;
-    }
-
-    .modern-card-title {
-        font-size: 12px;
-    }
-
-    .modern-card-meta {
-        font-size: 10px;
-    }
-
-    .modern-card-btn {
-        width: 100%;
-        text-align: center;
-        font-size: 11px;
-        padding: 3px 0;
-    }
-}
-
-.modern-card:hover {
-    border: 2px solid rgba(76, 201, 240, 0.5);
+.modern-card-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }
 
 .modern-card-title {
@@ -267,6 +222,13 @@ body {
     margin-bottom: 4px;
     width: 100%;
     line-height: 1.5;
+}
+
+.modern-card-description {
+    font-size: 12px;
+    color: #ccc;
+    margin-top: 8px;
+    line-height: 1.4;
 }
 
 .modern-card-btn {
@@ -568,4 +530,81 @@ a:focus {
     .purpur-select {
         width: 100%;
     }
+}
+
+/* Biology 模态框样式 */
+.mob-detail-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.mob-detail-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #4cc9f0;
+    margin-bottom: 5px;
+}
+
+.mob-detail-category {
+    font-size: 16px;
+    color: #aaa;
+    margin-bottom: 15px;
+}
+
+.mob-detail-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mob-detail-image {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px auto 20px;
+    overflow: hidden;
+    border-radius: 10px;
+    background: linear-gradient(145deg, #2d2d4d 0%, #25253d 100%);
+    border: 1px solid rgba(92, 92, 120, 0.4);
+}
+
+.mob-detail-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.mob-detail-description {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #f0f0f0;
+    width: 100%;
+}
+
+.mob-detail-description h3 {
+    color: #4cc9f0;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.mob-detail-description ul {
+    padding-left: 20px;
+    margin-bottom: 15px;
+}
+
+.mob-detail-description li {
+    margin-bottom: 5px;
+}
+
+.mob-detail-link {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(92, 92, 120, 0.6);
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
 }

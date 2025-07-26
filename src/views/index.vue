@@ -121,6 +121,49 @@
                     </n-space>
                   </div>
                 </template>
+                <template v-else-if="type === 'biology'">
+                  <div class="card-grid" ref="cardGridRef">
+                    <div
+                        v-for="mob in biologyDataRef"
+                        :key="mob.name"
+                        class="modern-card"
+                        @click="showMobDetail(mob)"
+                    >
+                      <div class="modern-card-image" v-if="mob.image">
+                        <img :src="mob.image" :alt="mob.name"/>
+                      </div>
+                      <div class="modern-card-title">{{ mob.name }}</div>
+                      <div class="modern-card-meta">{{ mob.category }}</div>
+                      <div class="modern-card-description">{{ mob.shortDescription }}</div>
+                    </div>
+                    <div
+                        v-for="n in emptyCardCount(type)"
+                        :key="`empty-${n}-${pager[type].pageNum}`"
+                        class="modern-card"
+                        aria-hidden="true"
+                    ></div>
+                  </div>
+                  <n-modal v-model:show="showMobModal" preset="card" :style="{width: '80%', maxWidth: '800px'}"
+                           size="huge" :bordered="false">
+                    <template #header>
+                      <div class="mob-detail-header">
+                        <div class="mob-detail-title">{{ currentMob.name }}</div>
+                        <div class="mob-detail-category">{{ currentMob.category }}</div>
+                      </div>
+                    </template>
+                    <div class="mob-detail-content">
+                      <div class="mob-detail-image" v-if="currentMob.image">
+                        <img :src="currentMob.image" :alt="currentMob.name"/>
+                      </div>
+                      <div class="mob-detail-description" v-html="currentMob.description"></div>
+                      <div class="mob-detail-link" v-if="currentMob.link">
+                        了解更多信息: <a :href="currentMob.link" target="_blank" class="cool-link">{{
+                          currentMob.link
+                        }}</a>
+                      </div>
+                    </div>
+                  </n-modal>
+                </template>
                 <template v-else>
                   <div class="card-grid" ref="cardGridRef">
                     <div
@@ -163,12 +206,24 @@
 </template>
 <script lang="tsx" setup>
 import '@/common/css/index.css'
+import {biology, BiologyDataItem} from '@/common/data/biology'
 import {nextTick, onBeforeUnmount, onMounted, ref, watch} from 'vue'
-import {createDiscreteApi, darkTheme, NAlert, NButton, NConfigProvider, NLayout, NSpin, NTabPane, NTabs} from 'naive-ui'
+import {
+  createDiscreteApi,
+  darkTheme,
+  NAlert,
+  NButton,
+  NConfigProvider,
+  NLayout,
+  NModal,
+  NSpin,
+  NTabPane,
+  NTabs
+} from 'naive-ui'
 // 错误信息
 const errorMessage = ref('')
 // 类型数组
-const types = ['native', 'fabric', 'forge', 'neoForge', 'purpur']
+const types = ['native', 'fabric', 'forge', 'neoForge', 'purpur', 'biology']
 // 主题配置
 const theme = {
   // 主题覆盖
@@ -199,7 +254,8 @@ const pager = ref({
   fabric: {pageNum: 1, pageSize: 15, total: 0},
   forge: {pageNum: 1, pageSize: 15, total: 0},
   neoForge: {pageNum: 1, pageSize: 15, total: 0},
-  purpur: {pageNum: 1, pageSize: 15, total: 0}
+  purpur: {pageNum: 1, pageSize: 15, total: 0},
+  biology: {pageNum: 1, pageSize: 15, total: 0}
 })
 // 加载状态
 const loading = ref({
@@ -207,7 +263,8 @@ const loading = ref({
   fabric: false,
   forge: false,
   neoForge: false,
-  purpur: false
+  purpur: false,
+  biology: false
 })
 // 错误状态
 const hasError = ref({
@@ -215,7 +272,8 @@ const hasError = ref({
   fabric: false,
   forge: false,
   neoForge: false,
-  purpur: false
+  purpur: false,
+  biology: false
 })
 // `Cors`错误状态
 const isCorsError = ref({
@@ -223,7 +281,19 @@ const isCorsError = ref({
   fabric: false,
   forge: false,
   neoForge: false,
-  purpur: false
+  purpur: false,
+  biology: false
+})
+// Biology相关状态
+const biologyDataRef = ref<BiologyDataItem[]>(biology)
+const showMobModal = ref(false)
+const currentMob = ref<BiologyDataItem>({
+  name: '',
+  category: '',
+  image: '',
+  shortDescription: '',
+  description: '',
+  link: ''
 })
 // Purpur 相关状态
 const purpurBuilds = ref<string[]>([])
@@ -231,6 +301,28 @@ const purpurBuildDetail = ref<any>(null)
 const purpurSelectedBuild = ref<string>('')
 const purpurSelectedMcVersion = ref<string>('')
 const purpurMinecraftVersions = ref<string[]>([])
+// 获取生物信息
+const fetchBiologyData = async () => {
+  loading.value.biology = true
+  hasError.value.biology = false
+  isCorsError.value.biology = false
+  try {
+    // 使用导入的静态数据作为生物信息源
+    biologyDataRef.value = biology
+    pager.value.biology.total = biologyDataRef.value.length
+  } catch (error) {
+    hasError.value.biology = true
+    errorMessage.value = error.message || '未知错误'
+    isCorsError.value.biology = error.message?.includes('CORS')
+  } finally {
+    loading.value.biology = false
+  }
+}
+// 显示生物详情
+const showMobDetail = (mob: BiologyDataItem) => {
+  currentMob.value = mob
+  showMobModal.value = true
+}
 // 获取原版信息
 const fetchNativeVersions = async () => {
   const response = await fetch('https://launchermeta.mojang.com/mc/game/version_manifest.json')
@@ -498,7 +590,8 @@ const fetchData = async (type: string) => {
       fabric: fetchFabricVersions,
       forge: fetchForgeVersions,
       neoForge: fetchNeoForgeVersions,
-      purpur: fetchPurpurMinecraftVersions
+      purpur: fetchPurpurMinecraftVersions,
+      biology: fetchBiologyData
     }[type]()
   } catch (error) {
     hasError.value[type] = true
@@ -520,8 +613,8 @@ const getPaginatedData = (type: string) => {
 }
 // 处理标签页切换
 const handleTabChange = (activeTab: string) => {
-  const type = activeTab as 'native' | 'fabric' | 'forge' | 'neoForge' | 'purpur'
-  if (!versionData.value[type].length && !loading.value[type]) {
+  const type = activeTab as 'native' | 'fabric' | 'forge' | 'neoForge' | 'purpur' | 'biology'
+  if ((!versionData.value[type] || !versionData.value[type].length) && !loading.value[type]) {
     fetchData(type)
   }
 }
@@ -546,8 +639,10 @@ const updateCardsPerRow = () => {
       cardsPerRow.value = colCount
       // 动态调整每页数量
       types.forEach(type => {
-        pager.value[type].pageSize = colCount * rowsPerPage
-        pager.value[type].pageNum = 1
+        if (pager.value[type]) {
+          pager.value[type].pageSize = colCount * rowsPerPage
+          pager.value[type].pageNum = 1
+        }
       })
     }
   })
@@ -586,9 +681,16 @@ watch(cardGridRef, (val) => {
 }, {flush: 'post'})
 // 计算每页需要补齐的空卡片数，避免 RangeError
 const emptyCardCount = (type: string) => {
-  const len = getPaginatedData(type).length
-  if (!cardsPerRow.value || len === 0) return 0
-  const mod = len % cardsPerRow.value
-  return mod === 0 ? 0 : cardsPerRow.value - mod
+  if (type === 'biology') {
+    const len = biologyDataRef.value.length
+    if (!cardsPerRow.value || len === 0) return 0
+    const mod = len % cardsPerRow.value
+    return mod === 0 ? 0 : cardsPerRow.value - mod
+  } else {
+    const len = getPaginatedData(type).length
+    if (!cardsPerRow.value || len === 0) return 0
+    const mod = len % cardsPerRow.value
+    return mod === 0 ? 0 : cardsPerRow.value - mod
+  }
 }
 </script>
