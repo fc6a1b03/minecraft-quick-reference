@@ -157,9 +157,9 @@
                       </div>
                       <div class="mob-detail-description" v-html="currentMob.description"></div>
                       <div class="mob-detail-link" v-if="currentMob.link">
-                        了解更多信息: <a :href="currentMob.link" target="_blank" class="cool-link">{{
-                          currentMob.link
-                        }}</a>
+                        <button class="pixel-button" @click="openLink(currentMob.link)">
+                          了解更多信息
+                        </button>
                       </div>
                     </div>
                   </n-modal>
@@ -323,6 +323,12 @@ const showMobDetail = (mob: BiologyDataItem) => {
   currentMob.value = mob
   showMobModal.value = true
 }
+
+// 打开链接
+const openLink = (url: string) => {
+  window.open(url, '_blank')
+}
+
 // 获取原版信息
 const fetchNativeVersions = async () => {
   const response = await fetch('https://launchermeta.mojang.com/mc/game/version_manifest.json')
