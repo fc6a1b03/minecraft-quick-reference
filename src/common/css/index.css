@@ -1,8 +1,8 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
     min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .cool-link {
@@ -39,7 +39,6 @@ body {
     padding: 20px 0;
 }
 
-/* 添加tabs导航区域的样式 */
 .n-tabs .n-tabs-nav {
     background: rgba(45, 45, 77, 0.6);
     backdrop-filter: blur(5px);
@@ -98,7 +97,6 @@ body {
     padding: 20px;
 }
 
-/* 平板设备优化 */
 @media (max-width: 1024px) and (min-width: 769px) {
     .card-grid {
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -119,7 +117,6 @@ body {
     }
 }
 
-/* 小屏幕设备优化 */
 @media (max-width: 480px) {
     .card-grid {
         grid-template-columns: 1fr;
@@ -196,8 +193,8 @@ body {
         padding: 8px;
         word-break: break-word;
         overflow-wrap: break-word;
-        max-height: 200px; /* 添加最大高度 */
-        overflow-y: auto; /* 添加垂直滚动条 */
+        max-height: 200px;
+        overflow-y: auto;
         min-height: 60px;
     }
 
@@ -206,7 +203,7 @@ body {
     }
 
     .modern-card-meta {
-        font-size: 11px; /* 调整字体大小 */
+        font-size: 11px;
     }
 
     .modern-card-btn {
@@ -296,65 +293,9 @@ body {
 }
 
 .modern-card-btn:focus {
-    box-shadow: 0 0 0 3px rgba(72, 149, 239, 0.4);
-}
-
-/* 移除空卡片样式 */
-.empty-card {
-    display: none;
-}
-
-.load-more-container {
-    margin-bottom: 20px;
-    text-align: center;
-    clear: both;
-    padding: 0 20px;
-}
-
-.load-more-button {
-    font-size: 14px;
-    padding: 10px 24px;
-    background: linear-gradient(145deg, #2d2d4d 0%, #25253d 100%);
-    color: #dcdcdc;
-    border: 1px solid rgba(92, 92, 120, 0.6);
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.load-more-button:hover {
-    background: linear-gradient(145deg, #4895ef 0%, #3a6ea5 100%);
-    border-color: #4895ef;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(72, 149, 239, 0.3);
-}
-
-/* 聚焦边框样式 - 与整体设计风格协调的颜色 */
-:focus {
     outline: 2px solid rgba(72, 149, 239, 0.5);
     outline-offset: 1px;
-}
-
-.n-button:focus {
-    outline: 2px solid rgba(72, 149, 239, 0.5);
-    outline-offset: 1px;
-    border-radius: 6px;
-}
-
-.n-select:focus-within {
-    outline: 2px solid rgba(72, 149, 239, 0.5);
-    outline-offset: 1px;
-    border-radius: 6px;
-}
-
-.pixel-button:focus {
-    outline: 2px solid rgba(72, 149, 239, 0.5);
-    outline-offset: 1px;
-}
-
-.modern-card-btn:focus {
-    outline: 2px solid rgba(72, 149, 239, 0.5);
-    outline-offset: 1px;
+    color: #4895ef;
 }
 
 button:focus {
@@ -372,6 +313,65 @@ a:focus {
     outline: 2px solid rgba(72, 149, 239, 0.5);
     outline-offset: -2px;
     border-radius: 8px 8px 0 0;
+}
+
+.modern-card-btn {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    padding: 10px 20px;
+    background: linear-gradient(145deg, #4895ef 0%, #3a6ea5 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(72, 149, 239, 0.3);
+}
+
+.modern-card-btn:hover {
+    background: linear-gradient(145deg, #4cc9f0 0%, #4895ef 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 201, 240, 0.4);
+    color: #ffffff;
+}
+
+.modern-card-btn:focus {
+    outline: 2px solid rgba(72, 149, 239, 0.5);
+    outline-offset: 1px;
+    color: #4895ef;
+}
+
+.load-more-button {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    padding: 10px 20px;
+    background: linear-gradient(145deg, #4895ef 0%, #3a6ea5 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(72, 149, 239, 0.3);
+}
+
+.load-more-button:hover {
+    background: linear-gradient(145deg, #4cc9f0 0%, #4895ef 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 201, 240, 0.4);
+}
+
+.load-more-button:focus {
+    outline: 2px solid rgba(72, 149, 239, 0.5);
+    outline-offset: 1px;
+    color: #1866B6;
+}
+
+.load-more-container {
+    margin-bottom: 20px;
+    text-align: center;
+    clear: both;
 }
 
 .pixel-card {
@@ -493,7 +493,6 @@ a:focus {
     cursor: not-allowed;
 }
 
-/* 大屏幕优化 */
 @media (min-width: 1400px) {
     .card-grid {
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -521,7 +520,6 @@ a:focus {
     }
 }
 
-/* Purpur 选择器响应式优化 */
 .purpur-select-row {
     display: flex;
     flex-direction: row;

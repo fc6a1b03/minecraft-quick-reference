@@ -133,28 +133,24 @@
                       <div v-if="row.date && row.date !== '无' && row.date !== '--'" class="modern-card-meta">
                         日期：{{ row.date }}
                       </div>
-                      <n-button type="primary" size="small" class="modern-card-btn"
-                                @click="handleDownload($event, row.name, row.url, row.type)">
+                      <button class="modern-card-btn" @click="handleDownload($event, row.name, row.url, row.type)">
                         下载
-                      </n-button>
+                      </button>
                     </div>
                     <div
                         v-for="n in emptyCardCount(type)"
                         :key="`empty-${n}-${pager[type].pageNum}`"
-                        class="modern-card empty-card"
+                        class="modern-card"
                         aria-hidden="true"
                     ></div>
                   </div>
                   <div class="load-more-container">
-                    <n-button
+                    <button
+                        @click="loadMore(type)" class="load-more-button"
                         :disabled="pager[type].pageNum * pager[type].pageSize >= pager[type].total"
-                        ghost
-                        type="info"
-                        @click="loadMore(type)"
-                        class="load-more-button"
                     >
                       加载更多
-                    </n-button>
+                    </button>
                   </div>
                 </template>
               </template>
