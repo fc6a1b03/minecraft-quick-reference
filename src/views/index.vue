@@ -102,8 +102,8 @@
                                         c.description
                                       }}
                                     </div>
-                                    <div style="font-size:12px; color:#aaa">{{ c.hash }} |
-                                      {{ c.timestamp ? new Date(c.timestamp).toLocaleString() : '' }}
+                                    <div style="font-size:12px; color:#aaa">
+                                      {{ c.hash }} | {{ c.timestamp ? new Date(c.timestamp).toLocaleString() : '' }}
                                     </div>
                                   </li>
                                 </ul>
@@ -162,9 +162,9 @@
   </div>
 </template>
 <script lang="tsx" setup>
+import '@/common/css/index.css'
 import {nextTick, onBeforeUnmount, onMounted, ref, watch} from 'vue'
 import {createDiscreteApi, darkTheme, NAlert, NButton, NConfigProvider, NLayout, NSpin, NTabPane, NTabs} from 'naive-ui'
-import '@/common/css/index.css'
 // 错误信息
 const errorMessage = ref('')
 // 类型数组
