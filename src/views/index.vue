@@ -122,9 +122,18 @@
                   </div>
                 </template>
                 <template v-else-if="type === 'biology'">
+                  <div style="padding: 0 20px">
+                    <n-input
+                        v-model:value="biologySearch"
+                        placeholder="搜索生物..."
+                        clearable
+                        style="margin-bottom: 20px; width: 100%"
+                        @input="filterBiologyData"
+                    />
+                  </div>
                   <div class="card-grid" ref="cardGridRef">
                     <div
-                        v-for="mob in biologyDataRef"
+                        v-for="mob in getPaginatedBiologyData()"
                         :key="mob.name"
                         class="modern-card"
                         @click="showMobDetail(mob)"
@@ -142,6 +151,15 @@
                         class="modern-card"
                         aria-hidden="true"
                     ></div>
+                  </div>
+                  <div class="load-more-container">
+                    <button
+                        class="load-more-button"
+                        @click="loadMoreBiology()"
+                        :disabled="pager.biology.pageNum * pager.biology.pageSize >= pager.biology.total"
+                    >
+                      加载更多
+                    </button>
                   </div>
                   <n-modal v-model:show="showMobModal" preset="card" :style="{width: '80%', maxWidth: '800px'}"
                            size="huge" :bordered="false">
@@ -221,7 +239,7 @@ import {
   NTabs
 } from 'naive-ui'
 // 错误信息
-const errorMessage = ref('')
+const errorMessage = ref<string>('')
 // 类型数组
 const types = ['native', 'fabric', 'forge', 'neoForge', 'purpur', 'biology']
 // 主题配置
@@ -285,8 +303,12 @@ const isCorsError = ref({
   biology: false
 })
 // Biology相关状态
-const showMobModal = ref(false)
+const biologySearch = ref<string>('')
+const showMobModal = ref<boolean>(false)
 const biologyDataRef = ref<BiologyDataItem[]>(biology)
+const filteredBiologyData = ref<BiologyDataItem[]>(biology)
+// 初始化时设置分页器总数
+pager.value.biology.total = biology.length
 const currentMob = ref<BiologyDataItem>({
   name: '',
   category: '',
@@ -309,7 +331,8 @@ const fetchBiologyData = async () => {
   try {
     // 使用导入的静态数据作为生物信息源
     biologyDataRef.value = biology
-    pager.value.biology.total = biologyDataRef.value.length
+    // 初始过滤数据
+    filterBiologyData()
   } catch (error) {
     hasError.value.biology = true
     errorMessage.value = error.message || '未知错误'
@@ -317,6 +340,21 @@ const fetchBiologyData = async () => {
   } finally {
     loading.value.biology = false
   }
+}
+// 过滤生物数据
+const filterBiologyData = () => {
+  if (!biologySearch.value) {
+    filteredBiologyData.value = biologyDataRef.value
+  } else {
+    const search = biologySearch.value.toLowerCase()
+    filteredBiologyData.value = biologyDataRef.value.filter(mob =>
+        mob.name.toLowerCase().includes(search) ||
+        mob.category.toLowerCase().includes(search) ||
+        mob.shortDescription.toLowerCase().includes(search)
+    )
+  }
+  pager.value.biology.pageNum = 1;
+  pager.value.biology.total = filteredBiologyData.value.length;
 }
 // 显示生物详情
 const showMobDetail = (mob: BiologyDataItem) => {
@@ -623,15 +661,25 @@ const handleTabChange = (activeTab: string) => {
     }
     return
   }
-
   if ((!versionData.value[type] || !versionData.value[type].length) && !loading.value[type]) {
     fetchData(type)
   }
+}
+// 获取分页生物数据
+const getPaginatedBiologyData = () => {
+  const {pageNum, pageSize} = pager.value.biology
+  return filteredBiologyData.value.slice(0, pageNum * pageSize)
 }
 // 加载更多
 const loadMore = (type: string) => {
   if (pager.value[type].pageNum * pager.value[type].pageSize < pager.value[type].total) {
     pager.value[type].pageNum += 1
+  }
+}
+// 生物数据加载更多
+const loadMoreBiology = () => {
+  if ((pager.value.biology.pageNum * pager.value.biology.pageSize) < pager.value.biology.total) {
+    pager.value.biology.pageNum += 1
   }
 }
 // 卡片分页自适应
@@ -643,15 +691,14 @@ const updateCardsPerRow = () => {
   nextTick(() => {
     const grid = cardGridRef.value
     if (!grid || !(grid instanceof HTMLElement)) return
-    const style = window.getComputedStyle(grid)
-    const colCount = style.gridTemplateColumns.split(' ').length
+    const colCount = window.getComputedStyle(grid).gridTemplateColumns.split(' ').length
     if (colCount > 0) {
       cardsPerRow.value = colCount
       // 动态调整每页数量
       types.forEach(type => {
         if (pager.value[type]) {
-          pager.value[type].pageSize = colCount * rowsPerPage
           pager.value[type].pageNum = 1
+          pager.value[type].pageSize = colCount * rowsPerPage
         }
       })
     }
@@ -694,7 +741,7 @@ const emptyCardCount = (type: string) => {
   // 确保 cardsPerRow 有默认值
   const cardsPerRowValue = cardsPerRow.value || 4
   if (type === 'biology') {
-    const len = biologyDataRef.value.length
+    const len = getPaginatedBiologyData().length
     if (!cardsPerRowValue || len === 0) return 0
     const mod = len % cardsPerRowValue
     return mod === 0 ? 0 : cardsPerRowValue - mod
@@ -705,4 +752,6 @@ const emptyCardCount = (type: string) => {
     return mod === 0 ? 0 : cardsPerRowValue - mod
   }
 }
+// 监听生物搜索框变化
+watch(biologySearch, () => filterBiologyData())
 </script>

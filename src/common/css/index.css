@@ -316,6 +316,9 @@ a:focus {
     outline: none;
     transition: all 0.3s ease;
     box-shadow: 0 2px 8px rgba(72, 149, 239, 0.3);
+    width: auto;
+    min-width: 120px;
+    max-width: 200px;
 }
 
 .load-more-button:hover {
@@ -328,6 +331,19 @@ a:focus {
     outline: 2px solid rgba(72, 149, 239, 0.5);
     outline-offset: 1px;
     color: #1866B6;
+}
+
+.load-more-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 0 2px 8px rgba(72, 149, 239, 0.3);
+}
+
+.load-more-button:disabled:hover {
+    background: linear-gradient(145deg, #4895ef 0%, #3a6ea5 100%);
+    transform: none;
+    box-shadow: 0 2px 8px rgba(72, 149, 239, 0.3);
 }
 
 .load-more-container {
