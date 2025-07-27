@@ -153,13 +153,13 @@
                     ></div>
                   </div>
                   <div class="load-more-container">
-                    <button
+                    <n-button
                         class="load-more-button"
                         @click="loadMoreBiology()"
                         :disabled="pager.biology.pageNum * pager.biology.pageSize >= pager.biology.total"
                     >
                       加载更多
-                    </button>
+                    </n-button>
                   </div>
                   <n-modal v-model:show="showMobModal" preset="card" :style="{width: '80%', maxWidth: '800px'}"
                            size="huge" :bordered="false">
@@ -175,9 +175,9 @@
                       </div>
                       <div class="mob-detail-description" v-html="currentMob.description"></div>
                       <div class="mob-detail-link" v-if="currentMob.link">
-                        <button class="pixel-button" @click="openLink(currentMob.link)">
+                        <n-button class="pixel-button" @click="openLink(currentMob.link)">
                           了解更多信息
-                        </button>
+                        </n-button>
                       </div>
                     </div>
                   </n-modal>
@@ -206,12 +206,12 @@
                     ></div>
                   </div>
                   <div class="load-more-container">
-                    <button
+                    <n-button
                         @click="loadMore(type)" class="load-more-button"
                         :disabled="pager[type].pageNum * pager[type].pageSize >= pager[type].total"
                     >
                       加载更多
-                    </button>
+                    </n-button>
                   </div>
                 </template>
               </template>
