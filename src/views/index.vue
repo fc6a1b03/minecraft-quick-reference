@@ -285,8 +285,8 @@ const isCorsError = ref({
   biology: false
 })
 // Biology相关状态
-const biologyDataRef = ref<BiologyDataItem[]>(biology)
 const showMobModal = ref(false)
+const biologyDataRef = ref<BiologyDataItem[]>(biology)
 const currentMob = ref<BiologyDataItem>({
   name: '',
   category: '',
@@ -323,12 +323,8 @@ const showMobDetail = (mob: BiologyDataItem) => {
   currentMob.value = mob
   showMobModal.value = true
 }
-
 // 打开链接
-const openLink = (url: string) => {
-  window.open(url, '_blank')
-}
-
+const openLink = (url: string) => window.open(url, '_blank')
 // 获取原版信息
 const fetchNativeVersions = async () => {
   const response = await fetch('https://launchermeta.mojang.com/mc/game/version_manifest.json')
@@ -620,6 +616,14 @@ const getPaginatedData = (type: string) => {
 // 处理标签页切换
 const handleTabChange = (activeTab: string) => {
   const type = activeTab as 'native' | 'fabric' | 'forge' | 'neoForge' | 'purpur' | 'biology'
+  // biology 类型特殊处理，不需要从 versionData 加载
+  if (type === 'biology') {
+    if (!biologyDataRef.value.length && !loading.value[type]) {
+      fetchData(type)
+    }
+    return
+  }
+
   if ((!versionData.value[type] || !versionData.value[type].length) && !loading.value[type]) {
     fetchData(type)
   }
@@ -687,16 +691,18 @@ watch(cardGridRef, (val) => {
 }, {flush: 'post'})
 // 计算每页需要补齐的空卡片数，避免 RangeError
 const emptyCardCount = (type: string) => {
+  // 确保 cardsPerRow 有默认值
+  const cardsPerRowValue = cardsPerRow.value || 4
   if (type === 'biology') {
     const len = biologyDataRef.value.length
-    if (!cardsPerRow.value || len === 0) return 0
-    const mod = len % cardsPerRow.value
-    return mod === 0 ? 0 : cardsPerRow.value - mod
+    if (!cardsPerRowValue || len === 0) return 0
+    const mod = len % cardsPerRowValue
+    return mod === 0 ? 0 : cardsPerRowValue - mod
   } else {
     const len = getPaginatedData(type).length
-    if (!cardsPerRow.value || len === 0) return 0
-    const mod = len % cardsPerRow.value
-    return mod === 0 ? 0 : cardsPerRow.value - mod
+    if (!cardsPerRowValue || len === 0) return 0
+    const mod = len % cardsPerRowValue
+    return mod === 0 ? 0 : cardsPerRowValue - mod
   }
 }
 </script>
