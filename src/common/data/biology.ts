@@ -11,7 +11,7 @@ export interface BiologyDataItem {
 export const biology: BiologyDataItem[] = [
     {
         name: "悦灵",
-        category: "被动生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/Allay_JE2.gif",
         shortDescription: "会帮助玩家收集物品的灵体生物，可通过音符盒引导",
         description: `<p>悦灵(Allay)是一种蓝色灵体生物，具有飞行能力，会被玩家手持的物品吸引并帮助收集相同物品。它们不会被敌对生物攻击，也不会自然消失。</p>
@@ -35,7 +35,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "蝙蝠",
-        category: "被动生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/thumb/Bat_JE4_BE3.gif/150px-Bat_JE4_BE3.gif",
         shortDescription: "会飞的小型生物，通常出现在洞穴中，无实际用途",
         description: `<p>蝙蝠(Bat)是游戏中最小的被动生物，具有飞行能力，通常成群出现在黑暗区域。它们不会与玩家互动，也不会掉落任何有价值的物品。</p>
@@ -60,7 +60,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "骆驼",
-        category: "被动生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/thumb/Saddled_Camel_Dash_BE1.gif/120px-Saddled_Camel_Dash_BE1.gif",
         shortDescription: "沙漠中的双峰坐骑，可搭载两名玩家，能快速跳跃",
         description: `<p>骆驼(Camel)是1.20版本加入的沙漠生物，具有独特的双峰特征，是游戏中唯一可以同时搭载两名玩家的坐骑。它们行动缓慢但能进行长距离跳跃。</p>
@@ -89,7 +89,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "鸡",
-        category: "被动生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/thumb/Chicken_Flapping.gif/113px-Chicken_Flapping.gif",
         shortDescription: "常见的农场动物，会下蛋，可提供鸡肉和羽毛",
         description: `<p>鸡(Chicken)是游戏中最常见的被动生物之一，广泛分布于各种生物群系，是早期生存中重要的食物和资源来源。</p>
@@ -119,7 +119,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "鳕鱼",
-        category: "被动生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/thumb/Cod.gif/150px-Cod.gif",
         shortDescription: "常见的水生生物，可提供食物来源",
         description: `<p>鳕鱼(Cod)是一种常见的被动水生生物，是海洋中最普遍的鱼类之一，可作为玩家的食物来源。</p>
@@ -148,7 +148,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "牛",
-        category: "被动生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/Cow_JE2.png",
         shortDescription: "常见的农场动物，可提供牛肉、皮革和牛奶",
         description: `<p>牛(Cow)是游戏中最常见的农场动物之一，是生存模式初期重要的食物和资源来源，广泛分布于各种生物群系。</p>
@@ -177,7 +177,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "驴",
-        category: "被动生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/Donkey_JE2.png",
         shortDescription: "可被驯服为坐骑的生物，能携带物品",
         description: `<p>驴(Donkey)是一种可被驯服的被动生物，类似于马，但不能装备马铠，取而代之的是可以装备箱子来携带物品。</p>
@@ -207,7 +207,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "发光鱿鱼",
-        category: "被动生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/thumb/Glow_Squid_JE1_BE2.gif/200px-Glow_Squid_JE1_BE2.gif",
         shortDescription: "会发光的鱿鱼变种，生成于黑暗的水下区域",
         description: `<p>发光鱿鱼(Glow Squid)是鱿鱼的变种，具有生物发光特性，身体会发出蓝绿色的光芒，是1.17版本加入的生物。</p>
@@ -236,7 +236,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "马",
-        category: "被动生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/thumb/White_Horse_JE5_BE3.png/540px-White_Horse_JE5_BE3.png",
         shortDescription: "可被驯服为快速坐骑的生物，有多种颜色和变种",
         description: `<p>马(Horse)是一种可被驯服的被动生物，是游戏中速度最快的陆地坐骑之一，有多种颜色、花纹和统计数据。</p>
@@ -267,7 +267,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "哞菇",
-        category: "被动生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/thumb/Mooshroom_JE5_BE3.png/150px-Mooshroom_JE5_BE3.png",
         shortDescription: "蘑菇岛上的特殊牛变种，可提供蘑菇 stew（蘑菇煲）",
         description: `<p>哞菇(Mooshroom)是牛的变种，仅存在于蘑菇岛生物群系，身体覆盖着红色蘑菇，是一种特殊的被动生物。</p>
@@ -297,7 +297,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "骡",
-        category: "被动生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/thumb/Saddled_Chested_Mule.png/200px-Saddled_Chested_Mule.png?2c899",
         shortDescription: "马和驴的杂交后代，不能繁殖但能携带更多物品",
         description: `<p>骡(Mule)是马和驴杂交产生的被动生物，结合了两者的特点，不能繁殖但具有良好的负重能力。</p>
@@ -326,7 +326,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "鹦鹉",
-        category: "被动生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/Dancing_Red_Parrot.gif",
         shortDescription: "可被驯服的彩色鸟类，能模仿生物声音",
         description: `<p>鹦鹉(Parrot)是一种色彩鲜艳的被动生物，可被玩家驯服为宠物，能模仿游戏中多种生物的声音。</p>
@@ -357,7 +357,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "猪",
-        category: "被动生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/thumb/Pig_JE3_BE2.png/647px-Pig_JE3_BE2.png",
         shortDescription: "常见的农场动物，可作为坐骑，提供猪肉",
         description: `<p>猪(Pig)是游戏中常见的被动生物，是早期生存的重要食物来源，也可被驯服为临时坐骑。</p>
@@ -387,7 +387,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "兔子",
-        category: "被动生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/Rabbit_running.gif",
         shortDescription: "小型草食动物，有多种毛色变种，提供兔肉",
         description: `<p>兔子(Rabbit)是一种小型被动生物，有多种毛色变种，分布在不同的生物群系中，是游戏中的食物来源之一。</p>
@@ -417,7 +417,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "鲑鱼",
-        category: "被动生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/thumb/Salmon_JE1.gif/150px-Salmon_JE1.gif",
         shortDescription: "常见的水生生物，有成年和幼年两种形态",
         description: `<p>鲑鱼(Salmon)是一种常见的被动水生生物，有成年和幼年两种形态，是重要的食物来源之一。</p>
@@ -448,7 +448,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "绵羊",
-        category: "被动生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/Jeb_Sheep_JE4_BE3.gif",
         shortDescription: "提供羊毛和羊肉的农场动物，羊毛可染色",
         description: `<p>绵羊(Sheep)是一种常见的被动生物，是游戏中羊毛的主要来源，也可提供羊肉作为食物。</p>
@@ -478,7 +478,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "骷髅马",
-        category: "被动生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/thumb/Skeleton_Horse_JE5_BE3.png/200px-Skeleton_Horse_JE5_BE3.png",
         shortDescription: "骷髅化的马，可被驯服，生成时可能伴随骷髅骑手",
         description: `<p>骷髅马(Skeleton Horse)是马的骷髅变种，是一种罕见的被动生物，有时会以骷髅陷阱的形式生成。</p>
@@ -508,7 +508,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "嗅探兽",
-        category: "被动生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/thumb/Sniffer_sniffsniff_JE1_BE1.gif/120px-Sniffer_sniffsniff_JE1_BE1.gif",
         shortDescription: "能嗅探并挖掘古代种子的大型生物",
         description: `<p>嗅探兽(Sniffer)是一种大型被动生物，具有挖掘古代种子的能力，是通过2022年生物投票加入的生物。</p>
@@ -537,7 +537,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "鱿鱼",
-        category: "被动生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/thumb/Squid.gif/200px-Squid.gif",
         shortDescription: "常见的水生生物，提供墨囊",
         description: `<p>鱿鱼(Squid)是一种常见的被动水生生物，生活在各种水域中，是墨囊的主要来源。</p>
@@ -598,7 +598,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "蝌蚪",
-        category: "被动生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/thumb/Tadpole_swimming.gif/150px-Tadpole_swimming.gif",
         shortDescription: "青蛙的幼年形态，生活在水中",
         description: `<p>蝌蚪(Tadpole)是青蛙的幼年形态，是一种小型被动水生生物，会逐渐成长为青蛙。</p>
@@ -628,7 +628,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "热带鱼",
-        category: "被动生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/Tropical_Fish_Preview_White.png",
         shortDescription: "色彩斑斓的小型鱼类，有多种外观变种",
         description: `<p>热带鱼(Tropical Fish)是一种色彩斑斓的被动水生生物，有多种外观和颜色组合，是游戏中最多样化的生物之一。</p>
@@ -659,7 +659,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "海龟",
-        category: "被动生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/thumb/Turtle_JE1_BE1.png/240px-Turtle_JE1_BE1.png",
         shortDescription: "水生爬行动物，会在沙滩上产卵",
         description: `<p>海龟(Turtle)是一种被动水生生物，生活在海洋中，但会返回沙滩产卵，幼年形态为小海龟。</p>
@@ -751,7 +751,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "山羊",
-        category: "友好生物",
+        category: "中立生物",
         image: "https://zh.minecraft.wiki/images/thumb/Goat.png/564px-Goat.png",
         shortDescription: "山地生物，会用头撞击玩家和物体",
         description: `<p>山羊(Goat)是一种生活在山地的中立生物，具有很强的跳跃能力，会主动撞击玩家和其他生物。</p>
@@ -782,7 +782,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "河豚",
-        category: "被动生物",
+        category: "中立生物",
         image: "https://zh.minecraft.wiki/images/Pufferfish_large.gif",
         shortDescription: "有毒的鱼类，受到威胁时会膨胀",
         description: `<p>河豚(Pufferfish)是一种有毒的被动水生生物，有独特的防御机制，受到威胁时会膨胀并露出尖刺。</p>
@@ -844,7 +844,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "猫",
-        category: "被动生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/thumb/Lying_down_Jellie_Cat_with_Red_Collar.png/800px-Lying_down_Jellie_Cat_with_Red_Collar.png",
         shortDescription: "可被驯服的家养动物，能驱赶苦力怕",
         description: `<p>猫(Cat)是一种可被驯服的被动生物，由豹猫驯服而来，有多种毛色变种，能为玩家提供多种益处。</p>
@@ -875,7 +875,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "青蛙",
-        category: "被动生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/thumb/Cold_Frog_Walking.gif/120px-Cold_Frog_Walking.gif",
         shortDescription: "会跳跃的两栖生物，能捕食小型生物",
         description: `<p>青蛙(Frog)是一种两栖被动生物，有三种不同的变种，会捕食小型生物并将其转化为蛙灯。</p>
@@ -907,7 +907,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "豹猫",
-        category: "被动生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/thumb/Ocelot_JE1_BE1.png/800px-Ocelot_JE1_BE1.png",
         shortDescription: "丛林中的野生猫科动物，可被驯服为猫",
         description: `<p>豹猫(Ocelot)是一种生活在丛林中的被动生物，外形类似现实中的豹猫，可被驯服为不同品种的猫。</p>
@@ -938,7 +938,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "雪傀儡",
-        category: "效用生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/thumb/Snow_Golem_JE1_BE1.png/279px-Snow_Golem_JE1_BE1.png",
         shortDescription: "由玩家创造的效用生物，会攻击敌对生物并留下雪迹",
         description: `<p>雪傀儡(Snow Golem)是一种由玩家创造的效用生物，外形类似雪人，会攻击敌对生物并在行走时留下雪迹。</p>
@@ -1156,7 +1156,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "熊猫",
-        category: "被动生物",
+        category: "中立生物",
         image: "https://zh.minecraft.wiki/images/thumb/Panda_JE1_BE1.png/643px-Panda_JE1_BE1.png",
         shortDescription: "稀有的熊科生物，有多种行为状态，生活在竹林",
         description: `<p>熊猫(Panda)是一种稀有的被动生物，外形可爱，生活在竹林中，有多种不同的行为状态和外观变种。</p>
@@ -1217,7 +1217,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "狼",
-        category: "中立生物",
+        category: "效用生物",
         image: "https://zh.minecraft.wiki/images/thumb/Wolf_JE1_BE1.png/620px-Wolf_JE1_BE1.png",
         shortDescription: "可被驯服为宠物狗的野生犬科生物",
         description: `<p>狼(Wolf)是一种中立生物，外形类似现实中的狼，可被玩家驯服为宠物狗，帮助玩家攻击敌对生物。</p>
@@ -2094,7 +2094,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "末影龙",
-        category: "Boss生物",
+        category: "Boss",
         image: "https://zh.minecraft.wiki/images/Ender_Dragon.gif",
         shortDescription: "游戏的最终Boss，栖息在末路之地。",
         description: `<p>末影龙(Ender Dragon)是《我的世界》中的第一个Boss生物，是游戏的最终挑战之一。它是一条巨大的黑色龙，具有紫色的眼睛和翅膀，栖息在末路之地。</p>
@@ -2108,7 +2108,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "凋灵",
-        category: "Boss生物",
+        category: "Boss",
         image: "https://zh.minecraft.wiki/images/thumb/Wither_JE2_BE2.png/600px-Wither_JE2_BE2.png",
         shortDescription: "由玩家召唤的Boss生物，会飞行并造成凋零效果。",
         description: `<p>凋灵(Wither)是《我的世界》中的第二个Boss生物，由玩家主动召唤而来。它是一个黑色的三头骨架生物，具有毁灭性的力量和飞行能力。</p>
