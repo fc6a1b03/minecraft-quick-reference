@@ -5,11 +5,11 @@
 Minecraft Quick Reference 是一个基于 Vue 3 和 Naive UI 构建的工具，旨在为 Minecraft 玩家提供快速、便捷的版本参考和下载服务。支持查询和下载 Minecraft 原版、Fabric 、 Forge 和 Purpur 的服务器版本信息，帮助玩家轻松管理和部署不同版本的 Minecraft 服务器。
 
 ## 环境信息
-- node 22.16.0
-- bun 1.2.19
-- vue 3.5.18
-- vite 6.3.5
-- naive-ui 2.42.0
+- node 24.13.1
+- bun 1.3.9
+- vue 3.5.28
+- vite 6.4.1
+- naive-ui 2.43.2
 
 ## 编码要求
 - 新特性 高性能 Lambda
