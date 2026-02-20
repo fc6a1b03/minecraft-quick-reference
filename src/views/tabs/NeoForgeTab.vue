@@ -1,0 +1,125 @@
+<template>
+  <VersionCardGrid
+    :data="paginatedData"
+    :has-more="hasMore"
+    :cards-per-row="cardsPerRow"
+    :download-progress="downloadProgress"
+    @load-more="loadMore"
+    @download="handleDownload"
+    @grid-update="updatePageSize($event, true)"
+    @grid-resize="updatePageSize($event, false)"
+  />
+</template>
+
+<script lang="ts" setup>
+import {ref, computed, onMounted, reactive} from 'vue'
+import VersionCardGrid from '@/components/VersionCardGrid.vue'
+import {usePagination} from '@/composables/usePagination'
+import {useDownload} from '@/composables/useDownload'
+import type {VersionItem, ServerType} from '@/types'
+import type {DownloadProgress} from '@/composables/useDownload'
+
+/**
+ * 组件事件
+ */
+interface Emits {
+  /** 更新加载状态 */
+  (e: 'update:loading', value: boolean): void
+  /** 错误 */
+  (e: 'error', message: string, isCors: boolean): void
+}
+
+const emit = defineEmits<Emits>()
+
+const type: ServerType = 'neoForge'
+const versions = ref<VersionItem[]>([])
+const cardsPerRow = ref(4)
+const downloadProgress = reactive<Record<string, DownloadProgress>>({})
+
+const loadingState = {[type]: false}
+const {handleDownload: downloadFile} = useDownload(loadingState as Record<ServerType, boolean>)
+
+const {
+  pager,
+  getPaginatedData,
+  loadMore,
+  setTotal,
+  updatePageSize: updateSize,
+  hasMore
+} = usePagination(type)
+
+const paginatedData = computed(() => getPaginatedData(versions.value))
+
+/**
+ * 获取 NeoForge 版本数据
+ */
+const fetchNeoForgeVersions = async (): Promise<void> => {
+  emit('update:loading', true)
+  try {
+    const response = await fetch('https://maven.neoforged.net/releases/net/neoforged/neoforge/maven-metadata.xml')
+    if (!response.ok) {
+      throw new Error(`无法加载 NeoForge 数据：${response.statusText}`)
+    }
+    const data = await response.text()
+    const xmlDoc = new DOMParser().parseFromString(data, "text/xml")
+    const versionsList = Array.from(xmlDoc.getElementsByTagName('version'))
+      .map(el => el.textContent).filter((v): v is string => !!v)
+    if (!versionsList.length) {
+      throw new Error('NeoForge 数据格式错误，无法解析')
+    }
+    const list = versionsList
+      .map((version: string) => ({
+        name: `NeoForge-server-mc.${version}-installer.jar`,
+        version: version,
+        date: '无',
+        type: 'neoForge',
+        url: `https://maven.neoforged.net/releases/net/neoforged/neoforge/${version}/neoforge-${version}-installer.jar`
+      }))
+      .sort((a: any, b: any) => b.version.localeCompare(a.version, undefined, {numeric: true, sensitivity: 'base'}))
+    versions.value = list
+    setTotal(list.length)
+  } catch (error: any) {
+    emit('error', error.message || '未知错误', error.message?.includes('CORS') || error instanceof TypeError)
+  } finally {
+    emit('update:loading', false)
+  }
+}
+
+/**
+ * 处理下载
+ * @param item 版本项
+ * @param onProgress 进度回调
+ */
+const handleDownload = (item: VersionItem, onProgress: (progress: DownloadProgress) => void): void => {
+  downloadProgress[item.name] = {
+    loading: true,
+    percent: 0,
+    loaded: 0,
+    total: 0
+  }
+
+  const progressCallback = (progress: DownloadProgress) => {
+    downloadProgress[item.name] = progress
+    onProgress(progress)
+  }
+
+  downloadFile(type, item.name, item.url, false, progressCallback)
+}
+
+/**
+ * 更新分页大小
+ * @param el 网格元素
+ * @param isInit 是否为初始加载
+ */
+const updatePageSize = (el: HTMLElement, isInit: boolean = false): void => {
+  updateSize(el, isInit)
+  const colCount = window.getComputedStyle(el).gridTemplateColumns.split(' ').length
+  if (colCount > 0) {
+    cardsPerRow.value = colCount
+  }
+}
+
+onMounted(() => {
+  fetchNeoForgeVersions()
+})
+</script>

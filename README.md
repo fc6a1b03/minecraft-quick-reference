@@ -1,6 +1,6 @@
 # Minecraft Quick Reference
 
-> 基于 Vue 3 + Naive UI 的 Minecraft 多版本服务器快速查询与下载工具
+> 基于 Vue 3 + Naive UI 的 Minecraft 多版本服务器快速查询与下载工具，支持原版、Fabric、Forge、NeoForge、Purpur、Folia 及生物图鉴
 
 ---
 
@@ -16,10 +16,10 @@
 
 ## 简介
 
-Minecraft Quick Reference 是一个基于 Vue 3 和 Naive UI 构建的工具，旨在为 Minecraft 玩家提供快速、便捷的版本参考和下载服务。支持查询和下载 Minecraft 原版、Fabric 、 Forge 和 Purpur 的服务器版本信息，帮助玩家轻松管理和部署不同版本的 Minecraft 服务器。
+Minecraft Quick Reference 是一个基于 Vue 3 和 Naive UI 构建的工具，旨在为 Minecraft 玩家提供快速、便捷的版本参考和下载服务。支持查询和下载 Minecraft 原版、Fabric、Forge、NeoForge、Purpur、Folia 的服务器版本信息，以及生物图鉴查询，帮助玩家轻松管理和部署不同版本的 Minecraft 服务器。
 
 ## 特性亮点
-- 🚀 多版本支持：原版、Fabric、Forge、Purpur 一站式查询与下载
+- 🚀 多版本支持：原版、Fabric、Forge、NeoForge、Purpur、Folia 一站式查询与下载
 - 📦 自动数据加载与分页，支持“加载更多”
 - 🔗 官方数据源，安全可靠
 - 🖥️ 现代化 UI，响应式设计，适配多端
@@ -68,9 +68,13 @@ bun run build
 ```
 ├── public/           # 静态资源
 ├── src/              # 源码目录
-│   ├── common/       # 公共资源
+│   ├── common/       # 公共资源（样式、数据）
+│   ├── components/   # 公共组件
+│   ├── composables/  # 可复用逻辑
+│   ├── types/        # 类型定义
 │   ├── router/       # 路由配置
 │   ├── views/        # 页面视图
+│   │   └── tabs/     # 页签组件
 │   ├── App.vue       # 根组件
 │   └── main.ts       # 入口文件
 ├── index.html        # HTML 模板

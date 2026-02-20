@@ -2,7 +2,7 @@
 **规则文件只对当前工程生效，单文件限制10000字符。如果无需将该文件提交到远程 Git 仓库，请将其添加到 .gitignore**
 
 ## 简介
-Minecraft Quick Reference 是一个基于 Vue 3 和 Naive UI 构建的工具，旨在为 Minecraft 玩家提供快速、便捷的版本参考和下载服务。支持查询和下载 Minecraft 原版、Fabric 、 Forge 和 Purpur 的服务器版本信息，帮助玩家轻松管理和部署不同版本的 Minecraft 服务器。
+Minecraft Quick Reference 是一个基于 Vue 3 和 Naive UI 构建的工具，旨在为 Minecraft 玩家提供快速、便捷的版本参考和下载服务。支持查询和下载 Minecraft 原版、Fabric、Forge、NeoForge、Purpur、Folia 的服务器版本信息，以及生物图鉴查询，帮助玩家轻松管理和部署不同版本的 Minecraft 服务器。
 
 ## 环境信息
 - node 24.13.1
@@ -12,7 +12,7 @@ Minecraft Quick Reference 是一个基于 Vue 3 和 Naive UI 构建的工具，�
 - naive-ui 2.43.2
 
 ## 编码要求
-- 新特性 高性能 Lambda
+- 新特性 高性能 低损耗 Lambda
 - 任何 编码字符串 都需要统一使用单引号
 - 变量必须定义并强类型，强遵守 TypeScript 规范要求
 - 任何 语法 使用需验证是否为当前时间下 最现代、性能更好 的选择，无需考虑任何旧版本兼容性问题
@@ -27,9 +27,13 @@ Minecraft Quick Reference 是一个基于 Vue 3 和 Naive UI 构建的工具，�
 ```
 ├── public/           # 静态资源
 ├── src/              # 源码目录
-│   ├── common/       # 公共资源
+│   ├── common/       # 公共资源（样式、数据）
+│   ├── components/   # 公共组件
+│   ├── composables/  # 可复用逻辑
+│   ├── types/        # 类型定义
 │   ├── router/       # 路由配置
 │   ├── views/        # 页面视图
+│   │   └── tabs/     # 页签组件
 │   ├── App.vue       # 根组件
 │   └── main.ts       # 入口文件
 ├── index.html        # HTML 模板

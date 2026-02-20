@@ -285,7 +285,8 @@ body {
 
 /* 卡片按钮 - 下载按钮样式 */
 .modern-card-btn {
-    margin-top: 12px;
+    margin-top: auto;
+    margin-bottom: 4px;
     align-self: flex-end;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 12px;
@@ -381,6 +382,11 @@ body {
     margin-bottom: 20px;
     text-align: center;
     clear: both;
+}
+
+/* 下载进度条与按钮间距 */
+.download-progress {
+    margin-bottom: 12px;
 }
 
 /* 像素卡片 */
