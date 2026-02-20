@@ -455,7 +455,8 @@ body {
 }
 
 /* Purpur 选择器 */
-.purpur-select-row {
+.purpur-select-row,
+.folia-select-row {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -464,13 +465,15 @@ body {
     padding: 15px 0;
 }
 
-.purpur-select-row > span {
+.purpur-select-row > span,
+.folia-select-row > span {
     font-size: 15px;
     color: #e6e6e6;
     min-width: fit-content;
 }
 
-.purpur-select {
+.purpur-select,
+.folia-select {
     min-width: 180px !important;
 }
 
@@ -581,17 +584,20 @@ body {
         padding: 3px 6px;
     }
 
-    .purpur-select-row {
+    .purpur-select-row,
+    .folia-select-row {
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
     }
 
-    .purpur-select-row > span {
+    .purpur-select-row > span,
+    .folia-select-row > span {
         margin-bottom: 4px;
     }
 
-    .purpur-select {
+    .purpur-select,
+    .folia-select {
         width: 100%;
         min-width: auto !important;
     }
@@ -628,15 +634,18 @@ body {
         padding: 2px 4px;
     }
 
-    .purpur-select-row {
+    .purpur-select-row,
+    .folia-select-row {
         gap: 12px;
     }
 
-    .purpur-select-row > span {
+    .purpur-select-row > span,
+    .folia-select-row > span {
         font-size: 14px;
     }
 
-    .purpur-select {
+    .purpur-select,
+    .folia-select {
         width: 100%;
     }
 }

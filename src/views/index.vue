@@ -55,7 +55,79 @@
                 </n-alert>
               </template>
               <template v-else>
-                <template v-if="type === 'purpur'">
+                <template v-if="type === 'folia'">
+                  <div style="width: 100%; max-width: 700px; margin: 0 auto; padding: 0 20px; box-sizing: border-box">
+                    <n-space vertical size="large">
+                      <n-space class="folia-select-row" align="center">
+                        <span>选择 Minecraft 版本：</span>
+                        <n-select
+                            class="folia-select"
+                            :loading="loading.folia"
+                            v-model:value="foliaSelectedMcVersion"
+                            @update:value="handleFoliaMcVersionChange"
+                            style="min-width: 180px; width: 100%; max-width: 280px"
+                            :options="foliaMinecraftVersions.map(v => ({ label: v, value: v }))"
+                        />
+                        <span>选择 Folia 构建：</span>
+                        <n-select
+                            class="folia-select"
+                            :loading="loading.folia"
+                            v-model:value="foliaSelectedBuild"
+                            @update:value="handleFoliaBuildChange"
+                            :options="foliaBuilds.slice().reverse().map(b => ({ label: String(b), value: b }))"
+                            style="min-width: 150px; white-space: nowrap; width: 100%; max-width: 220px"
+                        />
+                      </n-space>
+                      <div class="pixel-card">
+                        <div class="pixel-card-header">
+                          <span>构建详情</span>
+                        </div>
+                        <div class="pixel-card-content">
+                          <div><strong>项目:</strong> Folia</div>
+                          <div><strong>MC版本:</strong> {{ foliaSelectedMcVersion || 'N/A' }}</div>
+                          <div><strong>构建号:</strong> {{ foliaBuildDetail?.id || 'N/A' }}</div>
+                          <div><strong>通道:</strong> {{ foliaBuildDetail?.channel || 'N/A' }}</div>
+                          <div>
+                            <strong>构建时间:</strong> {{
+                              foliaBuildDetail?.time ? new Date(foliaBuildDetail.time).toLocaleString() : 'N/A'
+                            }}
+                          </div>
+                          <div><strong>提交数:</strong> {{ foliaBuildDetail?.commits?.length || 0 }}</div>
+                          <div v-if="foliaBuildDetail?.version?.java">
+                            <n-collapse :default-expanded-names="[]" arrow-placement="right">
+                              <n-collapse-item title="Java 要求" name="java">
+                                <div><strong>最低版本:</strong> Java {{ foliaBuildDetail.version.java.version.minimum }}</div>
+                                <div v-if="foliaBuildDetail.version.java.flags?.recommended?.length">
+                                  <strong>推荐 JVM 参数:</strong>
+                                  <pre style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 4px; overflow-x: auto; font-size: 12px; margin-top: 8px">{{ foliaBuildDetail.version.java.flags.recommended.join(' ') }}</pre>
+                                </div>
+                              </n-collapse-item>
+                            </n-collapse>
+                          </div>
+                          <div v-if="foliaBuildDetail?.commits && foliaBuildDetail.commits.length">
+                            <n-collapse :default-expanded-names="['commits']" arrow-placement="right">
+                              <n-collapse-item title="提交记录" name="commits">
+                                <ul style="padding-left: 1em">
+                                  <li v-for="c in foliaBuildDetail.commits" :key="c.sha">
+                                    <div style="font-size:13px; white-space:pre-line; margin:5px 0">{{ c.message }}</div>
+                                    <div style="font-size:12px; color:#aaa">{{ c.sha.substring(0, 8) }} | {{ c.time ? new Date(c.time).toLocaleString() : '' }}</div>
+                                  </li>
+                                </ul>
+                              </n-collapse-item>
+                            </n-collapse>
+                          </div>
+                        </div>
+                        <div class="pixel-card-footer">
+                          <button class="modern-card-btn" @click="handleFoliaDownload"
+                                  :disabled="!foliaSelectedMcVersion || !foliaSelectedBuild">
+                            下载
+                          </button>
+                        </div>
+                      </div>
+                    </n-space>
+                  </div>
+                </template>
+                <template v-else-if="type === 'purpur'">
                   <div style="width: 100%; max-width: 700px; margin: 0 auto; padding: 0 20px; box-sizing: border-box">
                     <n-space vertical size="large">
                       <n-space class="purpur-select-row" align="center">
@@ -112,7 +184,7 @@
                           </div>
                         </div>
                         <div class="pixel-card-footer">
-                          <button class="pixel-button" @click="handlePurpurDownload"
+                          <button class="modern-card-btn" @click="handlePurpurDownload"
                                   :disabled="!purpurSelectedMcVersion || !purpurSelectedBuild">
                             下载
                           </button>
@@ -231,6 +303,8 @@ import {
   darkTheme,
   NAlert,
   NButton,
+  NCollapse,
+  NCollapseItem,
   NConfigProvider,
   NLayout,
   NModal,
@@ -241,7 +315,7 @@ import {
 // 错误信息
 const errorMessage = ref<string>('')
 // 类型数组
-const types = ['native', 'fabric', 'forge', 'neoForge', 'purpur', 'biology']
+const types = ['native', 'fabric', 'forge', 'neoForge', 'purpur', 'folia', 'biology']
 // 主题配置
 const theme = {
   // 主题覆盖
@@ -264,7 +338,8 @@ const versionData = ref({
   fabric: [],
   forge: [],
   neoForge: [],
-  purpur: []
+  purpur: [],
+  folia: []
 })
 // 分页信息
 const pager = ref({
@@ -273,6 +348,7 @@ const pager = ref({
   forge: {pageNum: 1, pageSize: 15, total: 0},
   neoForge: {pageNum: 1, pageSize: 15, total: 0},
   purpur: {pageNum: 1, pageSize: 15, total: 0},
+  folia: {pageNum: 1, pageSize: 15, total: 0},
   biology: {pageNum: 1, pageSize: 15, total: 0}
 })
 // 加载状态
@@ -282,6 +358,7 @@ const loading = ref({
   forge: false,
   neoForge: false,
   purpur: false,
+  folia: false,
   biology: false
 })
 // 错误状态
@@ -291,6 +368,7 @@ const hasError = ref({
   forge: false,
   neoForge: false,
   purpur: false,
+  folia: false,
   biology: false
 })
 // `Cors`错误状态
@@ -300,6 +378,7 @@ const isCorsError = ref({
   forge: false,
   neoForge: false,
   purpur: false,
+  folia: false,
   biology: false
 })
 // Biology相关状态
@@ -323,6 +402,12 @@ const purpurBuildDetail = ref<any>(null)
 const purpurSelectedBuild = ref<string>('')
 const purpurSelectedMcVersion = ref<string>('')
 const purpurMinecraftVersions = ref<string[]>([])
+// Folia 相关状态
+const foliaBuilds = ref<number[]>([])
+const foliaBuildDetail = ref<any>(null)
+const foliaSelectedBuild = ref<number | null>(null)
+const foliaSelectedMcVersion = ref<string>('')
+const foliaMinecraftVersions = ref<string[]>([])
 // 获取生物信息
 const fetchBiologyData = async () => {
   loading.value.biology = true
@@ -541,17 +626,28 @@ const fetchPurpurBuildDetail = async () => {
   }
 }
 // Purpur 下载
-const handlePurpurDownload = () => {
+const handlePurpurDownload = async () => {
   if (!purpurSelectedMcVersion.value || !purpurSelectedBuild.value) return
   const url = `https://api.purpurmc.org/v2/purpur/${purpurSelectedMcVersion.value}/${purpurSelectedBuild.value}/download`
   const filename = `purpur-${purpurSelectedMcVersion.value}-${purpurSelectedBuild.value}.jar`
-  const a = document.createElement('a')
-  a.href = url
-  a.download = filename
-  a.target = '_blank'
-  document.body.appendChild(a)
-  a.click()
-  document.body.removeChild(a)
+  loading.value.purpur = true
+  try {
+    await blob(filename, url)
+    notification.success({
+      duration: 4000,
+      content: '下载成功',
+      keepAliveOnHover: true
+    })
+  } catch (error: any) {
+    notification.error({
+      duration: 4000,
+      content: '下载出错',
+      meta: error.message,
+      keepAliveOnHover: true
+    })
+  } finally {
+    loading.value.purpur = false
+  }
 }
 // Purpur 选择变化
 const handlePurpurMcVersionChange = async (val: string) => {
@@ -561,6 +657,111 @@ const handlePurpurMcVersionChange = async (val: string) => {
 const handlePurpurBuildChange = async (val: string) => {
   purpurSelectedBuild.value = val
   await fetchPurpurBuildDetail()
+}
+// 获取 Folia 支持的 Minecraft 版本
+const fetchFoliaVersions = async () => {
+  loading.value.folia = true
+  hasError.value.folia = false
+  isCorsError.value.folia = false
+  try {
+    // 第一步：获取完整 Folia 版本列表
+    const resp = await fetch('https://fill.papermc.io/v3/projects/folia')
+    if (!resp.ok) throw new Error('无法加载 Folia 版本列表')
+    const data = await resp.json()
+    // 扁平化版本列表（取所有小版本）
+    const allVersions: string[] = []
+    Object.values(data.versions || {}).forEach((arr: any) => {
+      if (Array.isArray(arr)) allVersions.push(...arr)
+    })
+    foliaMinecraftVersions.value = allVersions.sort((a, b) => b.localeCompare(a, undefined, {numeric: true, sensitivity: 'base'}))
+    // 第二步：获取最新 MC 版本
+    const mcResp = await fetch('https://launchermeta.mojang.com/mc/game/version_manifest.json')
+    if (!mcResp.ok) throw new Error('无法加载 Minecraft 版本列表')
+    const mcData = await mcResp.json()
+    const latestMcVersion = mcData.latest?.release || ''
+    // 如果 Folia 支持最新 MC 版本则使用，否则使用 Folia 最新版本
+    foliaSelectedMcVersion.value = allVersions.includes(latestMcVersion) ? latestMcVersion : (allVersions[0] || '')
+    await fetchFoliaBuilds()
+  } catch (e: any) {
+    hasError.value.folia = true
+    errorMessage.value = e.message || '未知错误'
+    isCorsError.value.folia = e.message?.includes('CORS')
+  } finally {
+    loading.value.folia = false
+  }
+}
+// 获取 Folia 构建号
+const fetchFoliaBuilds = async () => {
+  if (!foliaSelectedMcVersion.value) return
+  loading.value.folia = true
+  hasError.value.folia = false
+  isCorsError.value.folia = false
+  try {
+    const resp = await fetch(`https://fill.papermc.io/v3/projects/folia/versions/${foliaSelectedMcVersion.value}`)
+    if (!resp.ok) throw new Error('无法加载 Folia 构建号')
+    const data = await resp.json()
+    foliaBuilds.value = data.builds || []
+    foliaSelectedBuild.value = data.builds?.length ? Math.max(...data.builds) : null
+    await fetchFoliaBuildDetail()
+  } catch (e: any) {
+    hasError.value.folia = true
+    errorMessage.value = e.message || '未知错误'
+    isCorsError.value.folia = e.message?.includes('CORS')
+  } finally {
+    loading.value.folia = false
+  }
+}
+// 获取 Folia 构建详情
+const fetchFoliaBuildDetail = async () => {
+  if (!foliaSelectedMcVersion.value || !foliaSelectedBuild.value) return
+  loading.value.folia = true
+  hasError.value.folia = false
+  isCorsError.value.folia = false
+  try {
+    const resp = await fetch(`https://fill.papermc.io/v3/projects/folia/versions/${foliaSelectedMcVersion.value}/builds/${foliaSelectedBuild.value}`)
+    if (!resp.ok) throw new Error('无法加载 Folia 构建详情')
+    foliaBuildDetail.value = await resp.json()
+  } catch (e: any) {
+    hasError.value.folia = true
+    errorMessage.value = e.message || '未知错误'
+    isCorsError.value.folia = e.message?.includes('CORS')
+  } finally {
+    loading.value.folia = false
+  }
+}
+// Folia 下载
+const handleFoliaDownload = async () => {
+  if (!foliaBuildDetail.value) return
+  const downloadInfo = foliaBuildDetail.value.downloads?.['server:default']
+  if (!downloadInfo?.url) return
+  const filename = downloadInfo.name || `folia-${foliaSelectedMcVersion.value}-${foliaSelectedBuild.value}.jar`
+  loading.value.folia = true
+  try {
+    await blob(filename, downloadInfo.url)
+    notification.success({
+      duration: 4000,
+      content: '下载成功',
+      keepAliveOnHover: true
+    })
+  } catch (error: any) {
+    notification.error({
+      duration: 4000,
+      content: '下载出错',
+      meta: error.message,
+      keepAliveOnHover: true
+    })
+  } finally {
+    loading.value.folia = false
+  }
+}
+// Folia 选择变化
+const handleFoliaMcVersionChange = async (val: string) => {
+  foliaSelectedMcVersion.value = val
+  await fetchFoliaBuilds()
+}
+const handleFoliaBuildChange = async (val: number) => {
+  foliaSelectedBuild.value = val
+  await fetchFoliaBuildDetail()
 }
 // 处理下载
 const handleDownload = async (e: MouseEvent, name: string, versionUrl: string, type: string) => {
@@ -631,6 +832,7 @@ const fetchData = async (type: string) => {
       forge: fetchForgeVersions,
       neoForge: fetchNeoForgeVersions,
       purpur: fetchPurpurMinecraftVersions,
+      folia: fetchFoliaVersions,
       biology: fetchBiologyData
     }[type]()
   } catch (error) {
@@ -653,7 +855,7 @@ const getPaginatedData = (type: string) => {
 }
 // 处理标签页切换
 const handleTabChange = (activeTab: string) => {
-  const type = activeTab as 'native' | 'fabric' | 'forge' | 'neoForge' | 'purpur' | 'biology'
+  const type = activeTab as 'native' | 'fabric' | 'forge' | 'neoForge' | 'purpur' | 'folia' | 'biology'
   // biology 类型特殊处理，不需要从 versionData 加载
   if (type === 'biology') {
     if (!biologyDataRef.value.length && !loading.value[type]) {
@@ -708,6 +910,7 @@ const updateCardsPerRow = () => {
 onMounted(() => {
   fetchData('native')
   fetchPurpurMinecraftVersions()
+  fetchFoliaVersions()
   window.addEventListener('resize', updateCardsPerRow)
   nextTick(() => {
     if (cardGridRef.value && cardGridRef.value instanceof HTMLElement) {
