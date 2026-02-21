@@ -18,6 +18,7 @@ import VersionCardGrid from '@/components/VersionCardGrid.vue'
 import {usePagination} from '@/composables/usePagination'
 import type {DownloadProgress} from '@/composables/useDownload'
 import {useDownload} from '@/composables/useDownload'
+import {fetchForgeVersions} from '@/api'
 import type {ServerType, VersionItem} from '@/types'
 
 /**
@@ -54,30 +55,10 @@ const paginatedData = computed(() => getPaginatedData(versions.value))
 /**
  * 获取 Forge 版本数据
  */
-const fetchForgeVersions = async (): Promise<void> => {
+const fetchVersions = async (): Promise<void> => {
   emit('update:loading', true)
   try {
-    const response = await fetch('https://files.minecraftforge.net/net/minecraftforge/forge/promotions_slim.json')
-    if (!response.ok) {
-      throw new Error(`无法加载 Forge 数据：${response.statusText}`)
-    }
-    const promotions = await response.json()
-    if (!promotions.promos) {
-      throw new Error('Forge 数据格式错误，无法解析')
-    }
-    const list = Object.entries(promotions.promos)
-        .filter(([key]: [string, any]) => key.endsWith('-latest'))
-        .map(([key, value]) => {
-          const minecraftVersion = key.split('-')[0] || ''
-          return {
-            name: `forge-server-mc.${minecraftVersion}-${value}-installer.jar`,
-            version: minecraftVersion,
-            date: '无',
-            type: 'forge',
-            url: `https://maven.minecraftforge.net/net/minecraftforge/forge/${minecraftVersion}-${value}/forge-${minecraftVersion}-${value}-installer.jar`
-          }
-        })
-        .sort((a: any, b: any) => b.version.localeCompare(a.version, undefined, {numeric: true, sensitivity: 'base'}))
+    const list = await fetchForgeVersions()
     versions.value = list
     setTotal(list.length)
   } catch (error: any) {
@@ -119,5 +100,5 @@ const updatePageSize = (el: HTMLElement, isInit: boolean = false): void => {
   }
 }
 
-onMounted(() => fetchForgeVersions())
+onMounted(() => fetchVersions())
 </script>

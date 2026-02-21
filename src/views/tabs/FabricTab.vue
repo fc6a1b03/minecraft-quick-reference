@@ -18,6 +18,7 @@ import VersionCardGrid from '@/components/VersionCardGrid.vue'
 import {usePagination} from '@/composables/usePagination'
 import type {DownloadProgress} from '@/composables/useDownload'
 import {useDownload} from '@/composables/useDownload'
+import {fetchFabricVersions} from '@/api'
 import type {ServerType, VersionItem} from '@/types'
 
 /**
@@ -54,36 +55,10 @@ const paginatedData = computed(() => getPaginatedData(versions.value))
 /**
  * 获取 Fabric 版本数据
  */
-const fetchFabricVersions = async (): Promise<void> => {
+const fetchVersions = async (): Promise<void> => {
   emit('update:loading', true)
   try {
-    const versionsResponse = await fetch('https://meta.fabricmc.net/v2/versions/')
-    if (!versionsResponse.ok) {
-      throw new Error(`无法加载 Fabric 数据：${versionsResponse.statusText}`)
-    }
-    const versionsData = await versionsResponse.json()
-    if (!versionsData.game || !versionsData.game.length || !versionsData.loader || !versionsData.installer) {
-      throw new Error('Fabric 数据格式错误，无法解析')
-    }
-    const stableLoaderVersions = versionsData.loader.filter((lv: any) => lv.stable) || []
-    const stableInstallerVersions = versionsData.installer.filter((iv: any) => iv.stable) || []
-    const list = (versionsData.game.filter((gv: any) => gv.stable) || [])
-        .map((gameVersion: any) => {
-          const serverVersion = gameVersion.version
-          const loaderVersion = stableLoaderVersions.find((lv: any) => lv.version.startsWith(serverVersion))?.version || stableLoaderVersions[0].version
-          const installerVersion = stableInstallerVersions[0].version
-          return {
-            name: `fabric-server-mc.${serverVersion}-loader.${loaderVersion}-launcher.${installerVersion}.jar`,
-            version: serverVersion,
-            date: '无',
-            type: 'fabric',
-            url: `https://meta.fabricmc.net/v2/versions/loader/${serverVersion}/${loaderVersion}/${installerVersion}/server/jar`
-          }
-        })
-        .sort((a: any, b: any) => b.version.localeCompare(a.version, undefined, {
-          numeric: true,
-          sensitivity: 'base'
-        }))
+    const list = await fetchFabricVersions()
     versions.value = list
     setTotal(list.length)
   } catch (error: any) {
@@ -125,5 +100,5 @@ const updatePageSize = (el: HTMLElement, isInit: boolean = false): void => {
   }
 }
 
-onMounted(() => fetchFabricVersions())
+onMounted(() => fetchVersions())
 </script>

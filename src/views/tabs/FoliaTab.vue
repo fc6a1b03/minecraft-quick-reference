@@ -73,6 +73,7 @@ import {NCollapse, NCollapseItem, NSelect, NSpace} from 'naive-ui'
 import BuildDetailCard from '@/components/BuildDetailCard.vue'
 import type {DownloadProgress} from '@/composables/useDownload'
 import {useDownload} from '@/composables/useDownload'
+import {fetchFoliaMcVersions, fetchFoliaBuilds, fetchFoliaBuildDetail} from '@/api'
 import type {FoliaBuildDetail, ServerType} from '@/types'
 
 /**
@@ -102,17 +103,10 @@ const {downloadBlob} = useDownload(loadingState as Record<ServerType, boolean>)
 const fetchVersions = async (): Promise<void> => {
   loading.value = true
   try {
-    const resp = await fetch('https://fill.papermc.io/v3/projects/folia')
-    if (!resp.ok) throw new Error('无法加载 Folia 版本列表')
-    const data = await resp.json()
-    const allVersions: string[] = []
-    Object.values(data.versions || {}).forEach((arr: any) => {
-      if (Array.isArray(arr)) allVersions.push(...arr)
-    })
-    minecraftVersions.value = allVersions.sort((a, b) => b.localeCompare(a, undefined, {
-      numeric: true,
-      sensitivity: 'base'
-    }))
+    const allVersions = await fetchFoliaMcVersions()
+    minecraftVersions.value = allVersions
+    
+    // 获取最新 MC 版本
     const mcResp = await fetch('https://launchermeta.mojang.com/mc/game/version_manifest.json')
     if (!mcResp.ok) throw new Error('无法加载 Minecraft 版本列表')
     const mcData = await mcResp.json()
@@ -133,11 +127,9 @@ const fetchBuilds = async (): Promise<void> => {
   if (!selectedMcVersion.value) return
   loading.value = true
   try {
-    const resp = await fetch(`https://fill.papermc.io/v3/projects/folia/versions/${selectedMcVersion.value}`)
-    if (!resp.ok) throw new Error('无法加载 Folia 构建号')
-    const data = await resp.json()
-    builds.value = data.builds || []
-    selectedBuild.value = data.builds?.length ? Math.max(...data.builds) : null
+    const data = await fetchFoliaBuilds(selectedMcVersion.value)
+    builds.value = data.builds
+    selectedBuild.value = data.latest
     await fetchBuildDetail()
   } catch (e: any) {
     emit('error', e.message || '未知错误', e.message?.includes('CORS') || e instanceof TypeError)
@@ -153,9 +145,7 @@ const fetchBuildDetail = async (): Promise<void> => {
   if (!selectedMcVersion.value || !selectedBuild.value) return
   loading.value = true
   try {
-    const resp = await fetch(`https://fill.papermc.io/v3/projects/folia/versions/${selectedMcVersion.value}/builds/${selectedBuild.value}`)
-    if (!resp.ok) throw new Error('无法加载 Folia 构建详情')
-    buildDetail.value = await resp.json()
+    buildDetail.value = await fetchFoliaBuildDetail(selectedMcVersion.value, selectedBuild.value)
   } catch (e: any) {
     emit('error', e.message || '未知错误', e.message?.includes('CORS') || e instanceof TypeError)
   } finally {

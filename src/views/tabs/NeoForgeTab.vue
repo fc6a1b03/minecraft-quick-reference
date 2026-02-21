@@ -18,6 +18,7 @@ import VersionCardGrid from '@/components/VersionCardGrid.vue'
 import {usePagination} from '@/composables/usePagination'
 import type {DownloadProgress} from '@/composables/useDownload'
 import {useDownload} from '@/composables/useDownload'
+import {fetchNeoForgeVersions} from '@/api'
 import type {ServerType, VersionItem} from '@/types'
 
 /**
@@ -54,29 +55,10 @@ const paginatedData = computed(() => getPaginatedData(versions.value))
 /**
  * 获取 NeoForge 版本数据
  */
-const fetchNeoForgeVersions = async (): Promise<void> => {
+const fetchVersions = async (): Promise<void> => {
   emit('update:loading', true)
   try {
-    const response = await fetch('https://maven.neoforged.net/releases/net/neoforged/neoforge/maven-metadata.xml')
-    if (!response.ok) {
-      throw new Error(`无法加载 NeoForge 数据：${response.statusText}`)
-    }
-    const data = await response.text()
-    const xmlDoc = new DOMParser().parseFromString(data, "text/xml")
-    const versionsList = Array.from(xmlDoc.getElementsByTagName('version'))
-        .map(el => el.textContent).filter((v): v is string => !!v)
-    if (!versionsList.length) {
-      throw new Error('NeoForge 数据格式错误，无法解析')
-    }
-    const list = versionsList
-        .map((version: string) => ({
-          name: `NeoForge-server-mc.${version}-installer.jar`,
-          version: version,
-          date: '无',
-          type: 'neoForge',
-          url: `https://maven.neoforged.net/releases/net/neoforged/neoforge/${version}/neoforge-${version}-installer.jar`
-        }))
-        .sort((a: any, b: any) => b.version.localeCompare(a.version, undefined, {numeric: true, sensitivity: 'base'}))
+    const list = await fetchNeoForgeVersions()
     versions.value = list
     setTotal(list.length)
   } catch (error: any) {
@@ -118,5 +100,5 @@ const updatePageSize = (el: HTMLElement, isInit: boolean = false): void => {
   }
 }
 
-onMounted(() => fetchNeoForgeVersions())
+onMounted(() => fetchVersions())
 </script>

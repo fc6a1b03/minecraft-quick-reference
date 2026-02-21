@@ -60,6 +60,7 @@ import {NCollapse, NCollapseItem, NSelect, NSpace} from 'naive-ui'
 import BuildDetailCard from '@/components/BuildDetailCard.vue'
 import type {DownloadProgress} from '@/composables/useDownload'
 import {useDownload} from '@/composables/useDownload'
+import {fetchPurpurMcVersions, fetchPurpurBuilds, fetchPurpurBuildDetail, getPurpurDownloadUrl} from '@/api'
 import type {PurpurBuildDetail, ServerType} from '@/types'
 
 /**
@@ -89,11 +90,9 @@ const {downloadBlob} = useDownload(loadingState as Record<ServerType, boolean>)
 const fetchMinecraftVersions = async (): Promise<void> => {
   loading.value = true
   try {
-    const resp = await fetch('https://api.purpurmc.org/v2/purpur')
-    if (!resp.ok) throw new Error('无法加载 Purpur 版本列表')
-    const data = await resp.json()
-    minecraftVersions.value = data.versions || []
-    selectedMcVersion.value = data.metadata?.current || (data.versions?.[0] || '')
+    const data = await fetchPurpurMcVersions()
+    minecraftVersions.value = data.versions
+    selectedMcVersion.value = data.current
     await fetchBuilds()
   } catch (e: any) {
     emit('error', e.message || '未知错误', e.message?.includes('CORS') || e instanceof TypeError)
@@ -109,11 +108,9 @@ const fetchBuilds = async (): Promise<void> => {
   if (!selectedMcVersion.value) return
   loading.value = true
   try {
-    const resp = await fetch(`https://api.purpurmc.org/v2/purpur/${selectedMcVersion.value}`)
-    if (!resp.ok) throw new Error('无法加载 Purpur 构建号')
-    const data = await resp.json()
-    builds.value = data.builds?.all || []
-    selectedBuild.value = data.builds?.latest || (data.builds?.all?.[0] || '')
+    const data = await fetchPurpurBuilds(selectedMcVersion.value)
+    builds.value = data.builds
+    selectedBuild.value = data.latest
     await fetchBuildDetail()
   } catch (e: any) {
     emit('error', e.message || '未知错误', e.message?.includes('CORS') || e instanceof TypeError)
@@ -129,9 +126,7 @@ const fetchBuildDetail = async (): Promise<void> => {
   if (!selectedMcVersion.value || !selectedBuild.value) return
   loading.value = true
   try {
-    const resp = await fetch(`https://api.purpurmc.org/v2/purpur/${selectedMcVersion.value}/${selectedBuild.value}`)
-    if (!resp.ok) throw new Error('无法加载 Purpur 构建详情')
-    buildDetail.value = await resp.json()
+    buildDetail.value = await fetchPurpurBuildDetail(selectedMcVersion.value, selectedBuild.value)
   } catch (e: any) {
     emit('error', e.message || '未知错误', e.message?.includes('CORS') || e instanceof TypeError)
   } finally {
@@ -161,7 +156,7 @@ const handleBuildChange = async (val: string): Promise<void> => {
  */
 const handleDownload = async (onProgress: (progress: DownloadProgress) => void): Promise<void> => {
   if (!selectedMcVersion.value || !selectedBuild.value) return
-  const url = `https://api.purpurmc.org/v2/purpur/${selectedMcVersion.value}/${selectedBuild.value}/download`
+  const url = getPurpurDownloadUrl(selectedMcVersion.value, selectedBuild.value)
   const filename = `purpur-${selectedMcVersion.value}-${selectedBuild.value}.jar`
   try {
     await downloadBlob(filename, url, onProgress)

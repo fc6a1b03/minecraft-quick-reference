@@ -18,6 +18,7 @@ import VersionCardGrid from '@/components/VersionCardGrid.vue'
 import {usePagination} from '@/composables/usePagination'
 import type {DownloadProgress} from '@/composables/useDownload'
 import {useDownload} from '@/composables/useDownload'
+import {fetchNativeVersions} from '@/api'
 import type {ServerType, VersionItem} from '@/types'
 
 /**
@@ -54,24 +55,10 @@ const paginatedData = computed(() => getPaginatedData(versions.value))
 /**
  * 获取原版版本数据
  */
-const fetchNativeVersions = async (): Promise<void> => {
+const fetchVersions = async (): Promise<void> => {
   emit('update:loading', true)
   try {
-    const response = await fetch('https://launchermeta.mojang.com/mc/game/version_manifest.json')
-    if (!response.ok) {
-      throw new Error(`无法加载原版数据：${response.statusText}`)
-    }
-    const manifest = await response.json()
-    if (!manifest.versions || !manifest.versions.length) {
-      throw new Error('原版数据格式错误，无法解析')
-    }
-    const list = manifest.versions.map((v: any) => ({
-      name: `minecraft-server-${v.id}.jar`,
-      version: `${v.type.charAt(0).toUpperCase()}${v.type.slice(1)}`,
-      date: new Date(v.releaseTime).toLocaleDateString(),
-      type: 'native',
-      url: v.url
-    }))
+    const list = await fetchNativeVersions()
     versions.value = list
     setTotal(list.length)
   } catch (error: any) {
@@ -87,7 +74,6 @@ const fetchNativeVersions = async (): Promise<void> => {
  * @param onProgress 进度回调
  */
 const handleDownload = (item: VersionItem, onProgress: (progress: DownloadProgress) => void): void => {
-  // 初始化该项目的进度
   downloadProgress[item.name] = {
     loading: true,
     percent: 0,
@@ -114,5 +100,5 @@ const updatePageSize = (el: HTMLElement, isInit: boolean = false): void => {
   }
 }
 
-onMounted(() => fetchNativeVersions())
+onMounted(() => fetchVersions())
 </script>
