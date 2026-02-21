@@ -120,7 +120,7 @@ export const biology: BiologyDataItem[] = [
     {
         name: "鳕鱼",
         category: "被动生物",
-        image: "https://zh.minecraft.wiki/images/thumb/Cod.gif/150px-Cod.gif",
+        image: "https://zh.minecraft.wiki/images/thumb/Cod_JE1.gif/150px-Cod_JE1.gif?8ac97",
         shortDescription: "常见的水生生物，可提供食物来源",
         description: `<p>鳕鱼(Cod)是一种常见的被动水生生物，是海洋中最普遍的鱼类之一，可作为玩家的食物来源。</p>
 <h3>生成</h3>
@@ -208,7 +208,7 @@ export const biology: BiologyDataItem[] = [
     {
         name: "发光鱿鱼",
         category: "被动生物",
-        image: "https://zh.minecraft.wiki/images/thumb/Glow_Squid_JE1_BE2.gif/200px-Glow_Squid_JE1_BE2.gif",
+        image: "https://zh.minecraft.wiki/images/thumb/Glow_Squid_BE2.png/32px-Glow_Squid_BE2.png",
         shortDescription: "会发光的鱿鱼变种，生成于黑暗的水下区域",
         description: `<p>发光鱿鱼(Glow Squid)是鱿鱼的变种，具有生物发光特性，身体会发出蓝绿色的光芒，是1.17版本加入的生物。</p>
 <h3>生成</h3>
@@ -268,7 +268,7 @@ export const biology: BiologyDataItem[] = [
     {
         name: "哞菇",
         category: "被动生物",
-        image: "https://zh.minecraft.wiki/images/thumb/Mooshroom_JE5_BE3.png/150px-Mooshroom_JE5_BE3.png",
+        image: "https://zh.minecraft.wiki/images/thumb/Mooshroom_JE6_BE3.png/48px-Mooshroom_JE6_BE3.png",
         shortDescription: "蘑菇岛上的特殊牛变种，可提供蘑菇 stew（蘑菇煲）",
         description: `<p>哞菇(Mooshroom)是牛的变种，仅存在于蘑菇岛生物群系，身体覆盖着红色蘑菇，是一种特殊的被动生物。</p>
 <h3>生成</h3>
@@ -358,7 +358,7 @@ export const biology: BiologyDataItem[] = [
     {
         name: "猪",
         category: "被动生物",
-        image: "https://zh.minecraft.wiki/images/thumb/Pig_JE3_BE2.png/647px-Pig_JE3_BE2.png",
+        image: "https://zh.minecraft.wiki/images/thumb/Pig_JE4_BE2.png/48px-Pig_JE4_BE2.png",
         shortDescription: "常见的农场动物，可作为坐骑，提供猪肉",
         description: `<p>猪(Pig)是游戏中常见的被动生物，是早期生存的重要食物来源，也可被驯服为临时坐骑。</p>
 <h3>生成</h3>
@@ -388,7 +388,7 @@ export const biology: BiologyDataItem[] = [
     {
         name: "兔子",
         category: "被动生物",
-        image: "https://zh.minecraft.wiki/images/Rabbit_running.gif",
+        image: "https://zh.minecraft.wiki/images/thumb/White_Splotched_Rabbit_JE4_BE3.png/32px-White_Splotched_Rabbit_JE4_BE3.png",
         shortDescription: "小型草食动物，有多种毛色变种，提供兔肉",
         description: `<p>兔子(Rabbit)是一种小型被动生物，有多种毛色变种，分布在不同的生物群系中，是游戏中的食物来源之一。</p>
 <h3>生成</h3>
@@ -538,7 +538,7 @@ export const biology: BiologyDataItem[] = [
     {
         name: "鱿鱼",
         category: "被动生物",
-        image: "https://zh.minecraft.wiki/images/thumb/Squid.gif/200px-Squid.gif",
+        image: "https://zh.minecraft.wiki/images/thumb/Squid_JE2_BE2.png/32px-Squid_JE2_BE2.png",
         shortDescription: "常见的水生生物，提供墨囊",
         description: `<p>鱿鱼(Squid)是一种常见的被动水生生物，生活在各种水域中，是墨囊的主要来源。</p>
 <h3>生成</h3>
@@ -567,7 +567,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "炽足兽",
-        category: "中立生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/thumb/Strider_walking_JE2_BE2.gif/105px-Strider_walking_JE2_BE2.gif",
         shortDescription: "下界的熔岩生物，可被驯服为熔岩上的坐骑",
         description: `<p>炽足兽(Strider)是一种生活在下界熔岩中的中立生物，可被驯服为在熔岩上移动的坐骑。</p>
@@ -599,7 +599,7 @@ export const biology: BiologyDataItem[] = [
     {
         name: "蝌蚪",
         category: "被动生物",
-        image: "https://zh.minecraft.wiki/images/thumb/Tadpole_swimming.gif/150px-Tadpole_swimming.gif",
+        image: "https://zh.minecraft.wiki/images/thumb/Tadpole_swimming_JE1_BE1.gif/150px-Tadpole_swimming_JE1_BE1.gif",
         shortDescription: "青蛙的幼年形态，生活在水中",
         description: `<p>蝌蚪(Tadpole)是青蛙的幼年形态，是一种小型被动水生生物，会逐渐成长为青蛙。</p>
 <h3>生成</h3>
@@ -752,7 +752,7 @@ export const biology: BiologyDataItem[] = [
     {
         name: "山羊",
         category: "友好生物",
-        image: "https://zh.minecraft.wiki/images/thumb/Goat.png/564px-Goat.png",
+        image: "https://zh.minecraft.wiki/images/thumb/Goat_%28one_horn%29_BE1.png/32px-Goat_%28one_horn%29_BE1.png",
         shortDescription: "山地生物，会用头撞击玩家和物体",
         description: `<p>山羊(Goat)是一种生活在山地的中立生物，具有很强的跳跃能力，会主动撞击玩家和其他生物。</p>
 <h3>生成</h3>
@@ -782,7 +782,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "河豚",
-        category: "被动生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/Pufferfish_large.gif",
         shortDescription: "有毒的鱼类，受到威胁时会膨胀",
         description: `<p>河豚(Pufferfish)是一种有毒的被动水生生物，有独特的防御机制，受到威胁时会膨胀并露出尖刺。</p>
@@ -938,7 +938,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "雪傀儡",
-        category: "效用生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/thumb/Snow_Golem_JE1_BE1.png/279px-Snow_Golem_JE1_BE1.png",
         shortDescription: "由玩家创造的效用生物，会攻击敌对生物并留下雪迹",
         description: `<p>雪傀儡(Snow Golem)是一种由玩家创造的效用生物，外形类似雪人，会攻击敌对生物并在行走时留下雪迹。</p>
@@ -969,7 +969,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "蜜蜂",
-        category: "中立生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/Bee_with_nectar_JE1.gif",
         shortDescription: "会飞的昆虫，能采集花粉并制作蜂蜜",
         description: `<p>蜜蜂(Bee)是一种会飞的中立生物，生活在蜂巢或蜂箱中，能采集花粉并生产蜂蜜，受到攻击时会反击。</p>
@@ -1001,8 +1001,8 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "海豚",
-        category: "中立生物",
-        image: "https://zh.minecraft.wiki/images/thumb/Dolphin.gif/215px-Dolphin.gif",
+        category: "友好生物",
+        image: "https://zh.minecraft.wiki/images/thumb/Dolphin_JE1_BE2.png/50px-Dolphin_JE1_BE2.png",
         shortDescription: "聪明的水生生物，能引导玩家找到沉船和水下遗迹",
         description: `<p>海豚(Dolphin)是一种聪明的中立水生生物，生活在海洋中，能与玩家互动并提供帮助。</p>
 <h3>生成</h3>
@@ -1033,7 +1033,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "狐狸",
-        category: "中立生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/Fox_JE1_BE1.png",
         shortDescription: "夜间活动的小型哺乳动物，会偷取物品",
         description: `<p>狐狸(Fox)是一种夜间活动的中立生物，有红色和白色两种变种，会偷取物品并攻击小型生物。</p>
@@ -1065,7 +1065,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "铁傀儡",
-        category: "效用生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/thumb/Iron_Golem_JE1_BE1.png/319px-Iron_Golem_JE1_BE1.png",
         shortDescription: "强大的效用生物，会保护村民免受攻击",
         description: `<p>铁傀儡(Iron Golem)是一种强大的效用生物，外形高大，由铁锭构成，会主动保护村民和玩家免受敌对生物的攻击。</p>
@@ -1095,7 +1095,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "羊驼",
-        category: "中立生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/thumb/Gray_Llama_JE2_BE2.png/391px-Gray_Llama_JE2_BE2.png",
         shortDescription: "可被驯服的生物，能携带物品并吐口水防御",
         description: `<p>羊驼(Llama)是一种可被驯服的中立生物，外形类似骆驼，能携带物品，受到威胁时会向敌人吐口水。</p>
@@ -1126,7 +1126,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "行商羊驼",
-        category: "中立生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/thumb/Light_Gray_Carpeted_Llama_JE1_BE1.png/391px-Light_Gray_Carpeted_Llama_JE1_BE1.png",
         shortDescription: "跟随流浪商人的羊驼，会保护商人",
         description: `<p>行商羊驼(Trader Llama)是羊驼的一个变种，专门跟随流浪商人出现，会保护商人免受攻击。</p>
@@ -1156,7 +1156,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "熊猫",
-        category: "被动生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/thumb/Panda_JE1_BE1.png/643px-Panda_JE1_BE1.png",
         shortDescription: "稀有的熊科生物，有多种行为状态，生活在竹林",
         description: `<p>熊猫(Panda)是一种稀有的被动生物，外形可爱，生活在竹林中，有多种不同的行为状态和外观变种。</p>
@@ -1187,7 +1187,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "北极熊",
-        category: "中立生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/Polar_Bear_attacking.gif",
         shortDescription: "生活在寒冷地区的熊科生物，保护幼崽时会变得敌对",
         description: `<p>北极熊(Polar Bear)是一种生活在寒冷地区的中立生物，平时较为温和，但在保护幼崽时会变得极具攻击性。</p>
@@ -1217,7 +1217,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "狼",
-        category: "中立生物",
+        category: "友好生物",
         image: "https://zh.minecraft.wiki/images/thumb/Wolf_JE1_BE1.png/620px-Wolf_JE1_BE1.png",
         shortDescription: "可被驯服为宠物狗的野生犬科生物",
         description: `<p>狼(Wolf)是一种中立生物，外形类似现实中的狼，可被玩家驯服为宠物狗，帮助玩家攻击敌对生物。</p>
@@ -1468,7 +1468,7 @@ export const biology: BiologyDataItem[] = [
     {
         name: "守卫者",
         category: "敌对生物",
-        image: "https://zh.minecraft.wiki/images/thumb/Guardian.gif/280px-Guardian.gif",
+        image: "https://zh.minecraft.wiki/images/thumb/Guardian_JE2_BE2.gif/280px-Guardian_JE2_BE2.gif",
         shortDescription: "海底遗迹的守护者，会使用激光攻击",
         description: `<p>守卫者(Guardian)是一种敌对水生生物，生活在海底遗迹中，会使用激光攻击入侵者，保护遗迹中的宝藏。</p>
 <h3>生成</h3>
@@ -1562,7 +1562,7 @@ export const biology: BiologyDataItem[] = [
     {
         name: "岩浆怪",
         category: "敌对生物",
-        image: "https://zh.minecraft.wiki/images/Magma_Cube_jumping.gif",
+        image: "https://zh.minecraft.wiki/images/Magma_Cube_jumping_JE2_BE3.gif",
         shortDescription: "下界的史莱姆变种，生活在熔岩中，会弹跳攻击",
         description: `<p>岩浆怪(Magma Cube)是史莱姆的下界变种，是一种敌对生物，由岩浆构成，会弹跳着攻击玩家。</p>
 <h3>生成</h3>
@@ -1982,7 +1982,7 @@ export const biology: BiologyDataItem[] = [
     {
         name: "僵尸村民",
         category: "敌对生物",
-        image: "https://zh.minecraft.wiki/images/thumb/Swamp_Zombie_Villager_Base.png/337px-Swamp_Zombie_Villager_Base.png",
+        image: "https://zh.minecraft.wiki/images/thumb/Desert_Zombie_Villager_Base_JE1_BE1.png/31px-Desert_Zombie_Villager_Base_JE1_BE1.png",
         shortDescription: "村民被僵尸感染后的形态，可以被治愈恢复为普通村民。",
         description: `<p>僵尸村民(Zombie Villager)是《我的世界》中的一种敌对生物，是村民被僵尸感染后的形态。它们保留了原村民的职业特征，但行为与普通僵尸相似。</p>
 <h3>生成</h3>
@@ -2028,7 +2028,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "末影人",
-        category: "中立生物",
+        category: "敌对生物",
         image: "https://zh.minecraft.wiki/images/Enderman_Screaming.gif",
         shortDescription: "一种高大的中立生物，可以瞬间移动并拾取方块。",
         description: `<p>末影人(Enderman)是《我的世界》中一种独特的中立生物，具有黑色的身体、紫色的眼睛和长长的四肢。它们可以瞬间移动，并能拾取和放置方块。</p>
@@ -2047,7 +2047,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "猪灵",
-        category: "中立生物",
+        category: "敌对生物",
         image: "https://zh.minecraft.wiki/images/Piglin_celebrate_hunt.gif",
         shortDescription: "下界的类人生物，对黄金物品有特殊反应。",
         description: `<p>猪灵(Piglin)是《我的世界》下界中的一种中立生物，具有猪的特征和人类的形态。它们对黄金物品有特殊的喜爱和反应，是下界更新中加入的重要生物。</p>
@@ -2075,7 +2075,7 @@ export const biology: BiologyDataItem[] = [
     },
     {
         name: "僵尸猪灵",
-        category: "中立生物",
+        category: "敌对生物",
         image: "https://zh.minecraft.wiki/images/thumb/Zombified_Piglin_JE8.png/450px-Zombified_Piglin_JE8.png",
         shortDescription: "下界的僵尸猪生物，曾经被称为僵尸猪人。",
         description: `<p>僵尸猪灵(Zombified Piglin)是《我的世界》下界中的一种中立生物，具有猪的头部和人类的身体，通体呈僵尸般的绿色。它们曾经被称为僵尸猪人(Zombie Pigman)。</p>
@@ -2123,5 +2123,160 @@ export const biology: BiologyDataItem[] = [
 <h3>战斗与掉落</h3>
 <p>凋灵拥有300点生命值（150颗心），是极其强大的Boss。击败后会掉落 Nether Star（下界之星），用于制作信标。凋灵在攻击时会破坏周围的方块，战斗时需要注意环境安全。</p>`,
         link: "https://zh.minecraft.wiki/w/凋灵"
+    },
+    {
+        name: "僵尸马",
+        category: "未使用",
+        image: "https://zh.minecraft.wiki/images/thumb/Zombie_Horse_BE3.png/50px-Zombie_Horse_BE3.png",
+        shortDescription: "游戏中存在但无法自然生成的生物",
+        description: `<p>僵尸马(Zombie Horse)是Minecraft中存在的一种生物，是马的僵尸变种。与普通僵尸不同，僵尸马不会攻击玩家，是被动生物。</p>
+<h3>生成</h3>
+<p>僵尸马不会自然生成，只能通过以下方式获得：</p>
+<ul>
+  <li>使用/summon命令生成</li>
+  <li>在创造模式中使用刷怪蛋生成</li>
+  <li>无法通过正常游戏机制获得</li>
+</ul>
+<h3>行为</h3>
+<p>僵尸马的行为特点：</p>
+<ul>
+  <li>属于被动生物，不会攻击任何生物</li>
+  <li>行为模式与普通马相似，可以装备鞍</li>
+  <li>无法被驯服，但可以被骑乘（需要鞍）</li>
+  <li>在阳光下不会燃烧</li>
+</ul>
+<h3>特性</h3>
+<p>僵尸马的特性：</p>
+<ul>
+  <li>死亡时不会掉落任何物品</li>
+  <li>无法自然生成是设计上的选择</li>
+  <li>Java版和基岩版都存在</li>
+</ul>`,
+        link: "https://zh.minecraft.wiki/w/僵尸马"
+    },
+    {
+        name: "巨人",
+        category: "仅Java版",
+        image: "https://zh.minecraft.wiki/images/thumb/Zombie_JE2_BE2.png/50px-Zombie_JE2_BE2.png",
+        shortDescription: "Java版特有的巨型僵尸，无法自然生成",
+        description: `<p>巨人(Giant)是Minecraft Java版特有的一种生物，是僵尸的巨型版本。它体型巨大，但无法自然生成，只能通过命令生成。</p>
+<h3>生成</h3>
+<p>巨人不会自然生成，只能通过以下方式获得：</p>
+<ul>
+  <li>使用/summon minecraft:giant命令生成</li>
+  <li>无法通过刷怪蛋或任何正常游戏机制生成</li>
+  <li>仅存在于Java版</li>
+</ul>
+<h3>行为</h3>
+<p>巨人的行为特点：</p>
+<ul>
+  <li>体型是普通僵尸的6倍（高12格）</li>
+  <li>不会移动，没有AI</li>
+  <li>不会攻击玩家，也不会对伤害做出反应</li>
+  <li>在阳光下不会燃烧</li>
+</ul>
+<h3>特性</h3>
+<p>巨人的特性：</p>
+<ul>
+  <li>死亡时掉落0-2个腐肉</li>
+  <li>生命值高达100点（50颗心）</li>
+  <li>纯粹是遗留代码，没有实际用途</li>
+  <li>基岩版中不存在此生物</li>
+</ul>`,
+        link: "https://zh.minecraft.wiki/w/巨人"
+    },
+    {
+        name: "幻术师",
+        category: "仅Java版",
+        image: "https://zh.minecraft.wiki/images/thumb/Illusioner_celebrating.gif/32px-Illusioner_celebrating.gif",
+        shortDescription: "Java版特有的灾厄村民，能使用幻术攻击",
+        description: `<p>幻术师(Illusioner)是Minecraft Java版特有的一种敌对生物，属于灾厄村民的一种。它能使用弓箭攻击，并具有特殊的幻术能力。</p>
+<h3>生成</h3>
+<p>幻术师不会自然生成，只能通过以下方式获得：</p>
+<ul>
+  <li>使用/summon minecraft:illusioner命令生成</li>
+  <li>无法通过刷怪蛋或任何正常游戏机制生成</li>
+  <li>仅存在于Java版</li>
+</ul>
+<h3>行为</h3>
+<p>幻术师的行为特点：</p>
+<ul>
+  <li>会使用弓箭进行远程攻击</li>
+  <li>能施展幻术：召唤自己的分身并使自己隐形</li>
+  <li>会主动攻击玩家、村民和铁傀儡</li>
+  <li>属于灾厄村民，会参与袭击事件（虽然不会自然生成）</li>
+</ul>
+<h3>战斗</h3>
+<p>幻术师的战斗特点：</p>
+<ul>
+  <li>拥有32点生命值（16颗心）</li>
+  <li>会使用失明咒语使玩家失明</li>
+  <li>击败后会掉落弓（有几率附魔）和5点经验值</li>
+  <li>基岩版中不存在此生物</li>
+</ul>`,
+        link: "https://zh.minecraft.wiki/w/幻术师"
+    },
+    {
+        name: "远古守卫者幽灵",
+        category: "仅基岩版和教育版",
+        image: "https://zh.minecraft.wiki/images/thumb/Elder_Guardian_JE2_BE2.gif/280px-Elder_Guardian_JE2_BE2.gif",
+        shortDescription: "基岩版和教育版特有的幽灵生物，无实际功能",
+        description: `<p>远古守卫者幽灵(Elder Guardian Ghost)是Minecraft基岩版和教育版特有的一种生物。它是远古守卫者的幽灵版本，没有实际的AI和功能。</p>
+<h3>生成</h3>
+<p>远古守卫者幽灵不会自然生成，只能通过以下方式获得：</p>
+<ul>
+  <li>使用/summon elder_guardian_ghost命令生成</li>
+  <li>无法通过刷怪蛋或任何正常游戏机制生成</li>
+  <li>仅存在于基岩版和教育版</li>
+</ul>
+<h3>行为</h3>
+<p>远古守卫者幽灵的行为特点：</p>
+<ul>
+  <li>没有AI，不会移动或攻击</li>
+  <li>外观与远古守卫者相似，但具有幽灵般的半透明效果</li>
+  <li>不受重力影响，可以漂浮在空中</li>
+  <li>不会受到伤害，也无法被杀死</li>
+</ul>
+<h3>特性</h3>
+<p>远古守卫者幽灵的特性：</p>
+<ul>
+  <li>纯粹是遗留代码或测试用生物</li>
+  <li>没有掉落物</li>
+  <li>Java版中不存在此生物</li>
+  <li>可能是远古守卫者施加挖掘疲劳效果时的动画残留</li>
+</ul>`,
+        link: "https://zh.minecraft.wiki/w/远古守卫者幽灵"
+    },
+    {
+        name: "NPC",
+        category: "仅基岩版和教育版",
+        image: "https://zh.minecraft.wiki/images/thumb/NPC1pre.png/150px-NPC1pre.png",
+        shortDescription: "基岩版和教育版特有的非玩家角色，用于教育目的",
+        description: `<p>NPC(Non-Player Character)是Minecraft教育版和基岩版特有的一种生物。它们用于教育场景，可以与玩家互动并提供信息。</p>
+<h3>生成</h3>
+<p>NPC的生成方式：</p>
+<ul>
+  <li>在教育版中可以使用NPC刷怪蛋生成</li>
+  <li>在基岩版中需要使用命令/generate或/summon生成</li>
+  <li>在Java版中不存在</li>
+</ul>
+<h3>行为</h3>
+<p>NPC的行为特点：</p>
+<ul>
+  <li>不会移动，始终停留在生成位置</li>
+  <li>不会受到伤害，无法被杀死</li>
+  <li>可以右键点击与之交互</li>
+  <li>可以设置对话框和命令执行</li>
+</ul>
+<h3>用途</h3>
+<p>NPC的主要用途：</p>
+<ul>
+  <li>在教育版中用于创建互动式教学内容</li>
+  <li>可以设置对话框，向玩家展示信息</li>
+  <li>可以执行命令，如传送玩家、给予物品等</li>
+  <li>可以设置不同的外观（有多种皮肤可选）</li>
+  <li>Java版中不存在此功能</li>
+</ul>`,
+        link: "https://zh.minecraft.wiki/w/NPC"
     }
 ];
