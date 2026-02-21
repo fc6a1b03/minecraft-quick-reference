@@ -942,13 +942,15 @@ a:focus,
     max-width: 220px;
 }
 
-/* ==================== Biology Tab 搜索 ==================== */
-.biology-search-wrapper {
+/* ==================== Biology/Structure Tab 搜索 ==================== */
+.biology-search-wrapper,
+.structure-search-wrapper {
     padding: 0 20px;
 }
 
-/* ==================== Biology Modal ==================== */
-.biology-modal {
+/* ==================== Biology/Structure Modal ==================== */
+.biology-modal,
+.structure-modal {
     width: 80%;
     max-width: 800px;
 }
@@ -1090,13 +1092,15 @@ a:focus,
         font-size: 10px;
     }
 
-    /* Biology 搜索 */
-    .biology-search-wrapper {
+    /* Biology/Structure 搜索 */
+    .biology-search-wrapper,
+    .structure-search-wrapper {
         padding: 0 12px;
     }
 
-    /* Biology Modal */
-    .biology-modal {
+    /* Biology/Structure Modal */
+    .biology-modal,
+    .structure-modal {
         width: 95% !important;
         max-width: none;
         margin: 0 auto;
@@ -1217,7 +1221,8 @@ a:focus,
         flex: 1;
     }
 
-    .biology-modal {
+    .biology-modal,
+    .structure-modal {
         width: 90% !important;
     }
 
@@ -1246,7 +1251,8 @@ a:focus,
         padding: 14px 18px;
     }
 
-    .biology-modal {
+    .biology-modal,
+    .structure-modal {
         width: 85% !important;
     }
 }
@@ -1267,7 +1273,8 @@ a:focus,
         height: 80px;
     }
 
-    .biology-modal {
+    .biology-modal,
+    .structure-modal {
         max-height: 90vh;
         overflow-y: auto;
     }

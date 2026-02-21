@@ -1,7 +1,16 @@
 /**
  * 服务器类型
  */
-export type ServerType = 'native' | 'fabric' | 'forge' | 'neoForge' | 'paper' | 'purpur' | 'folia' | 'biology'
+export type ServerType =
+    'native'
+    | 'fabric'
+    | 'forge'
+    | 'neoForge'
+    | 'paper'
+    | 'purpur'
+    | 'folia'
+    | 'biology'
+    | 'structure'
 
 /**
  * 版本数据项
@@ -143,4 +152,17 @@ export interface BiologyDataItem {
     shortDescription: string
     description: string
     link: string
+}
+
+/**
+ * 结构数据项
+ */
+export interface StructureDataItem {
+    name: string
+    category: string
+    image: string
+    shortDescription: string
+    description: string
+    link: string
+    images?: string[]
 }

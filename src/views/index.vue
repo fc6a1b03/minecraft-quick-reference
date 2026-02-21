@@ -93,6 +93,11 @@
                       @update:loading="(v: boolean) => loading.biology = v"
                       :key="'biology-tab'"
                   />
+                  <StructureTab
+                      v-else-if="type === 'structure'"
+                      @update:loading="(v: boolean) => loading.structure = v"
+                      :key="'structure-tab'"
+                  />
                 </transition>
               </template>
             </n-spin>
@@ -118,9 +123,10 @@ const FabricTab = defineAsyncComponent(() => import('./tabs/FabricTab.vue'))
 const PurpurTab = defineAsyncComponent(() => import('./tabs/PurpurTab.vue'))
 const BiologyTab = defineAsyncComponent(() => import('./tabs/BiologyTab.vue'))
 const NeoForgeTab = defineAsyncComponent(() => import('./tabs/NeoForgeTab.vue'))
+const StructureTab = defineAsyncComponent(() => import('./tabs/StructureTab.vue'))
 
 /** 服务器类型列表 */
-const types: ServerType[] = ['native', 'fabric', 'forge', 'neoForge', 'paper', 'purpur', 'folia', 'biology']
+const types: ServerType[] = ['native', 'fabric', 'forge', 'neoForge', 'paper', 'purpur', 'folia', 'biology', 'structure']
 
 /** 主题配置 */
 const theme = {
@@ -142,7 +148,8 @@ const errorMessage = ref<Record<ServerType, string>>({
   paper: '',
   purpur: '',
   folia: '',
-  biology: ''
+  biology: '',
+  structure: ''
 })
 
 /** 加载状态 */
@@ -154,7 +161,8 @@ const loading = ref<Record<ServerType, boolean>>({
   paper: false,
   purpur: false,
   folia: false,
-  biology: false
+  biology: false,
+  structure: false
 })
 
 /** 错误状态 */
@@ -166,7 +174,8 @@ const hasError = ref<Record<ServerType, boolean>>({
   paper: false,
   purpur: false,
   folia: false,
-  biology: false
+  biology: false,
+  structure: false
 })
 
 /** CORS 错误状态 */
@@ -178,7 +187,8 @@ const isCorsError = ref<Record<ServerType, boolean>>({
   paper: false,
   purpur: false,
   folia: false,
-  biology: false
+  biology: false,
+  structure: false
 })
 
 /**
@@ -194,7 +204,8 @@ const formatTabName = (type: ServerType): string => {
     paper: 'Paper',
     purpur: 'Purpur',
     folia: 'Folia',
-    biology: 'Biology'
+    biology: 'Biology',
+    structure: 'Structure'
   }
   return nameMap[type] || type
 }
