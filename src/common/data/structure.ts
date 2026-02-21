@@ -30,14 +30,14 @@ export const structures: StructureDataItem[] = [
       'https://static.wikia.nocookie.net/minecraft_zh_gamepedia/images/f/f8/Overworld_Ruined_Portal_2.png/revision/latest/scale-to-width-down/150',
       'https://static.wikia.nocookie.net/minecraft_zh_gamepedia/images/3/3f/Overworld_Ruined_Portal_7.png/revision/latest/scale-to-width-down/150',
       'https://static.wikia.nocookie.net/minecraft_zh_gamepedia/images/f/f5/Overworld_Ruined_Portal_8.png/revision/latest/scale-to-width-down/150',
-      'https://static.wikia.nocookie.net/minecraft_zh_gamepedia/images/2/2c/Overworld_Ruined_Portal_10.png/revision/latest/scale-to-width-down/150',
+      'https://static.wikia.nocookie.net/minecraft_zh_gamepedia/images/2/2c/Overworld_Ruined_Portal_10.png/revision/latest/scale-to-width-down/150'
     ]
   },
   // 地下结构
   {
     name: '远古城市',
     category: '地下结构',
-    image: 'https://zh.minecraft.wiki/images/thumb/Ancient_City_JE1.png/250px-Ancient_City_JE1.png',
+    image: 'https://static.wikia.nocookie.net/minecraft_zh_gamepedia/images/0/00/Ancient_City.png/revision/latest/scale-to-width-down/1000',
     shortDescription: '一种延伸很广的城池状结构，建筑主体是深板岩及其变种方块',
     description: `<p>远古城市(Ancient City)是一种庞大的地下城池结构，位于深暗之域生物群系中，由深板岩及其变种方块构成，是游戏中最神秘的结构之一。</p>
 <h3>生成</h3>
@@ -65,7 +65,11 @@ export const structures: StructureDataItem[] = [
   <li>触发过多声音会召唤监守者</li>
   <li>建议潜行移动，避免发出声音</li>
 </ul>`,
-    link: 'https://minecraft.fandom.com/zh/wiki/远古城市'
+    link: 'https://minecraft.fandom.com/zh/wiki/远古城市',
+    images: [
+        'https://static.wikia.nocookie.net/minecraft_zh_gamepedia/images/b/b8/Deep_Dark_Light.png/revision/latest',
+        'https://static.wikia.nocookie.net/minecraft_zh_gamepedia/images/3/33/Ancient_City_Scenery.png/revision/latest/scale-to-width-down/1000'
+    ]
   },
   {
     name: '埋藏的宝藏',
@@ -99,7 +103,7 @@ export const structures: StructureDataItem[] = [
   {
     name: '废弃矿井',
     category: '地下结构',
-    image: 'https://zh.minecraft.wiki/images/thumb/Mineshaft_JE1.png/250px-Mineshaft_JE1.png',
+    image: 'https://static.wikia.nocookie.net/minecraft_zh_gamepedia/images/9/9b/Hanging_mineshaft_in_cheese_cave.png/revision/latest/scale-to-width-down/1000',
     shortDescription: '包含长长的走道，其上有铁轨，有时铁轨上有运输矿车',
     description: `<p>废弃矿井(Abandoned Mineshaft)是一种庞大的地下结构，由木质支架、铁轨和矿车组成，是寻找资源和刷怪的好地方。</p>
 <h3>生成</h3>
@@ -126,7 +130,12 @@ export const structures: StructureDataItem[] = [
   <li>洞穴蜘蛛攻击会造成中毒效果</li>
   <li>建议携带牛奶解毒</li>
 </ul>`,
-    link: 'https://minecraft.fandom.com/zh/wiki/废弃矿井'
+    link: 'https://minecraft.fandom.com/zh/wiki/废弃矿井',
+    images: [
+      'https://static.wikia.nocookie.net/minecraft_zh_gamepedia/images/a/ad/Mine_shaft_chest.png/revision/latest/scale-to-width-down/1000',
+      'https://static.wikia.nocookie.net/minecraft_zh_gamepedia/images/5/54/Bedrockmineshaft.png/revision/latest/scale-to-width-down/1000',
+      'https://static.wikia.nocookie.net/minecraft_zh_gamepedia/images/d/d6/Aquifer_Mineshaft.png/revision/latest/scale-to-width-down/1000'
+    ]
   },
   {
     name: '要塞',
