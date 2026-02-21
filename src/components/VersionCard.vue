@@ -85,6 +85,8 @@ const handleClick = (): void => {
   gap: 10px;
   margin-top: auto;
   width: 100%;
+  flex-wrap: nowrap;
+  overflow: hidden;
 }
 
 .progress-bar-bg {
@@ -93,6 +95,7 @@ const handleClick = (): void => {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 3px;
   overflow: hidden;
+  min-width: 40px;
 }
 
 .progress-bar-fill {
@@ -107,10 +110,28 @@ const handleClick = (): void => {
   color: #4cc9f0;
   min-width: 35px;
   text-align: right;
+  flex-shrink: 0;
 }
 
 .modern-card-btn {
   margin: 0;
   flex-shrink: 0;
+}
+
+@media (max-width: 414px) {
+  .card-footer {
+    gap: 8px;
+  }
+
+  .progress-text {
+    font-size: 10px;
+    min-width: 30px;
+  }
+
+  .modern-card-btn {
+    font-size: 11px;
+    padding: 4px 10px;
+    height: 28px;
+  }
 }
 </style>

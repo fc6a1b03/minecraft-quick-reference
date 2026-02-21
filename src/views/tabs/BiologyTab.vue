@@ -1,10 +1,10 @@
 <template>
-  <div style="padding: 0 20px">
+  <div class="biology-search-wrapper">
     <n-input
         v-model:value="searchQuery"
         placeholder="搜索生物..."
         clearable
-        style="margin-bottom: 20px; width: 100%"
+        class="biology-search-input"
     />
   </div>
   <div class="card-grid" ref="gridRef">

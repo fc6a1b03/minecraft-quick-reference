@@ -3,7 +3,7 @@
       :show="show"
       @update:show="$emit('update:show', $event)"
       preset="card"
-      :style="{width: '80%', maxWidth: '800px'}"
+      class="biology-modal"
       size="huge"
       :bordered="false"
   >

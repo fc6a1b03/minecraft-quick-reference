@@ -1,25 +1,23 @@
 <!--suppress ExceptionCaughtLocallyJS -->
 <template>
-  <div style="width: 100%; max-width: 700px; margin: 0 auto; padding: 0 20px; box-sizing: border-box">
+  <div class="purpur-container">
     <n-space vertical size="large">
       <n-space class="purpur-select-row" align="center">
         <span>选择 Minecraft 版本：</span>
         <n-select
-            class="purpur-select"
             :loading="loading"
             v-model:value="selectedMcVersion"
             @update:value="handleMcVersionChange"
-            style="min-width: 180px; width: 100%; max-width: 280px"
+            class="purpur-select purpur-select-mc"
             :options="minecraftVersions.map(v => ({ label: v, value: v }))"
         />
         <span>选择 Purpur 构建：</span>
         <n-select
-            class="purpur-select"
             :loading="loading"
             v-model:value="selectedBuild"
             @update:value="handleBuildChange"
             :options="builds.map(b => ({ label: b, value: b }))"
-            style="min-width: 150px; white-space: nowrap; width: 100%; max-width: 220px"
+            class="purpur-select purpur-select-build"
         />
       </n-space>
       <BuildDetailCard
@@ -38,11 +36,11 @@
           <div v-if="buildDetail?.commits && buildDetail.commits.length">
             <n-collapse :default-expanded-names="['commits']" arrow-placement="right">
               <n-collapse-item title="提交记录" name="commits">
-                <ul style="padding-left: 1em">
+                <ul class="commit-list">
                   <li v-for="c in buildDetail.commits" :key="c.hash">
                     <div><b>{{ c.author }}</b> &lt;{{ c.email }}&gt;</div>
-                    <div style="font-size:13px; white-space:pre-line; margin:5px 0">{{ c.description }}</div>
-                    <div style="font-size:12px; color:#aaa">
+                    <div class="commit-message">{{ c.description }}</div>
+                    <div class="commit-meta">
                       {{ c.hash }} | {{ c.timestamp ? new Date(c.timestamp).toLocaleString() : '' }}
                     </div>
                   </li>

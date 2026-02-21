@@ -1,25 +1,23 @@
 <!--suppress ExceptionCaughtLocallyJS -->
 <template>
-  <div style="width: 100%; max-width: 700px; margin: 0 auto; padding: 0 20px; box-sizing: border-box">
+  <div class="folia-container">
     <n-space vertical size="large">
       <n-space class="folia-select-row" align="center">
         <span>选择 Minecraft 版本：</span>
         <n-select
-            class="folia-select"
+            class="folia-select folia-select-mc"
             :loading="loading"
             v-model:value="selectedMcVersion"
             @update:value="handleMcVersionChange"
-            style="min-width: 180px; width: 100%; max-width: 280px"
             :options="minecraftVersions.map(v => ({ label: v, value: v }))"
         />
         <span>选择 Folia 构建：</span>
         <n-select
-            class="folia-select"
+            class="folia-select folia-select-build"
             :loading="loading"
             v-model:value="selectedBuild"
             @update:value="handleBuildChange"
             :options="builds.slice().reverse().map(b => ({ label: String(b), value: b }))"
-            style="min-width: 150px; white-space: nowrap; width: 100%; max-width: 220px"
         />
       </n-space>
       <BuildDetailCard
@@ -42,8 +40,7 @@
                 <div><strong>最低版本:</strong> Java {{ buildDetail.version.java.version.minimum }}</div>
                 <div v-if="buildDetail.version.java.flags?.recommended?.length">
                   <strong>推荐 JVM 参数:</strong>
-                  <pre
-                      style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 4px; overflow-x: auto; font-size: 12px; margin-top: 8px">{{
+                  <pre class="java-flags">{{
                       buildDetail.version.java.flags.recommended.join(' ')
                     }}</pre>
                 </div>
@@ -53,10 +50,10 @@
           <div v-if="buildDetail?.commits && buildDetail.commits.length">
             <n-collapse :default-expanded-names="['commits']" arrow-placement="right">
               <n-collapse-item title="提交记录" name="commits">
-                <ul style="padding-left: 1em">
+                <ul class="commit-list">
                   <li v-for="c in buildDetail.commits" :key="c.sha">
-                    <div style="font-size:13px; white-space:pre-line; margin:5px 0">{{ c.message }}</div>
-                    <div style="font-size:12px; color:#aaa">{{ c.sha.substring(0, 8) }} |
+                    <div class="commit-message">{{ c.message }}</div>
+                    <div class="commit-meta">{{ c.sha.substring(0, 8) }} |
                       {{ c.time ? new Date(c.time).toLocaleString() : '' }}
                     </div>
                   </li>
