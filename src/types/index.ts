@@ -1,7 +1,7 @@
 /**
  * 服务器类型
  */
-export type ServerType = 'native' | 'fabric' | 'forge' | 'neoForge' | 'purpur' | 'folia' | 'biology'
+export type ServerType = 'native' | 'fabric' | 'forge' | 'neoForge' | 'paper' | 'purpur' | 'folia' | 'biology'
 
 /**
  * 版本数据项
@@ -51,6 +51,7 @@ export interface VersionData {
     fabric: VersionItem[]
     forge: VersionItem[]
     neoForge: VersionItem[]
+    paper: VersionItem[]
     purpur: VersionItem[]
     folia: VersionItem[]
 }
@@ -70,6 +71,36 @@ export interface PurpurBuildDetail {
         description: string
         timestamp: string
     }>
+}
+
+/**
+ * Paper 构建详情
+ */
+export interface PaperBuildDetail {
+    id: number
+    channel: string
+    time: string
+    commits?: Array<{
+        sha: string
+        message: string
+        time: string
+    }>
+    version?: {
+        java?: {
+            version: {
+                minimum: number
+            }
+            flags?: {
+                recommended?: string[]
+            }
+        }
+    }
+    downloads?: {
+        'server:default'?: {
+            name: string
+            url: string
+        }
+    }
 }
 
 /**

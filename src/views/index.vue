@@ -27,15 +27,20 @@
               :name="type"
               :tab="formatTabName(type)"
           >
-            <template v-if="type === 'purpur' || type === 'folia'">
+            <template v-if="type === 'paper' || type === 'purpur' || type === 'folia'">
               <ErrorAlert
                   v-if="hasError[type]"
                   :is-cors-error="isCorsError[type]"
                   :error-message="errorMessage[type]"
               />
               <transition name="tab-content" mode="out-in">
+                <PaperTab
+                    v-if="type === 'paper'"
+                    @error="(msg: string, cors: boolean) => handleError('paper', msg, cors)"
+                    :key="'paper-tab'"
+                />
                 <PurpurTab
-                    v-if="type === 'purpur'"
+                    v-else-if="type === 'purpur'"
                     @error="(msg: string, cors: boolean) => handleError('purpur', msg, cors)"
                     :key="'purpur-tab'"
                 />
@@ -105,6 +110,7 @@ import {darkTheme, NConfigProvider, NLayout, NSpin, NTabPane, NTabs} from 'naive
 import ErrorAlert from '@/components/ErrorAlert.vue'
 import type {ServerType} from '@/types'
 
+const PaperTab = defineAsyncComponent(() => import('./tabs/PaperTab.vue'))
 const FoliaTab = defineAsyncComponent(() => import('./tabs/FoliaTab.vue'))
 const ForgeTab = defineAsyncComponent(() => import('./tabs/ForgeTab.vue'))
 const NativeTab = defineAsyncComponent(() => import('./tabs/NativeTab.vue'))
@@ -114,7 +120,7 @@ const BiologyTab = defineAsyncComponent(() => import('./tabs/BiologyTab.vue'))
 const NeoForgeTab = defineAsyncComponent(() => import('./tabs/NeoForgeTab.vue'))
 
 /** 服务器类型列表 */
-const types: ServerType[] = ['native', 'fabric', 'forge', 'neoForge', 'purpur', 'folia', 'biology']
+const types: ServerType[] = ['native', 'fabric', 'forge', 'neoForge', 'paper', 'purpur', 'folia', 'biology']
 
 /** 主题配置 */
 const theme = {
@@ -133,6 +139,7 @@ const errorMessage = ref<Record<ServerType, string>>({
   fabric: '',
   forge: '',
   neoForge: '',
+  paper: '',
   purpur: '',
   folia: '',
   biology: ''
@@ -144,6 +151,7 @@ const loading = ref<Record<ServerType, boolean>>({
   fabric: false,
   forge: false,
   neoForge: false,
+  paper: false,
   purpur: false,
   folia: false,
   biology: false
@@ -155,6 +163,7 @@ const hasError = ref<Record<ServerType, boolean>>({
   fabric: false,
   forge: false,
   neoForge: false,
+  paper: false,
   purpur: false,
   folia: false,
   biology: false
@@ -166,6 +175,7 @@ const isCorsError = ref<Record<ServerType, boolean>>({
   fabric: false,
   forge: false,
   neoForge: false,
+  paper: false,
   purpur: false,
   folia: false,
   biology: false
@@ -181,6 +191,7 @@ const formatTabName = (type: ServerType): string => {
     fabric: 'Fabric',
     forge: 'Forge',
     neoForge: 'NeoForge',
+    paper: 'Paper',
     purpur: 'Purpur',
     folia: 'Folia',
     biology: 'Biology'

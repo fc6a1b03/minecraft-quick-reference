@@ -601,7 +601,8 @@ body {
     box-shadow: 0 2px 8px rgba(72, 149, 239, 0.3);
 }
 
-/* Purpur 选择器 */
+/* Paper/Purpur/Folia 选择器 */
+.paper-select-row,
 .purpur-select-row,
 .folia-select-row {
     display: flex;
@@ -612,6 +613,7 @@ body {
     padding: 15px 0;
 }
 
+.paper-select-row > span,
 .purpur-select-row > span,
 .folia-select-row > span {
     font-size: 15px;
@@ -619,6 +621,7 @@ body {
     min-width: fit-content;
 }
 
+.paper-select,
 .purpur-select,
 .folia-select {
     min-width: 180px !important;
@@ -731,6 +734,7 @@ body {
         padding: 8px 16px;
     }
 
+    .paper-select-row,
     .purpur-select-row,
     .folia-select-row {
         flex-direction: column;
@@ -738,11 +742,13 @@ body {
         gap: 12px;
     }
 
+    .paper-select-row > span,
     .purpur-select-row > span,
     .folia-select-row > span {
         margin-bottom: 4px;
     }
 
+    .paper-select,
     .purpur-select,
     .folia-select {
         width: 100%;
@@ -781,16 +787,19 @@ body {
         padding: 6px 12px;
     }
 
+    .paper-select-row,
     .purpur-select-row,
     .folia-select-row {
         gap: 10px;
     }
 
+    .paper-select-row > span,
     .purpur-select-row > span,
     .folia-select-row > span {
         font-size: 14px;
     }
 
+    .paper-select,
     .purpur-select,
     .folia-select {
         width: 100%;
@@ -808,6 +817,28 @@ a:focus,
 .n-collapse-item__header:focus {
     outline-offset: -2px;
     border-radius: 8px 8px 0 0;
+}
+
+/* ==================== Paper Tab 容器 ==================== */
+.paper-container {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.paper-select-mc {
+    min-width: 180px;
+    width: 100%;
+    max-width: 280px;
+}
+
+.paper-select-build {
+    min-width: 150px;
+    white-space: nowrap;
+    width: 100%;
+    max-width: 220px;
 }
 
 /* ==================== Folia Tab 容器 ==================== */
