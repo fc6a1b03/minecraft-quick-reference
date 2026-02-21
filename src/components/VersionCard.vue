@@ -16,6 +16,16 @@
       <span class="meta-value">{{ date }}</span>
     </div>
     <div class="card-footer">
+      <template v-if="downloadProgress.loading">
+        <div class="progress-wrapper">
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" :style="{ width: `${downloadProgress.percent}%` }">
+              <div class="progress-glow"></div>
+            </div>
+          </div>
+          <div class="progress-text">{{ downloadProgress.percent }}%</div>
+        </div>
+      </template>
       <button
           class="modern-card-btn download-btn"
           @click="handleClick"
@@ -233,6 +243,58 @@ const handleClick = (): void => {
   overflow: hidden;
 }
 
+/* 进度条样式 - 与 BuildDetailCard 统一 */
+.progress-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.progress-bar-bg {
+  flex: 1;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(76, 201, 240, 0.1);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  border-radius: 4px;
+  transition: width 0.3s ease;
+  position: relative;
+  box-shadow: 0 0 10px rgba(76, 201, 240, 0.3);
+}
+
+.progress-glow {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5));
+  animation: glow-move 1s linear infinite;
+}
+
+@keyframes glow-move {
+  0% { transform: translateX(-20px); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateX(20px); opacity: 0; }
+}
+
+.progress-text {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary-color);
+  min-width: 40px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
 /* 下载按钮 */
 .download-btn {
   margin: 0;
@@ -259,19 +321,27 @@ const handleClick = (): void => {
 .btn-spinner {
   width: 12px;
   height: 12px;
-  border: 2px solid transparent;
-  border-top-color: currentColor;
-  border-radius: 50%;
-  animation: spinner-rotate 0.8s linear infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-@keyframes spinner-rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.btn-spinner::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover-color));
+  animation: cube-rotate 1.5s infinite ease-in-out;
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(76, 201, 240, 0.5);
+}
+
+@keyframes cube-rotate {
+  0% { transform: perspective(40px) rotateX(0deg) rotateY(0deg); }
+  25% { transform: perspective(40px) rotateX(90deg) rotateY(0deg); }
+  50% { transform: perspective(40px) rotateX(90deg) rotateY(90deg); }
+  75% { transform: perspective(40px) rotateX(180deg) rotateY(90deg); }
+  100% { transform: perspective(40px) rotateX(360deg) rotateY(180deg); }
 }
 
 .btn-label {
@@ -314,7 +384,7 @@ const handleClick = (): void => {
     animation: none;
   }
 
-  .btn-spinner {
+  .btn-spinner::before {
     animation: none;
   }
 }
