@@ -1,0 +1,1033 @@
+/* ==================== 游戏风格主题 - 2026 视觉样式 ==================== */
+
+/* ---------- 像素字体 ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@500;600;700&display=swap');
+
+/* ---------- CSS 变量 ---------- */
+:root {
+    /* 游戏风格配色 - 霓虹赛博朋克 */
+    --mc-grass: #5D8C22;
+    --mc-dirt: #8B6914;
+    --mc-stone: #7D7D7D;
+    --mc-diamond: #4AEDD7;
+    --mc-gold: #F4D142;
+    --mc-redstone: #FF6B6B;
+    --mc-lapis: #3B5FCC;
+    --mc-emerald: #4ADE80;
+
+    /* 霓虹发光色 */
+    --neon-cyan: #00F5FF;
+    --neon-pink: #FF10F0;
+    --neon-purple: #B829F7;
+    --neon-green: #39FF14;
+    --neon-orange: #FF9500;
+    --neon-yellow: #FFF01F;
+
+    /* 深色主题背景 */
+    --bg-dark-primary: #0D0D12;
+    --bg-dark-secondary: #16161D;
+    --bg-dark-tertiary: #1E1E28;
+    --bg-card: rgba(22, 22, 29, 0.85);
+
+    /* 游戏风格边框 */
+    --pixel-border: 3px;
+    --block-border: inset 0 0 0 2px rgba(255, 255, 255, 0.1),
+    inset 0 0 0 4px rgba(0, 0, 0, 0.2);
+
+    /* 发光效果 */
+    --glow-cyan: 0 0 10px rgba(0, 245, 255, 0.5),
+    0 0 20px rgba(0, 245, 255, 0.3),
+    0 0 30px rgba(0, 245, 255, 0.1);
+    --glow-purple: 0 0 10px rgba(184, 41, 247, 0.5),
+    0 0 20px rgba(184, 41, 247, 0.3),
+    0 0 30px rgba(184, 41, 247, 0.1);
+    --glow-green: 0 0 10px rgba(57, 255, 20, 0.5),
+    0 0 20px rgba(57, 255, 20, 0.3);
+
+    /* 游戏风格过渡 */
+    --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-elastic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* ---------- 全局动画关键帧 ---------- */
+
+/* 像素闪烁 */
+@keyframes pixel-flicker {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+    75% {
+        opacity: 0.95;
+    }
+}
+
+/* 霓虹脉冲 */
+@keyframes neon-pulse {
+    0%, 100% {
+        box-shadow: 0 0 5px var(--neon-cyan),
+        0 0 10px var(--neon-cyan),
+        0 0 15px var(--neon-cyan);
+    }
+    50% {
+        box-shadow: 0 0 10px var(--neon-cyan),
+        0 0 20px var(--neon-cyan),
+        0 0 30px var(--neon-cyan),
+        0 0 40px var(--neon-cyan);
+    }
+}
+
+/* 边框流光 */
+@keyframes border-flow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* 浮动效果 */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+/* 抖动效果 */
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-3px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(3px);
+    }
+}
+
+/* 弹跳入场 */
+@keyframes bounce-in {
+    0% {
+        opacity: 0;
+        transform: scale(0.3) translateY(50px);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05) translateY(-10px);
+    }
+    70% {
+        transform: scale(0.95) translateY(5px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* 滑入动画 */
+@keyframes slide-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-in-left {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* 旋转发光 */
+@keyframes spin-glow {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* 粒子爆炸 */
+@keyframes particle-burst {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--tx), var(--ty)) scale(0);
+        opacity: 0;
+    }
+}
+
+/* 扫描线效果 */
+@keyframes scanline {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(100vh);
+    }
+}
+
+/* 进度条闪烁 */
+@keyframes progress-shine {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* 卡片翻转 */
+@keyframes card-flip {
+    0% {
+        transform: rotateY(0deg);
+    }
+    100% {
+        transform: rotateY(360deg);
+    }
+}
+
+/* 悬停震动 */
+@keyframes hover-shake {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-2deg);
+    }
+    75% {
+        transform: rotate(2deg);
+    }
+}
+
+/* ---------- 游戏风格基础类 ---------- */
+
+/* 像素文字效果 */
+.font-pixel {
+    font-family: 'Press Start 2P', cursive;
+    letter-spacing: -0.5px;
+}
+
+.font-gaming {
+    font-family: 'Rajdhani', 'Segoe UI', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+/* 霓虹文字 */
+.text-neon {
+    color: var(--neon-cyan);
+    text-shadow: 0 0 5px var(--neon-cyan),
+    0 0 10px var(--neon-cyan),
+    0 0 20px rgba(0, 245, 255, 0.5);
+}
+
+.text-neon-pink {
+    color: var(--neon-pink);
+    text-shadow: 0 0 5px var(--neon-pink),
+    0 0 10px var(--neon-pink),
+    0 0 20px rgba(255, 16, 240, 0.5);
+}
+
+.text-neon-green {
+    color: var(--neon-green);
+    text-shadow: 0 0 5px var(--neon-green),
+    0 0 10px var(--neon-green);
+}
+
+/* 游戏风格边框 */
+.border-pixel {
+    border: var(--pixel-border) solid transparent;
+    border-image: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple)) 1;
+    clip-path: polygon(
+            0 4px, 4px 0,
+            calc(100% - 4px) 0, 100% 4px,
+            100% calc(100% - 4px), calc(100% - 4px) 100%,
+            4px 100%, 0 calc(100% - 4px)
+    );
+}
+
+.border-glow {
+    position: relative;
+}
+
+.border-glow::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple), var(--neon-pink), var(--neon-cyan));
+    background-size: 400% 400%;
+    border-radius: inherit;
+    z-index: -1;
+    animation: border-flow 3s ease infinite;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.border-glow:hover::before {
+    opacity: 1;
+}
+
+/* ---------- 卡片游戏风格 ---------- */
+
+/* 游戏卡片基础 */
+.game-card {
+    background: var(--bg-card);
+    border: 2px solid rgba(0, 245, 255, 0.2);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s var(--transition-elastic);
+    backdrop-filter: blur(10px);
+}
+
+.game-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(0, 245, 255, 0.1),
+            transparent
+    );
+    transition: left 0.5s;
+}
+
+.game-card:hover::before {
+    left: 100%;
+}
+
+.game-card:hover {
+    border-color: var(--neon-cyan);
+    box-shadow: var(--glow-cyan);
+    transform: translateY(-5px) scale(1.02);
+}
+
+/* 像素风格卡片 */
+.pixel-card-style {
+    background: var(--bg-dark-secondary);
+    border: 4px solid #333;
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.1),
+    4px 4px 0 rgba(0, 0, 0, 0.5),
+    0 0 0 4px #222;
+    image-rendering: pixelated;
+    transition: all 0.15s ease;
+}
+
+.pixel-card-style:hover {
+    border-color: var(--mc-diamond);
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.2),
+    6px 6px 0 rgba(0, 0, 0, 0.3),
+    0 0 15px rgba(74, 237, 215, 0.4);
+    transform: translate(-2px, -2px);
+}
+
+.pixel-card-style:active {
+    transform: translate(2px, 2px);
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.1),
+    2px 2px 0 rgba(0, 0, 0, 0.5),
+    0 0 0 4px #222;
+}
+
+/* 稀有度边框 */
+.rarity-common {
+    border-color: #9CA3AF;
+}
+
+.rarity-uncommon {
+    border-color: #22C55E;
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+}
+
+.rarity-rare {
+    border-color: #3B82F6;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+}
+
+.rarity-epic {
+    border-color: #A855F7;
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+}
+
+.rarity-legendary {
+    border-color: #F59E0B;
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+    animation: pixel-flicker 2s infinite;
+}
+
+/* ---------- 按钮游戏风格 ---------- */
+
+/* 游戏按钮基础 */
+.game-btn {
+    position: relative;
+    padding: 12px 24px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: white;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border: 2px solid var(--neon-cyan);
+    border-radius: 8px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s var(--transition-elastic);
+    box-shadow: 0 4px 15px rgba(0, 245, 255, 0.2);
+}
+
+.game-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(0, 245, 255, 0.3),
+            transparent
+    );
+    transition: left 0.4s;
+}
+
+.game-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--glow-cyan);
+    border-color: var(--neon-cyan);
+}
+
+.game-btn:hover::before {
+    left: 100%;
+}
+
+.game-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 8px rgba(0, 245, 255, 0.2);
+}
+
+/* 像素按钮 */
+.pixel-btn {
+    background: #4A5568;
+    border: 4px solid #2D3748;
+    border-radius: 0;
+    padding: 10px 20px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px;
+    color: white;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: inset -4px -4px 0 rgba(0, 0, 0, 0.3),
+    inset 4px 4px 0 rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.1s;
+    image-rendering: pixelated;
+}
+
+.pixel-btn:hover {
+    background: #5A6578;
+    transform: translate(-1px, -1px);
+}
+
+.pixel-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: inset -2px -2px 0 rgba(0, 0, 0, 0.3),
+    inset 2px 2px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* 钻石风格按钮 */
+.btn-diamond {
+    background: linear-gradient(135deg, #1a3a3a 0%, #2d5a5a 50%, #1a3a3a 100%);
+    border-color: var(--mc-diamond);
+    box-shadow: 0 0 15px rgba(74, 237, 215, 0.3);
+}
+
+.btn-diamond:hover {
+    box-shadow: 0 0 25px rgba(74, 237, 215, 0.5);
+}
+
+/* ---------- 进度条游戏风格 ---------- */
+
+/* 游戏进度条 */
+.game-progress {
+    height: 12px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid #333;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.game-progress-fill {
+    height: 100%;
+    background: linear-gradient(
+            90deg,
+            var(--mc-diamond) 0%,
+            var(--neon-cyan) 50%,
+            var(--mc-diamond) 100%
+    );
+    background-size: 200% 100%;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+    position: relative;
+    animation: progress-shine 2s linear infinite;
+}
+
+.game-progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), transparent);
+    border-radius: 4px 4px 0 0;
+}
+
+/* 经验条风格 */
+.xp-progress {
+    height: 8px;
+    background: #2a2a2a;
+    border: 2px solid #1a1a1a;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.xp-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #84CC16, #A3E635);
+    box-shadow: 0 0 10px rgba(132, 204, 22, 0.5);
+}
+
+/* ---------- Tab 游戏风格 ---------- */
+
+/* 游戏风格 Tab */
+.game-tabs {
+    background: transparent;
+}
+
+.game-tabs .n-tabs-nav {
+    background: linear-gradient(180deg, rgba(22, 22, 29, 0.9) 0%, rgba(13, 13, 18, 0.95) 100%);
+    border-bottom: 2px solid rgba(0, 245, 255, 0.2);
+    padding: 8px 20px;
+}
+
+.game-tabs .n-tab {
+    position: relative;
+    padding: 14px 24px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.6);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.game-tabs .n-tab::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+    transition: all 0.3s var(--transition-elastic);
+    transform: translateX(-50%);
+    border-radius: 2px 2px 0 0;
+}
+
+.game-tabs .n-tab:hover {
+    color: rgba(255, 255, 255, 0.9);
+    transform: translateY(-2px);
+}
+
+.game-tabs .n-tab:hover::before {
+    width: 60%;
+    opacity: 0.5;
+}
+
+.game-tabs .n-tab.n-tab--active {
+    color: var(--neon-cyan);
+    text-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
+}
+
+.game-tabs .n-tab.n-tab--active::before {
+    width: 100%;
+    box-shadow: 0 0 15px var(--neon-cyan);
+}
+
+/* ---------- 粒子效果 ---------- */
+
+/* 粒子容器 */
+.particles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+/* 像素粒子 */
+.pixel-particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: var(--neon-cyan);
+    opacity: 0.6;
+    animation: float 8s ease-in-out infinite;
+    box-shadow: 0 0 10px currentColor;
+}
+
+/* 方块粒子 */
+.block-particle {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(0, 245, 255, 0.3);
+    animation: spin-glow 10s linear infinite, float 6s ease-in-out infinite;
+}
+
+/* ---------- 扫描线背景 ---------- */
+
+.scanlines {
+    position: relative;
+}
+
+.scanlines::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.03) 0px,
+            rgba(0, 0, 0, 0.03) 1px,
+            transparent 1px,
+            transparent 2px
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ---------- 网格背景 ---------- */
+
+.grid-bg {
+    background-image: linear-gradient(rgba(0, 245, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 245, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+}
+
+/* ---------- 模态框游戏风格 ---------- */
+
+.game-modal {
+    background: linear-gradient(180deg, #1a1a24 0%, #121218 100%);
+    border: 2px solid var(--neon-cyan);
+    border-radius: 16px;
+    box-shadow: 0 0 30px rgba(0, 245, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.game-modal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+}
+
+/* 角落装饰 */
+.corner-decoration {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--neon-cyan);
+}
+
+.corner-decoration.tl {
+    top: -2px;
+    left: -2px;
+    border-right: none;
+    border-bottom: none;
+}
+
+.corner-decoration.tr {
+    top: -2px;
+    right: -2px;
+    border-left: none;
+    border-bottom: none;
+}
+
+.corner-decoration.bl {
+    bottom: -2px;
+    left: -2px;
+    border-right: none;
+    border-top: none;
+}
+
+.corner-decoration.br {
+    bottom: -2px;
+    right: -2px;
+    border-left: none;
+    border-top: none;
+}
+
+/* ---------- 徽章/标签 ---------- */
+
+.game-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 4px;
+    background: rgba(0, 245, 255, 0.15);
+    border: 1px solid rgba(0, 245, 255, 0.3);
+    color: var(--neon-cyan);
+    text-shadow: 0 0 5px rgba(0, 245, 255, 0.5);
+}
+
+.game-badge.rare {
+    background: rgba(168, 85, 247, 0.15);
+    border-color: rgba(168, 85, 247, 0.3);
+    color: var(--neon-purple);
+    text-shadow: 0 0 5px rgba(184, 41, 247, 0.5);
+}
+
+.game-badge.epic {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: rgba(245, 158, 11, 0.3);
+    color: var(--neon-orange);
+    text-shadow: 0 0 5px rgba(255, 149, 0, 0.5);
+    animation: pixel-flicker 2s infinite;
+}
+
+/* ---------- 加载动画 ---------- */
+
+/* 像素加载器 */
+.pixel-loader {
+    display: inline-block;
+    position: relative;
+    width: 64px;
+    height: 64px;
+}
+
+.pixel-loader div {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: var(--neon-cyan);
+    animation: pixel-loader 1.2s linear infinite;
+    box-shadow: 0 0 10px var(--neon-cyan);
+}
+
+.pixel-loader div:nth-child(1) {
+    top: 8px;
+    left: 8px;
+    animation-delay: 0s;
+}
+
+.pixel-loader div:nth-child(2) {
+    top: 8px;
+    left: 28px;
+    animation-delay: -0.4s;
+}
+
+.pixel-loader div:nth-child(3) {
+    top: 8px;
+    left: 48px;
+    animation-delay: -0.8s;
+}
+
+.pixel-loader div:nth-child(4) {
+    top: 28px;
+    left: 8px;
+    animation-delay: -0.4s;
+}
+
+.pixel-loader div:nth-child(5) {
+    top: 28px;
+    left: 28px;
+    animation-delay: -0.8s;
+}
+
+.pixel-loader div:nth-child(6) {
+    top: 28px;
+    left: 48px;
+    animation-delay: -1.2s;
+}
+
+.pixel-loader div:nth-child(7) {
+    top: 48px;
+    left: 8px;
+    animation-delay: -0.8s;
+}
+
+.pixel-loader div:nth-child(8) {
+    top: 48px;
+    left: 28px;
+    animation-delay: -1.2s;
+}
+
+.pixel-loader div:nth-child(9) {
+    top: 48px;
+    left: 48px;
+    animation-delay: -1.6s;
+}
+
+@keyframes pixel-loader {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.3;
+        transform: scale(0.8);
+    }
+}
+
+/* 旋转方块加载器 */
+.cube-loader {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: cube-spin 2s infinite ease-in-out;
+}
+
+.cube-loader::before,
+.cube-loader::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 3px solid var(--neon-cyan);
+    box-shadow: 0 0 10px var(--neon-cyan);
+}
+
+.cube-loader::before {
+    transform: translateZ(20px);
+}
+
+.cube-loader::after {
+    transform: rotateY(90deg) translateZ(20px);
+}
+
+@keyframes cube-spin {
+    0% {
+        transform: rotateX(0) rotateY(0);
+    }
+    100% {
+        transform: rotateX(360deg) rotateY(360deg);
+    }
+}
+
+/* ---------- 悬停工具提示 ---------- */
+
+.game-tooltip {
+    position: relative;
+}
+
+.game-tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    padding: 8px 12px;
+    background: rgba(13, 13, 18, 0.95);
+    border: 1px solid var(--neon-cyan);
+    border-radius: 6px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 12px;
+    color: var(--neon-cyan);
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    pointer-events: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    z-index: 100;
+}
+
+.game-tooltip:hover::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-4px);
+}
+
+/* ---------- 成就/通知弹出 ---------- */
+
+.achievement-popup {
+    position: fixed;
+    top: 20px;
+    right: -400px;
+    background: linear-gradient(135deg, #1a1a24 0%, #121218 100%);
+    border: 2px solid var(--neon-cyan);
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: var(--glow-cyan);
+    transition: right 0.5s var(--transition-elastic);
+    z-index: 1000;
+}
+
+.achievement-popup.show {
+    right: 20px;
+}
+
+.achievement-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(0, 245, 255, 0.1);
+    border: 2px solid var(--neon-cyan);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.achievement-text h4 {
+    margin: 0;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.achievement-text p {
+    margin: 4px 0 0;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--neon-cyan);
+}
+
+/* ---------- 输入框游戏风格 ---------- */
+
+.game-input {
+    background: rgba(13, 13, 18, 0.8);
+    border: 2px solid rgba(0, 245, 255, 0.2);
+    border-radius: 8px;
+    padding: 12px 16px;
+    color: white;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.game-input:focus {
+    outline: none;
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 15px rgba(0, 245, 255, 0.2);
+}
+
+.game-input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* ---------- 滚动条游戏风格 ---------- */
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-dark-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--neon-cyan), var(--neon-purple));
+    border-radius: 5px;
+    border: 2px solid var(--bg-dark-primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--neon-cyan), var(--neon-pink));
+}
+
+/* ---------- 响应式优化 ---------- */
+
+@media (max-width: 768px) {
+    .game-tabs .n-tab {
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+
+    .game-btn {
+        padding: 10px 18px;
+        font-size: 12px;
+    }
+
+    .pixel-btn {
+        padding: 8px 14px;
+        font-size: 8px;
+    }
+
+    .achievement-popup {
+        left: 10px;
+        right: 10px;
+        width: auto;
+    }
+
+    .achievement-popup.show {
+        right: 10px;
+    }
+}
+
+/* ---------- 减少动画偏好 ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
