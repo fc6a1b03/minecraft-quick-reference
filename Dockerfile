@@ -1,7 +1,7 @@
 FROM oven/bun AS builder
 WORKDIR /app
 COPY . .
-RUN bun update && bun run build
+RUN bun run update && bun run build
 
 ################################
 

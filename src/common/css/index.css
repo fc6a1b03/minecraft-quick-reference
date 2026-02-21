@@ -768,6 +768,26 @@ a:focus,
     width: 100%;
 }
 
+/* ==================== Biology 空卡片样式 ==================== */
+.modern-card--empty {
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    pointer-events: none;
+    min-height: auto;
+}
+
+.modern-card--empty::before {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    /* 移动端单列布局不需要空卡片 */
+    .modern-card--empty {
+        display: none;
+    }
+}
+
 /* ==================== Purpur/Folia Tab 容器 ==================== */
 .purpur-container {
     width: 100%;

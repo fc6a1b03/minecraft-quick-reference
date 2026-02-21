@@ -18,9 +18,9 @@
         @click="showDetail(mob)"
     />
     <div
-        v-for="n in emptyCount"
+        v-for="n in emptySlots"
         :key="`empty-${n}`"
-        class="modern-card"
+        class="modern-card modern-card--empty"
         aria-hidden="true"
     />
   </div>
@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, nextTick, onMounted, ref, watch} from 'vue'
+import {computed, nextTick, onBeforeUnmount, onMounted, ref, watch} from 'vue'
 import {NButton, NInput} from 'naive-ui'
 import BiologyCard from '@/components/BiologyCard.vue'
 import BiologyModal from '@/components/BiologyModal.vue'
@@ -53,7 +53,7 @@ interface Emits {
   (e: 'update:loading', value: boolean): void
 }
 
-defineEmits<Emits>();
+defineEmits<Emits>()
 const type: ServerType = 'biology'
 const searchQuery = ref<string>('')
 const showModal = ref<boolean>(false)
@@ -75,12 +75,22 @@ const {
   getPaginatedData,
   loadMore,
   setTotal,
-  emptyCardCount,
+  updatePageSize,
   hasMore
 } = usePagination(type)
 
 const paginatedData = computed(() => getPaginatedData(filteredData.value))
-const emptyCount = computed(() => emptyCardCount(paginatedData.value.length))
+
+/** 当前实际列数 */
+const currentCols = ref(4)
+
+/** 计算空卡片数量 */
+const emptySlots = computed(() => {
+  const dataCount = paginatedData.value.length
+  if (dataCount === 0 || currentCols.value <= 1) return 0
+  const mod = dataCount % currentCols.value
+  return mod === 0 ? 0 : currentCols.value - mod
+})
 
 /**
  * 过滤数据
@@ -109,29 +119,50 @@ const showDetail = (mob: BiologyDataItem): void => {
 }
 
 /**
- * 监听窗口大小变化
+ * 监听网格大小变化
  */
-const handleResize = (): void => {
-  nextTick(() => {
+const handleResize = async (): Promise<void> => {
+  await updatePageSize(gridRef.value, false)
+  // 更新当前列数用于空卡片计算
+  await nextTick(() => {
     if (gridRef.value) {
       const colCount = window.getComputedStyle(gridRef.value).gridTemplateColumns.split(' ').length
       if (colCount > 0) {
-        pager.value.pageSize = colCount * 3
+        currentCols.value = colCount
       }
     }
   })
 }
 
+/**
+ * 设置 ResizeObserver
+ */
+const setupResizeObserver = (): void => {
+  if (gridRef.value) {
+    resizeObserver = new ResizeObserver(() => handleResize())
+    resizeObserver.observe(gridRef.value)
+  }
+}
+
+/**
+ * 清理 ResizeObserver
+ */
+const cleanupResizeObserver = (): void => {
+  if (resizeObserver) {
+    resizeObserver.disconnect()
+    resizeObserver = null
+  }
+}
+
 onMounted(() => {
   setTotal(allData.value.length)
-  window.addEventListener('resize', handleResize)
   nextTick(() => {
-    if (gridRef.value) {
-      new ResizeObserver(() => handleResize()).observe(gridRef.value)
-    }
+    setupResizeObserver()
     handleResize()
   })
 })
+
+onBeforeUnmount(() => cleanupResizeObserver())
 
 watch(searchQuery, () => filterData())
 </script>
