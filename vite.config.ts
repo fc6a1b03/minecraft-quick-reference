@@ -1,11 +1,19 @@
-import * as path from "node:path"
-import {defineConfig} from "vite"
-import vue from "@vitejs/plugin-vue"
-import vueJsx from "@vitejs/plugin-vue-jsx"
-import compression from "vite-plugin-compression"
+import * as path from 'node:path'
+import {defineConfig} from 'vite'
+import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
+import compression from 'vite-plugin-compression'
 
 export default defineConfig({
-    plugins: [vue(), vueJsx()],
+    plugins: [
+        vue(),
+        vueJsx(),
+        compression({
+            algorithm: 'gzip',
+            ext: '.gz',
+            threshold: 1024
+        })
+    ],
     resolve: {
         alias: {
             '@': path.resolve(__dirname, './src'),

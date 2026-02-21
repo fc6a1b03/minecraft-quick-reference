@@ -1,29 +1,30 @@
+<!--suppress ExceptionCaughtLocallyJS -->
 <template>
   <div style="width: 100%; max-width: 700px; margin: 0 auto; padding: 0 20px; box-sizing: border-box">
     <n-space vertical size="large">
       <n-space class="purpur-select-row" align="center">
         <span>选择 Minecraft 版本：</span>
         <n-select
-          class="purpur-select"
-          :loading="loading"
-          v-model:value="selectedMcVersion"
-          @update:value="handleMcVersionChange"
-          style="min-width: 180px; width: 100%; max-width: 280px"
-          :options="minecraftVersions.map(v => ({ label: v, value: v }))"
+            class="purpur-select"
+            :loading="loading"
+            v-model:value="selectedMcVersion"
+            @update:value="handleMcVersionChange"
+            style="min-width: 180px; width: 100%; max-width: 280px"
+            :options="minecraftVersions.map(v => ({ label: v, value: v }))"
         />
         <span>选择 Purpur 构建：</span>
         <n-select
-          class="purpur-select"
-          :loading="loading"
-          v-model:value="selectedBuild"
-          @update:value="handleBuildChange"
-          :options="builds.map(b => ({ label: b, value: b }))"
-          style="min-width: 150px; white-space: nowrap; width: 100%; max-width: 220px"
+            class="purpur-select"
+            :loading="loading"
+            v-model:value="selectedBuild"
+            @update:value="handleBuildChange"
+            :options="builds.map(b => ({ label: b, value: b }))"
+            style="min-width: 150px; white-space: nowrap; width: 100%; max-width: 220px"
         />
       </n-space>
       <BuildDetailCard
-        :disabled="!selectedMcVersion || !selectedBuild"
-        @download="handleDownload"
+          :disabled="!selectedMcVersion || !selectedBuild"
+          @download="handleDownload"
       >
         <template #content>
           <div><strong>项目:</strong> {{ buildDetail?.project || 'N/A' }}</div>
@@ -56,12 +57,12 @@
 </template>
 
 <script lang="ts" setup>
-import {ref, onMounted} from 'vue'
-import {NSpace, NSelect, NCollapse, NCollapseItem} from 'naive-ui'
+import {onMounted, ref} from 'vue'
+import {NCollapse, NCollapseItem, NSelect, NSpace} from 'naive-ui'
 import BuildDetailCard from '@/components/BuildDetailCard.vue'
+import type {DownloadProgress} from '@/composables/useDownload'
 import {useDownload} from '@/composables/useDownload'
 import type {PurpurBuildDetail, ServerType} from '@/types'
-import type {DownloadProgress} from '@/composables/useDownload'
 
 /**
  * 组件事件
@@ -171,7 +172,5 @@ const handleDownload = async (onProgress: (progress: DownloadProgress) => void):
   }
 }
 
-onMounted(() => {
-  fetchMinecraftVersions()
-})
+onMounted(() => fetchMinecraftVersions())
 </script>

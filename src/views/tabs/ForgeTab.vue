@@ -1,23 +1,24 @@
+<!--suppress ExceptionCaughtLocallyJS -->
 <template>
   <VersionCardGrid
-    :data="paginatedData"
-    :has-more="hasMore"
-    :cards-per-row="cardsPerRow"
-    :download-progress="downloadProgress"
-    @load-more="loadMore"
-    @download="handleDownload"
-    @grid-update="updatePageSize($event, true)"
-    @grid-resize="updatePageSize($event, false)"
+      :data="paginatedData"
+      :has-more="hasMore"
+      :cards-per-row="cardsPerRow"
+      :download-progress="downloadProgress"
+      @load-more="loadMore"
+      @download="handleDownload"
+      @grid-update="updatePageSize($event, true)"
+      @grid-resize="updatePageSize($event, false)"
   />
 </template>
 
 <script lang="ts" setup>
-import {ref, computed, onMounted, reactive} from 'vue'
+import {computed, onMounted, reactive, ref} from 'vue'
 import VersionCardGrid from '@/components/VersionCardGrid.vue'
 import {usePagination} from '@/composables/usePagination'
-import {useDownload} from '@/composables/useDownload'
-import type {VersionItem, ServerType} from '@/types'
 import type {DownloadProgress} from '@/composables/useDownload'
+import {useDownload} from '@/composables/useDownload'
+import type {ServerType, VersionItem} from '@/types'
 
 /**
  * 组件事件
@@ -25,6 +26,7 @@ import type {DownloadProgress} from '@/composables/useDownload'
 interface Emits {
   /** 更新加载状态 */
   (e: 'update:loading', value: boolean): void
+
   /** 错误 */
   (e: 'error', message: string, isCors: boolean): void
 }
@@ -40,7 +42,6 @@ const loadingState = {[type]: false}
 const {handleDownload: downloadFile} = useDownload(loadingState as Record<ServerType, boolean>)
 
 const {
-  pager,
   getPaginatedData,
   loadMore,
   setTotal,
@@ -65,18 +66,18 @@ const fetchForgeVersions = async (): Promise<void> => {
       throw new Error('Forge 数据格式错误，无法解析')
     }
     const list = Object.entries(promotions.promos)
-      .filter(([key]: [string, any]) => key.endsWith('-latest'))
-      .map(([key, value]) => {
-        const minecraftVersion = key.split('-')[0] || ''
-        return {
-          name: `forge-server-mc.${minecraftVersion}-${value}-installer.jar`,
-          version: minecraftVersion,
-          date: '无',
-          type: 'forge',
-          url: `https://maven.minecraftforge.net/net/minecraftforge/forge/${minecraftVersion}-${value}/forge-${minecraftVersion}-${value}-installer.jar`
-        }
-      })
-      .sort((a: any, b: any) => b.version.localeCompare(a.version, undefined, {numeric: true, sensitivity: 'base'}))
+        .filter(([key]: [string, any]) => key.endsWith('-latest'))
+        .map(([key, value]) => {
+          const minecraftVersion = key.split('-')[0] || ''
+          return {
+            name: `forge-server-mc.${minecraftVersion}-${value}-installer.jar`,
+            version: minecraftVersion,
+            date: '无',
+            type: 'forge',
+            url: `https://maven.minecraftforge.net/net/minecraftforge/forge/${minecraftVersion}-${value}/forge-${minecraftVersion}-${value}-installer.jar`
+          }
+        })
+        .sort((a: any, b: any) => b.version.localeCompare(a.version, undefined, {numeric: true, sensitivity: 'base'}))
     versions.value = list
     setTotal(list.length)
   } catch (error: any) {
@@ -98,12 +99,10 @@ const handleDownload = (item: VersionItem, onProgress: (progress: DownloadProgre
     loaded: 0,
     total: 0
   }
-
   const progressCallback = (progress: DownloadProgress) => {
     downloadProgress[item.name] = progress
     onProgress(progress)
   }
-
   downloadFile(type, item.name, item.url, false, progressCallback)
 }
 
@@ -120,7 +119,5 @@ const updatePageSize = (el: HTMLElement, isInit: boolean = false): void => {
   }
 }
 
-onMounted(() => {
-  fetchForgeVersions()
-})
+onMounted(() => fetchForgeVersions())
 </script>

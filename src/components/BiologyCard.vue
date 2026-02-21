@@ -1,7 +1,7 @@
 <template>
   <div class="modern-card" @click="$emit('click')">
     <div class="modern-card-image" v-if="image">
-      <img :src="image" :alt="name" />
+      <img :src="image" :alt="name"/>
     </div>
     <div class="modern-card-title">{{ name }}</div>
     <div class="modern-card-meta">{{ category }}</div>

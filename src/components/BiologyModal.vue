@@ -1,11 +1,11 @@
 <template>
   <n-modal
-    :show="show"
-    @update:show="$emit('update:show', $event)"
-    preset="card"
-    :style="{width: '80%', maxWidth: '800px'}"
-    size="huge"
-    :bordered="false"
+      :show="show"
+      @update:show="$emit('update:show', $event)"
+      preset="card"
+      :style="{width: '80%', maxWidth: '800px'}"
+      size="huge"
+      :bordered="false"
   >
     <template #header>
       <div class="mob-detail-header">
@@ -15,7 +15,7 @@
     </template>
     <div class="mob-detail-content">
       <div class="mob-detail-image" v-if="data.image">
-        <img :src="data.image" :alt="data.name" />
+        <img :src="data.image" :alt="data.name"/>
       </div>
       <div class="mob-detail-description" v-html="data.description"></div>
       <div class="mob-detail-link" v-if="data.link">
@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts" setup>
-import {NModal, NButton} from 'naive-ui'
+import {NButton, NModal} from 'naive-ui'
 import type {BiologyDataItem} from '@/types'
 
 /**

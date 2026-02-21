@@ -13,9 +13,9 @@
         <div class="progress-text">{{ downloadProgress.percent }}%</div>
       </template>
       <button
-        class="modern-card-btn"
-        @click="handleClick"
-        :disabled="downloadProgress.loading"
+          class="modern-card-btn"
+          @click="handleClick"
+          :disabled="downloadProgress.loading"
       >
         {{ downloadProgress.loading ? '下载中...' : '下载' }}
       </button>

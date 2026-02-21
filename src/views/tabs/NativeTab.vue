@@ -1,23 +1,24 @@
+<!--suppress ExceptionCaughtLocallyJS -->
 <template>
   <VersionCardGrid
-    :data="paginatedData"
-    :has-more="hasMore"
-    :cards-per-row="cardsPerRow"
-    :download-progress="downloadProgress"
-    @load-more="loadMore"
-    @download="handleDownload"
-    @grid-update="updatePageSize($event, true)"
-    @grid-resize="updatePageSize($event, false)"
+      :data="paginatedData"
+      :has-more="hasMore"
+      :cards-per-row="cardsPerRow"
+      :download-progress="downloadProgress"
+      @load-more="loadMore"
+      @download="handleDownload"
+      @grid-update="updatePageSize($event, true)"
+      @grid-resize="updatePageSize($event, false)"
   />
 </template>
 
 <script lang="ts" setup>
-import {ref, computed, onMounted, reactive} from 'vue'
+import {computed, onMounted, reactive, ref} from 'vue'
 import VersionCardGrid from '@/components/VersionCardGrid.vue'
 import {usePagination} from '@/composables/usePagination'
-import {useDownload} from '@/composables/useDownload'
-import type {VersionItem, ServerType} from '@/types'
 import type {DownloadProgress} from '@/composables/useDownload'
+import {useDownload} from '@/composables/useDownload'
+import type {ServerType, VersionItem} from '@/types'
 
 /**
  * 组件事件
@@ -25,6 +26,7 @@ import type {DownloadProgress} from '@/composables/useDownload'
 interface Emits {
   /** 更新加载状态 */
   (e: 'update:loading', value: boolean): void
+
   /** 错误 */
   (e: 'error', message: string, isCors: boolean): void
 }
@@ -92,12 +94,10 @@ const handleDownload = (item: VersionItem, onProgress: (progress: DownloadProgre
     loaded: 0,
     total: 0
   }
-
   const progressCallback = (progress: DownloadProgress) => {
     downloadProgress[item.name] = progress
     onProgress(progress)
   }
-
   downloadFile(type, item.name, item.url, true, progressCallback)
 }
 
@@ -114,7 +114,5 @@ const updatePageSize = (el: HTMLElement, isInit: boolean = false): void => {
   }
 }
 
-onMounted(() => {
-  fetchNativeVersions()
-})
+onMounted(() => fetchNativeVersions())
 </script>

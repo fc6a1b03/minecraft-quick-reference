@@ -11,35 +11,35 @@
                 class="cool-link"
                 href="https://webextension.org/listing/access-control.html"
                 target="_blank"
-              >CORS Unblock</a>浏览器插件并对该网站激活后刷新页面
+            >CORS Unblock</a>浏览器插件并对该网站激活后刷新页面
             </li>
             <li>
               下载地址：
               <n-space vertical>
                 <n-button
-                  class="cool-link"
-                  href="https://chromewebstore.google.com/detail/cors-unblock/lfhmikememgdcahcdlaciloancbhjino"
-                  tag="a"
-                  target="_blank"
-                  text
+                    class="cool-link"
+                    href="https://chromewebstore.google.com/detail/cors-unblock/lfhmikememgdcahcdlaciloancbhjino"
+                    tag="a"
+                    target="_blank"
+                    text
                 >
                   Google Chrome
                 </n-button>
                 <n-button
-                  class="cool-link"
-                  href="https://microsoftedge.microsoft.com/addons/detail/cors-unblock/hkjklmhkbkdhlgnnfbbcihcajofmjgbh"
-                  tag="a"
-                  target="_blank"
-                  text
+                    class="cool-link"
+                    href="https://microsoftedge.microsoft.com/addons/detail/cors-unblock/hkjklmhkbkdhlgnnfbbcihcajofmjgbh"
+                    tag="a"
+                    target="_blank"
+                    text
                 >
                   Microsoft Edge
                 </n-button>
                 <n-button
-                  class="cool-link"
-                  href="https://addons.mozilla.org/zh-CN/firefox/addon/cors-unblock/"
-                  tag="a"
-                  target="_blank"
-                  text
+                    class="cool-link"
+                    href="https://addons.mozilla.org/zh-CN/firefox/addon/cors-unblock/"
+                    tag="a"
+                    target="_blank"
+                    text
                 >
                   Mozilla Firefox
                 </n-button>
@@ -56,7 +56,7 @@
 </template>
 
 <script lang="ts" setup>
-import {NAlert, NSpace, NButton} from 'naive-ui'
+import {NAlert, NButton, NSpace} from 'naive-ui'
 
 /**
  * 组件属性

@@ -1,29 +1,30 @@
+<!--suppress ExceptionCaughtLocallyJS -->
 <template>
   <div style="width: 100%; max-width: 700px; margin: 0 auto; padding: 0 20px; box-sizing: border-box">
     <n-space vertical size="large">
       <n-space class="folia-select-row" align="center">
         <span>选择 Minecraft 版本：</span>
         <n-select
-          class="folia-select"
-          :loading="loading"
-          v-model:value="selectedMcVersion"
-          @update:value="handleMcVersionChange"
-          style="min-width: 180px; width: 100%; max-width: 280px"
-          :options="minecraftVersions.map(v => ({ label: v, value: v }))"
+            class="folia-select"
+            :loading="loading"
+            v-model:value="selectedMcVersion"
+            @update:value="handleMcVersionChange"
+            style="min-width: 180px; width: 100%; max-width: 280px"
+            :options="minecraftVersions.map(v => ({ label: v, value: v }))"
         />
         <span>选择 Folia 构建：</span>
         <n-select
-          class="folia-select"
-          :loading="loading"
-          v-model:value="selectedBuild"
-          @update:value="handleBuildChange"
-          :options="builds.slice().reverse().map(b => ({ label: String(b), value: b }))"
-          style="min-width: 150px; white-space: nowrap; width: 100%; max-width: 220px"
+            class="folia-select"
+            :loading="loading"
+            v-model:value="selectedBuild"
+            @update:value="handleBuildChange"
+            :options="builds.slice().reverse().map(b => ({ label: String(b), value: b }))"
+            style="min-width: 150px; white-space: nowrap; width: 100%; max-width: 220px"
         />
       </n-space>
       <BuildDetailCard
-        :disabled="!selectedMcVersion || !selectedBuild"
-        @download="handleDownload"
+          :disabled="!selectedMcVersion || !selectedBuild"
+          @download="handleDownload"
       >
         <template #content>
           <div><strong>项目:</strong> Folia</div>
@@ -41,7 +42,10 @@
                 <div><strong>最低版本:</strong> Java {{ buildDetail.version.java.version.minimum }}</div>
                 <div v-if="buildDetail.version.java.flags?.recommended?.length">
                   <strong>推荐 JVM 参数:</strong>
-                  <pre style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 4px; overflow-x: auto; font-size: 12px; margin-top: 8px">{{ buildDetail.version.java.flags.recommended.join(' ') }}</pre>
+                  <pre
+                      style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 4px; overflow-x: auto; font-size: 12px; margin-top: 8px">{{
+                      buildDetail.version.java.flags.recommended.join(' ')
+                    }}</pre>
                 </div>
               </n-collapse-item>
             </n-collapse>
@@ -52,7 +56,9 @@
                 <ul style="padding-left: 1em">
                   <li v-for="c in buildDetail.commits" :key="c.sha">
                     <div style="font-size:13px; white-space:pre-line; margin:5px 0">{{ c.message }}</div>
-                    <div style="font-size:12px; color:#aaa">{{ c.sha.substring(0, 8) }} | {{ c.time ? new Date(c.time).toLocaleString() : '' }}</div>
+                    <div style="font-size:12px; color:#aaa">{{ c.sha.substring(0, 8) }} |
+                      {{ c.time ? new Date(c.time).toLocaleString() : '' }}
+                    </div>
                   </li>
                 </ul>
               </n-collapse-item>
@@ -65,12 +71,12 @@
 </template>
 
 <script lang="ts" setup>
-import {ref, onMounted} from 'vue'
-import {NSpace, NSelect, NCollapse, NCollapseItem} from 'naive-ui'
+import {onMounted, ref} from 'vue'
+import {NCollapse, NCollapseItem, NSelect, NSpace} from 'naive-ui'
 import BuildDetailCard from '@/components/BuildDetailCard.vue'
+import type {DownloadProgress} from '@/composables/useDownload'
 import {useDownload} from '@/composables/useDownload'
 import type {FoliaBuildDetail, ServerType} from '@/types'
-import type {DownloadProgress} from '@/composables/useDownload'
 
 /**
  * 组件事件
@@ -106,7 +112,10 @@ const fetchVersions = async (): Promise<void> => {
     Object.values(data.versions || {}).forEach((arr: any) => {
       if (Array.isArray(arr)) allVersions.push(...arr)
     })
-    minecraftVersions.value = allVersions.sort((a, b) => b.localeCompare(a, undefined, {numeric: true, sensitivity: 'base'}))
+    minecraftVersions.value = allVersions.sort((a, b) => b.localeCompare(a, undefined, {
+      numeric: true,
+      sensitivity: 'base'
+    }))
     const mcResp = await fetch('https://launchermeta.mojang.com/mc/game/version_manifest.json')
     if (!mcResp.ok) throw new Error('无法加载 Minecraft 版本列表')
     const mcData = await mcResp.json()
@@ -189,7 +198,5 @@ const handleDownload = async (onProgress: (progress: DownloadProgress) => void):
   }
 }
 
-onMounted(() => {
-  fetchVersions()
-})
+onMounted(() => fetchVersions())
 </script>

@@ -7,20 +7,20 @@ export type ServerType = 'native' | 'fabric' | 'forge' | 'neoForge' | 'purpur' |
  * 版本数据项
  */
 export interface VersionItem {
-  name: string
-  version: string
-  date: string
-  type: string
-  url: string
+    name: string
+    version: string
+    date: string
+    type: string
+    url: string
 }
 
 /**
  * 分页信息
  */
 export interface Pager {
-  pageNum: number
-  pageSize: number
-  total: number
+    pageNum: number
+    pageSize: number
+    total: number
 }
 
 /**
@@ -47,69 +47,69 @@ export type CorsErrorRecord = Record<ServerType, boolean>
  * 版本数据结构
  */
 export interface VersionData {
-  native: VersionItem[]
-  fabric: VersionItem[]
-  forge: VersionItem[]
-  neoForge: VersionItem[]
-  purpur: VersionItem[]
-  folia: VersionItem[]
+    native: VersionItem[]
+    fabric: VersionItem[]
+    forge: VersionItem[]
+    neoForge: VersionItem[]
+    purpur: VersionItem[]
+    folia: VersionItem[]
 }
 
 /**
  * Purpur 构建详情
  */
 export interface PurpurBuildDetail {
-  project: string
-  version: string
-  build: string
-  timestamp: string
-  commits?: Array<{
-    hash: string
-    author: string
-    email: string
-    description: string
+    project: string
+    version: string
+    build: string
     timestamp: string
-  }>
+    commits?: Array<{
+        hash: string
+        author: string
+        email: string
+        description: string
+        timestamp: string
+    }>
 }
 
 /**
  * Folia 构建详情
  */
 export interface FoliaBuildDetail {
-  id: number
-  channel: string
-  time: string
-  commits?: Array<{
-    sha: string
-    message: string
+    id: number
+    channel: string
     time: string
-  }>
-  version?: {
-    java?: {
-      version: {
-        minimum: string
-      }
-      flags?: {
-        recommended?: string[]
-      }
+    commits?: Array<{
+        sha: string
+        message: string
+        time: string
+    }>
+    version?: {
+        java?: {
+            version: {
+                minimum: string
+            }
+            flags?: {
+                recommended?: string[]
+            }
+        }
     }
-  }
-  downloads?: {
-    'server:default'?: {
-      name: string
-      url: string
+    downloads?: {
+        'server:default'?: {
+            name: string
+            url: string
+        }
     }
-  }
 }
 
 /**
  * 生物数据项
  */
 export interface BiologyDataItem {
-  name: string
-  category: string
-  image: string
-  shortDescription: string
-  description: string
-  link: string
+    name: string
+    category: string
+    image: string
+    shortDescription: string
+    description: string
+    link: string
 }

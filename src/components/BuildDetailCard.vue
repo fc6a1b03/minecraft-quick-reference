@@ -4,7 +4,7 @@
       <span>构建详情</span>
     </div>
     <div class="pixel-card-content">
-      <slot name="content" />
+      <slot name="content"/>
     </div>
     <div class="card-footer">
       <template v-if="progress.loading">
@@ -14,9 +14,9 @@
         <div class="progress-text">{{ progress.percent }}%</div>
       </template>
       <button
-        class="modern-card-btn"
-        @click="$emit('download', onProgress)"
-        :disabled="disabled || progress.loading"
+          class="modern-card-btn"
+          @click="$emit('download', onProgress)"
+          :disabled="disabled || progress.loading"
       >
         {{ progress.loading ? '下载中...' : '下载' }}
       </button>

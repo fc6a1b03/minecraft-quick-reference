@@ -1,26 +1,26 @@
 <template>
   <div class="card-grid" ref="gridRef">
     <VersionCard
-      v-for="row in data"
-      :key="row.name"
-      :name="row.name"
-      :version="row.version"
-      :date="row.date"
-      :download-progress="getDownloadProgress(row.name)"
-      @download="(onProgress) => $emit('download', row, onProgress)"
+        v-for="row in data"
+        :key="row.name"
+        :name="row.name"
+        :version="row.version"
+        :date="row.date"
+        :download-progress="getDownloadProgress(row.name)"
+        @download="(onProgress) => $emit('download', row, onProgress)"
     />
     <div
-      v-for="n in emptyCount"
-      :key="`empty-${n}`"
-      class="modern-card"
-      aria-hidden="true"
+        v-for="n in emptyCount"
+        :key="`empty-${n}`"
+        class="modern-card"
+        aria-hidden="true"
     />
   </div>
   <div class="load-more-container">
     <n-button
-      class="load-more-button"
-      @click="$emit('loadMore')"
-      :disabled="!hasMore"
+        class="load-more-button"
+        @click="$emit('loadMore')"
+        :disabled="!hasMore"
     >
       加载更多
     </n-button>
@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts" setup>
-import {ref, computed, watch, onMounted, onBeforeUnmount, nextTick} from 'vue'
+import {computed, nextTick, onBeforeUnmount, onMounted, ref, watch} from 'vue'
 import {NButton} from 'naive-ui'
 import VersionCard from './VersionCard.vue'
 import type {VersionItem} from '@/types'
@@ -54,10 +54,13 @@ interface Props {
 interface Emits {
   /** 加载更多 */
   (e: 'loadMore'): void
+
   /** 下载 */
   (e: 'download', item: VersionItem, onProgress: (progress: DownloadProgress) => void): void
+
   /** 网格引用更新（首次挂载） */
   (e: 'gridUpdate', el: HTMLElement): void
+
   /** 网格大小变化（窗口调整） */
   (e: 'gridResize', el: HTMLElement): void
 }
@@ -130,9 +133,7 @@ onMounted(() => {
   })
 })
 
-onBeforeUnmount(() => {
-  cleanupResizeObserver()
-})
+onBeforeUnmount(() => cleanupResizeObserver())
 
 watch(gridRef, (newVal) => {
   cleanupResizeObserver()

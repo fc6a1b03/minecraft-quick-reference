@@ -1,44 +1,44 @@
 <template>
   <div style="padding: 0 20px">
     <n-input
-      v-model:value="searchQuery"
-      placeholder="搜索生物..."
-      clearable
-      style="margin-bottom: 20px; width: 100%"
+        v-model:value="searchQuery"
+        placeholder="搜索生物..."
+        clearable
+        style="margin-bottom: 20px; width: 100%"
     />
   </div>
   <div class="card-grid" ref="gridRef">
     <BiologyCard
-      v-for="mob in paginatedData"
-      :key="mob.name"
-      :name="mob.name"
-      :category="mob.category"
-      :image="mob.image"
-      :short-description="mob.shortDescription"
-      @click="showDetail(mob)"
+        v-for="mob in paginatedData"
+        :key="mob.name"
+        :name="mob.name"
+        :category="mob.category"
+        :image="mob.image"
+        :short-description="mob.shortDescription"
+        @click="showDetail(mob)"
     />
     <div
-      v-for="n in emptyCount"
-      :key="`empty-${n}`"
-      class="modern-card"
-      aria-hidden="true"
+        v-for="n in emptyCount"
+        :key="`empty-${n}`"
+        class="modern-card"
+        aria-hidden="true"
     />
   </div>
   <div class="load-more-container">
     <n-button
-      class="load-more-button"
-      @click="loadMore"
-      :disabled="!hasMore"
+        class="load-more-button"
+        @click="loadMore"
+        :disabled="!hasMore"
     >
       加载更多
     </n-button>
   </div>
-  <BiologyModal :show="showModal" @update:show="showModal = $event" :data="currentMob" />
+  <BiologyModal :show="showModal" @update:show="showModal = $event" :data="currentMob"/>
 </template>
 
 <script lang="ts" setup>
-import {ref, computed, onMounted, watch, nextTick} from 'vue'
-import {NInput, NButton} from 'naive-ui'
+import {computed, nextTick, onMounted, ref, watch} from 'vue'
+import {NButton, NInput} from 'naive-ui'
 import BiologyCard from '@/components/BiologyCard.vue'
 import BiologyModal from '@/components/BiologyModal.vue'
 import {usePagination} from '@/composables/usePagination'
@@ -52,6 +52,7 @@ interface Emits {
   /** 更新加载状态 */
   (e: 'update:loading', value: boolean): void
 }
+
 defineEmits<Emits>();
 const type: ServerType = 'biology'
 const searchQuery = ref<string>('')
@@ -90,9 +91,9 @@ const filterData = (): void => {
   } else {
     const search = searchQuery.value.toLowerCase()
     filteredData.value = allData.value.filter(mob =>
-      mob.name.toLowerCase().includes(search) ||
-      mob.category.toLowerCase().includes(search) ||
-      mob.shortDescription.toLowerCase().includes(search)
+        mob.name.toLowerCase().includes(search) ||
+        mob.category.toLowerCase().includes(search) ||
+        mob.shortDescription.toLowerCase().includes(search)
     )
   }
   pager.value.pageNum = 1
@@ -126,10 +127,7 @@ onMounted(() => {
   window.addEventListener('resize', handleResize)
   nextTick(() => {
     if (gridRef.value) {
-      resizeObserver = new ResizeObserver(() => {
-        handleResize()
-      })
-      resizeObserver.observe(gridRef.value)
+      new ResizeObserver(() => handleResize()).observe(gridRef.value)
     }
     handleResize()
   })

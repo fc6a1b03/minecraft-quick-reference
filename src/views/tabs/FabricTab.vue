@@ -1,23 +1,24 @@
+<!--suppress ExceptionCaughtLocallyJS -->
 <template>
   <VersionCardGrid
-    :data="paginatedData"
-    :has-more="hasMore"
-    :cards-per-row="cardsPerRow"
-    :download-progress="downloadProgress"
-    @load-more="loadMore"
-    @download="handleDownload"
-    @grid-update="updatePageSize($event, true)"
-    @grid-resize="updatePageSize($event, false)"
+      :data="paginatedData"
+      :has-more="hasMore"
+      :cards-per-row="cardsPerRow"
+      :download-progress="downloadProgress"
+      @load-more="loadMore"
+      @download="handleDownload"
+      @grid-update="updatePageSize($event, true)"
+      @grid-resize="updatePageSize($event, false)"
   />
 </template>
 
 <script lang="ts" setup>
-import {ref, computed, onMounted, reactive} from 'vue'
+import {computed, onMounted, reactive, ref} from 'vue'
 import VersionCardGrid from '@/components/VersionCardGrid.vue'
 import {usePagination} from '@/composables/usePagination'
-import {useDownload} from '@/composables/useDownload'
-import type {VersionItem, ServerType} from '@/types'
 import type {DownloadProgress} from '@/composables/useDownload'
+import {useDownload} from '@/composables/useDownload'
+import type {ServerType, VersionItem} from '@/types'
 
 /**
  * 组件事件
@@ -25,6 +26,7 @@ import type {DownloadProgress} from '@/composables/useDownload'
 interface Emits {
   /** 更新加载状态 */
   (e: 'update:loading', value: boolean): void
+
   /** 错误 */
   (e: 'error', message: string, isCors: boolean): void
 }
@@ -66,22 +68,22 @@ const fetchFabricVersions = async (): Promise<void> => {
     const stableLoaderVersions = versionsData.loader.filter((lv: any) => lv.stable) || []
     const stableInstallerVersions = versionsData.installer.filter((iv: any) => iv.stable) || []
     const list = (versionsData.game.filter((gv: any) => gv.stable) || [])
-      .map((gameVersion: any) => {
-        const serverVersion = gameVersion.version
-        const loaderVersion = stableLoaderVersions.find((lv: any) => lv.version.startsWith(serverVersion))?.version || stableLoaderVersions[0].version
-        const installerVersion = stableInstallerVersions[0].version
-        return {
-          name: `fabric-server-mc.${serverVersion}-loader.${loaderVersion}-launcher.${installerVersion}.jar`,
-          version: serverVersion,
-          date: '无',
-          type: 'fabric',
-          url: `https://meta.fabricmc.net/v2/versions/loader/${serverVersion}/${loaderVersion}/${installerVersion}/server/jar`
-        }
-      })
-      .sort((a: any, b: any) => b.version.localeCompare(a.version, undefined, {
-        numeric: true,
-        sensitivity: 'base'
-      }))
+        .map((gameVersion: any) => {
+          const serverVersion = gameVersion.version
+          const loaderVersion = stableLoaderVersions.find((lv: any) => lv.version.startsWith(serverVersion))?.version || stableLoaderVersions[0].version
+          const installerVersion = stableInstallerVersions[0].version
+          return {
+            name: `fabric-server-mc.${serverVersion}-loader.${loaderVersion}-launcher.${installerVersion}.jar`,
+            version: serverVersion,
+            date: '无',
+            type: 'fabric',
+            url: `https://meta.fabricmc.net/v2/versions/loader/${serverVersion}/${loaderVersion}/${installerVersion}/server/jar`
+          }
+        })
+        .sort((a: any, b: any) => b.version.localeCompare(a.version, undefined, {
+          numeric: true,
+          sensitivity: 'base'
+        }))
     versions.value = list
     setTotal(list.length)
   } catch (error: any) {
@@ -103,12 +105,10 @@ const handleDownload = (item: VersionItem, onProgress: (progress: DownloadProgre
     loaded: 0,
     total: 0
   }
-
   const progressCallback = (progress: DownloadProgress) => {
     downloadProgress[item.name] = progress
     onProgress(progress)
   }
-
   downloadFile(type, item.name, item.url, false, progressCallback)
 }
 
@@ -125,7 +125,5 @@ const updatePageSize = (el: HTMLElement, isInit: boolean = false): void => {
   }
 }
 
-onMounted(() => {
-  fetchFabricVersions()
-})
+onMounted(() => fetchFabricVersions())
 </script>
