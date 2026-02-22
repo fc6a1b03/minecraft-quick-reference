@@ -122,6 +122,31 @@ body {
     background: transparent;
 }
 
+/* 移动端 Tabs 横向滚动 */
+.game-tabs--mobile .n-tabs-nav {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 0 8px;
+}
+
+.game-tabs--mobile .n-tabs-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.game-tabs--mobile .n-tabs-tab-wrapper {
+    flex-shrink: 0;
+    padding: 0 4px;
+}
+
+.game-tabs--mobile .n-tab {
+    padding: 12px 16px;
+    min-width: 72px;
+    text-align: center;
+}
+
 .n-tabs .n-tab-pane {
     padding: 20px 0;
 }
@@ -961,13 +986,19 @@ a:focus,
 @media (max-width: 414px) {
     /* Tabs 移动端优化 */
     .n-tabs .n-tab {
-        padding: 10px 8px;
-        font-size: var(--font-size-xs);
+        padding: 12px 16px;
+        font-size: var(--font-size-sm);
         letter-spacing: 0;
+        min-width: 72px;
+    }
+
+    .game-tabs--mobile .n-tabs .n-tab {
+        padding: 12px 18px;
+        min-width: 80px;
     }
 
     .n-tabs .n-tabs-nav {
-        padding: 0 4px;
+        padding: 0 8px;
     }
 
     .n-tabs .n-tab-pane {
@@ -1165,8 +1196,9 @@ a:focus,
 /* 中屏手机: 415px - 767px (iPhone Plus/Pro Max, Android大屏) */
 @media (min-width: 415px) and (max-width: 767px) {
     .n-tabs .n-tab {
-        padding: 12px 12px;
+        padding: 12px 16px;
         font-size: var(--font-size-sm);
+        min-width: 72px;
     }
 
     .card-grid {

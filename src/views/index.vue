@@ -15,10 +15,11 @@
         </div>
         <n-tabs
             animated
-            justify-content="space-evenly"
+            :justify-content="isMobile ? 'flex-start' : 'space-evenly'"
             size="large"
             type="bar"
             class="game-tabs"
+            :class="{ 'game-tabs--mobile': isMobile }"
             @update:value="handleTabChange"
         >
           <n-tab-pane
@@ -110,7 +111,7 @@
 
 <script lang="ts" setup>
 import '@/common/css/index.css'
-import {defineAsyncComponent, ref} from 'vue'
+import {defineAsyncComponent, onMounted, onUnmounted, ref} from 'vue'
 import {darkTheme, NConfigProvider, NLayout, NSpin, NTabPane, NTabs} from 'naive-ui'
 import ErrorAlert from '@/components/ErrorAlert.vue'
 import type {ServerType} from '@/types'
@@ -230,6 +231,26 @@ const handleTabChange = (value: string): void => {
   // Tab切换时的特效可以在这里添加
   console.log('Tab changed to:', value)
 }
+
+/** 是否为移动端 */
+const isMobile = ref<boolean>(false)
+
+/**
+ * 检查是否为移动端
+ */
+const checkMobile = (): void => {
+  isMobile.value = window.innerWidth <= 768
+}
+
+// 监听窗口大小变化
+onMounted(() => {
+  checkMobile()
+  window.addEventListener('resize', checkMobile)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', checkMobile)
+})
 </script>
 
 <style scoped>
