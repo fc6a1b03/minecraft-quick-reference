@@ -2,7 +2,7 @@
   "name": "minecraft-quick-reference",
   "private": true,
   "type": "module",
-  "version": "0.5.0",
+  "version": "0.5.5",
   "scripts": {
     "dev": "vite --host",
     "build": "rimraf dist && vite build",

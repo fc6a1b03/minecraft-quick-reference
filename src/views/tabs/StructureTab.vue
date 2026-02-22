@@ -93,6 +93,15 @@ const emptySlots = computed(() => {
 })
 
 /**
+ * 检查 category 是否匹配搜索词
+ * @param category 分类（字符串或数组）
+ * @param search 搜索词
+ * @returns 是否匹配
+ */
+const categoryMatches = (category: string | string[], search: string): boolean =>
+    Array.isArray(category) ? category.some(cat => cat.toLowerCase().includes(search)) : category.toLowerCase().includes(search);
+
+/**
  * 过滤数据
  */
 const filterData = (): void => {
@@ -102,7 +111,7 @@ const filterData = (): void => {
     const search = searchQuery.value.toLowerCase()
     filteredData.value = allData.value.filter(structure =>
         structure.name.toLowerCase().includes(search) ||
-        structure.category.toLowerCase().includes(search) ||
+        categoryMatches(structure.category, search) ||
         structure.shortDescription.toLowerCase().includes(search)
     )
   }

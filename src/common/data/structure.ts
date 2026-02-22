@@ -1,10 +1,10 @@
 import type {StructureDataItem} from '@/types'
 
 export const structures: StructureDataItem[] = [
-    // 主世界
+    // 主世界 & 下界
     {
         name: '废弃传送门',
-        category: '主世界',
+        category: ['主世界', '下界'],
         image: 'https://static.wikia.nocookie.net/minecraft_zh_gamepedia/images/7/70/Overworld_Giant_Ruined_Portal_1.png/revision/latest/scale-to-width-down/150',
         shortDescription: '由黑曜石、哭泣的黑曜石和石头的变种组成，包含金块和战利品箱子',
         description: `<p>废弃传送门(Ruined Portal)是主世界中随机生成的损坏的下界传送门结构，由黑曜石、哭泣的黑曜石和各种石头变种组成。</p>

@@ -6,7 +6,7 @@
   >
     <template #header>
       <div class="structure-detail-header">
-        <div class="structure-detail-badge">{{ data.category }}</div>
+        <div class="structure-detail-badge">{{ getCategoryText() }}</div>
         <div class="structure-detail-title">{{ data.name }}</div>
         <div class="title-underline">
           <span class="underline-left"></span>
@@ -105,6 +105,17 @@ const openLink = (): void => {
   if (props.data.link) {
     window.open(props.data.link, '_blank')
   }
+}
+
+/**
+ * 获取显示的分类文本
+ * @returns 分类文本（多分类用 / 分隔）
+ */
+const getCategoryText = (): string => {
+  if (Array.isArray(props.data.category)) {
+    return props.data.category.join(' / ')
+  }
+  return props.data.category
 }
 
 /** 监听显示状态，重置图片索引 */

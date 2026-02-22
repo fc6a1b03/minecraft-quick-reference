@@ -14,7 +14,7 @@
       <div class="modern-card-title structure-title">{{ name }}</div>
       <div class="category-badge" :class="getCategoryClass()">
         <span class="badge-icon">{{ getCategoryIcon() }}</span>
-        <span class="badge-text">{{ category }}</span>
+        <span class="badge-text">{{ getCategoryText() }}</span>
       </div>
       <div class="modern-card-description structure-description">{{ shortDescription }}</div>
       <!-- 查看详情提示 -->
@@ -34,7 +34,7 @@ interface Props {
   /** 名称 */
   name: string
   /** 分类 */
-  category: string
+  category: string | string[]
   /** 图片地址 */
   image?: string
   /** 简短描述 */
@@ -69,7 +69,8 @@ const getCategoryClass = (cat?: string): string => {
     '下界结构': 'nether',
     '末地结构': 'end',
   }
-  return categoryMap[cat || props.category] || 'common'
+  const targetCat = cat || (Array.isArray(props.category) ? props.category[0] : props.category)
+  return categoryMap[targetCat] || 'common'
 }
 
 /**
@@ -92,7 +93,19 @@ const getCategoryIcon = (cat?: string): string => {
     '下界结构': '🔥',
     '末地结构': '🐉',
   }
-  return iconMap[cat || props.category] || '❓'
+  const targetCat = cat || (Array.isArray(props.category) ? props.category[0] : props.category)
+  return iconMap[targetCat] || '❓'
+}
+
+/**
+ * 获取显示的分类文本
+ * @returns 分类文本（多分类用 / 分隔）
+ */
+const getCategoryText = (): string => {
+  if (Array.isArray(props.category)) {
+    return props.category.join(' / ')
+  }
+  return props.category
 }
 </script>
 

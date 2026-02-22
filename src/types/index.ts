@@ -159,7 +159,7 @@ export interface BiologyDataItem {
  */
 export interface StructureDataItem {
     name: string
-    category: string
+    category: string | string[]
     image: string
     shortDescription: string
     description: string
