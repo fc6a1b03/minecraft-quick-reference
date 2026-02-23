@@ -13,6 +13,48 @@ export type ServerType =
     | 'structure'
 
 /**
+ * Native 下载信息
+ */
+export interface NativeDownloadInfo {
+    sha1: string
+    size: number
+    url: string
+}
+
+/**
+ * Native 版本详细下载信息
+ */
+export interface NativeDownloads {
+    client?: NativeDownloadInfo
+    server?: NativeDownloadInfo
+}
+
+/**
+ * Native 版本详细信息
+ */
+export interface NativeVersionDetail {
+    id: string
+    type: string
+    releaseTime: string
+    time: string
+    javaVersion?: {
+        component: string
+        majorVersion: number
+    }
+    mainClass?: string
+    minimumLauncherVersion?: number
+    downloads: NativeDownloads
+    assetIndex?: {
+        id: string
+        sha1: string
+        size: number
+        totalSize: number
+        url: string
+    }
+    complianceLevel?: number
+}
+
+/**
  * 版本数据项
  */
 export interface VersionItem {
@@ -21,6 +63,7 @@ export interface VersionItem {
     date: string
     type: string
     url: string
+    nativeDetail?: NativeVersionDetail
 }
 
 /**

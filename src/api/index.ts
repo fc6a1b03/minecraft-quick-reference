@@ -53,12 +53,40 @@ export const fetchNativeVersions = async (): Promise<VersionItem[]> => {
         throw new Error('原版数据格式错误，无法解析')
     }
     return manifest.versions.map((v: any) => ({
-        name: `minecraft-server-${v.id}.jar`,
+        name: v.id,
         version: `${v.type.charAt(0).toUpperCase()}${v.type.slice(1)}`,
         date: new Date(v.releaseTime).toLocaleDateString(),
         type: 'native',
         url: v.url
     }))
+}
+
+/**
+ * 获取 Native 版本详细信息
+ * @param versionUrl 版本 JSON 地址
+ * @returns 版本详细信息
+ */
+export const fetchNativeVersionDetail = async (versionUrl: string): Promise<import('@/types').NativeVersionDetail> => {
+    const response = await fetch(versionUrl)
+    if (!response.ok) {
+        throw new Error(`无法加载版本详情：${response.statusText}`)
+    }
+    const data = await response.json()
+    return {
+        id: data.id,
+        type: data.type,
+        releaseTime: data.releaseTime,
+        time: data.time,
+        javaVersion: data.javaVersion,
+        mainClass: data.mainClass,
+        minimumLauncherVersion: data.minimumLauncherVersion,
+        downloads: {
+            client: data.downloads?.client,
+            server: data.downloads?.server
+        },
+        assetIndex: data.assetIndex,
+        complianceLevel: data.complianceLevel
+    }
 }
 
 // ==================== Fabric API ====================

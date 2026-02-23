@@ -1379,3 +1379,400 @@ a:focus,
         animation: none;
     }
 }
+
+/* ==================== Native 下载对话框样式 ==================== */
+
+/* 对话框整体容器 - 添加顶部边距 */
+.native-download-modal {
+    margin-top: 60px !important;
+    margin-bottom: 60px !important;
+}
+
+.native-download-modal .n-card {
+    background: linear-gradient(145deg, rgba(45, 45, 77, 0.98) 0%, rgba(37, 37, 61, 0.98) 100%);
+    border: 1px solid rgba(76, 201, 240, 0.2);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(76, 201, 240, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.native-download-modal .n-card-header {
+    background: linear-gradient(90deg, rgba(76, 201, 240, 0.1) 0%, transparent 100%);
+    border-bottom: 1px solid rgba(76, 201, 240, 0.2);
+    padding: 20px 24px;
+    position: relative;
+}
+
+.native-download-modal .n-card-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+}
+
+.native-download-modal .n-card-header__main {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary-color);
+    font-family: 'Rajdhani', sans-serif;
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 20px rgba(76, 201, 240, 0.3);
+    padding-left: 12px;
+}
+
+.native-download-modal .n-card__content {
+    padding: 24px;
+}
+
+/* 加载状态 */
+.detail-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 60px 20px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.detail-loading p {
+    font-size: 14px;
+    letter-spacing: 0.05em;
+}
+
+/* 版本详情容器 */
+.version-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* 信息区块卡片 */
+.detail-section {
+    background: rgba(0, 0, 0, 0.25);
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 2px solid transparent;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.detail-section:hover {
+    border-color: rgba(76, 201, 240, 0.15);
+    border-top-color: transparent;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.detail-section::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -1px;
+    right: -1px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary-color), rgba(76, 201, 240, 0.3) 60%, transparent);
+    opacity: 0.8;
+}
+
+/* 区块标题 */
+.section-title {
+    margin: 0 0 16px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--primary-color);
+    font-family: 'Rajdhani', sans-serif;
+    letter-spacing: 0.08em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* 信息网格 */
+.detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+}
+
+/* 信息项 */
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.2s ease;
+}
+
+.detail-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(76, 201, 240, 0.1);
+}
+
+.detail-label {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 500;
+}
+
+.detail-value {
+    font-size: 14px;
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+.detail-sub {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4);
+    margin-left: 4px;
+    font-weight: 400;
+}
+
+/* 资源文件信息 */
+.asset-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.asset-info .detail-item {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.asset-info .detail-label {
+    flex-shrink: 0;
+}
+
+.asset-info .detail-value {
+    color: var(--primary-color);
+    font-family: 'Rajdhani', sans-serif;
+}
+
+/* 下载选项区域 */
+.download-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+/* 下载按钮 */
+.download-option-btn {
+    height: auto !important;
+    padding: 20px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 2px solid rgba(255, 255, 255, 0.08) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.download-option-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.download-option-btn.client::before {
+    background: linear-gradient(90deg, #22c55e, #4ade80);
+}
+
+.download-option-btn.server::before {
+    background: linear-gradient(90deg, #a855f7, #c084fc);
+}
+
+.download-option-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border-color: var(--primary-color) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.download-option-btn:hover:not(:disabled)::before {
+    opacity: 1;
+}
+
+.download-option-btn.client:hover:not(:disabled) {
+    border-color: #22c55e !important;
+    box-shadow: 0 10px 30px rgba(34, 197, 94, 0.15);
+}
+
+.download-option-btn.server:hover:not(:disabled) {
+    border-color: #a855f7 !important;
+    box-shadow: 0 10px 30px rgba(168, 85, 247, 0.15);
+}
+
+.download-option-btn:disabled {
+    opacity: 0.5;
+}
+
+.download-option-btn .btn-icon {
+    font-size: 28px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.download-btn-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    width: 100%;
+}
+
+.download-btn-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-light);
+    letter-spacing: 0.02em;
+}
+
+.download-btn-meta {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.45);
+    font-family: 'Rajdhani', sans-serif;
+    letter-spacing: 0.03em;
+}
+
+/* 无下载状态 */
+.no-download {
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.1);
+    border: 2px dashed rgba(255, 255, 255, 0.1);
+}
+
+/* 下载进度 */
+.modal-progress {
+    background: linear-gradient(145deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 100%);
+    padding: 20px;
+    border: 1px solid rgba(76, 201, 240, 0.25);
+    border-top: 2px solid var(--primary-color);
+    box-shadow: 0 0 20px rgba(76, 201, 240, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.modal-progress .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.modal-progress .progress-label {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.modal-progress .progress-percent {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary-color);
+    font-family: 'Rajdhani', sans-serif;
+    text-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
+}
+
+.modal-progress .progress-size {
+    margin-top: 10px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4);
+    text-align: right;
+    font-family: 'Rajdhani', sans-serif;
+    letter-spacing: 0.03em;
+}
+
+/* 错误状态 */
+.detail-error {
+    padding: 40px 24px;
+}
+
+/* Native 下载对话框移动端适配 */
+@media (max-width: 768px) {
+    .native-download-modal {
+        margin-top: 40px !important;
+        margin-bottom: 40px !important;
+    }
+
+    .native-download-modal .n-card__content {
+        padding: 16px;
+    }
+
+    .detail-section {
+        padding: 16px;
+    }
+
+    .detail-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .detail-item {
+        border-radius: 6px;
+    }
+
+    .download-options {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .native-download-modal {
+        margin-top: 20px !important;
+        margin-bottom: 20px !important;
+        width: 95% !important;
+        max-width: none !important;
+    }
+
+    .native-download-modal .n-card-header {
+        padding: 16px 20px;
+    }
+
+    .native-download-modal .n-card-header__main {
+        font-size: 18px;
+    }
+
+    .native-download-modal .n-card__content {
+        padding: 16px;
+    }
+
+    .detail-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .detail-item {
+        padding: 8px 10px;
+    }
+
+    .download-option-btn {
+        padding: 16px !important;
+    }
+
+    .section-title {
+        font-size: 13px;
+        margin-bottom: 12px;
+        padding-bottom: 10px;
+    }
+
+    .detail-value {
+        font-size: 13px;
+    }
+}
