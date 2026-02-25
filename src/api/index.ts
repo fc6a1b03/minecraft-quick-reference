@@ -397,4 +397,56 @@ export const fetchFoliaBuildDetail = async (mcVersion: string, build: number): P
 
 // ==================== 通用导出 ====================
 
+// ==================== Bedrock API ====================
+
+interface BedrockVersionsData {
+    CreationTime: string
+    'From_mcappx.com': Record<string, {
+        Type: 'Release' | 'Preview'
+        BuildType: 'UWP' | 'GDK'
+        ID: string
+        Date: string
+        Variations: Array<{
+            Arch: string
+            ArchivalStatus: number
+            OSbuild: string
+            MetaData: string[]
+            MD5: string
+        }>
+    }>
+}
+
+/**
+ * 获取 Bedrock 版本列表
+ * @returns 版本列表
+ */
+export const fetchBedrockVersions = async (): Promise<VersionItem[]> => {
+    const response = await fetch('https://data.mcappx.com/v2/bedrock.json')
+    if (!response.ok) {
+        throw new Error(`无法加载 Bedrock 数据：${response.statusText}`)
+    }
+    const data: BedrockVersionsData = await response.json()
+    if (!data['From_mcappx.com']) {
+        throw new Error('Bedrock 数据格式错误，无法解析')
+    }
+    return Object.entries(data['From_mcappx.com'])
+        .map(([key, value]) => ({
+            name: key,
+            version: `${value.Type} | ${value.BuildType}`,
+            date: value.Date,
+            type: 'bedrock',
+            url: '',
+            bedrockDetail: value
+        }))
+        .sort((a, b) => {
+            // 优先按日期排序，然后按版本号排序
+            const dateCompare = new Date(b.date).getTime() - new Date(a.date).getTime()
+            if (dateCompare !== 0) return dateCompare
+            return b.name.localeCompare(a.name, undefined, {
+                numeric: true,
+                sensitivity: 'base'
+            })
+        })
+}
+
 export {API_BASE_URLS, isCorsError, sortVersions}

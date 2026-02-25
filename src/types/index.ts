@@ -3,6 +3,7 @@
  */
 export type ServerType =
     'native'
+    | 'bedrock'
     | 'fabric'
     | 'forge'
     | 'neoForge'
@@ -64,6 +65,7 @@ export interface VersionItem {
     type: string
     url: string
     nativeDetail?: NativeVersionDetail
+    bedrockDetail?: BedrockVersionInfo
 }
 
 /**
@@ -100,12 +102,43 @@ export type CorsErrorRecord = Record<ServerType, boolean>
  */
 export interface VersionData {
     native: VersionItem[]
+    bedrock: VersionItem[]
     fabric: VersionItem[]
     forge: VersionItem[]
     neoForge: VersionItem[]
     paper: VersionItem[]
     purpur: VersionItem[]
     folia: VersionItem[]
+}
+
+/**
+ * Bedrock 变体信息
+ */
+export interface BedrockVariation {
+    Arch: string
+    ArchivalStatus: number
+    OSbuild: string
+    MetaData: string[]
+    MD5: string
+}
+
+/**
+ * Bedrock 版本信息
+ */
+export interface BedrockVersionInfo {
+    Type: 'Release' | 'Preview'
+    BuildType: 'UWP' | 'GDK'
+    ID: string
+    Date: string
+    Variations: BedrockVariation[]
+}
+
+/**
+ * Bedrock API 响应数据
+ */
+export interface BedrockVersionsData {
+    CreationTime: string
+    From_mcappx_com: Record<string, BedrockVersionInfo>
 }
 
 /**

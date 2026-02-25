@@ -6,6 +6,7 @@
         :name="row.name"
         :version="row.version"
         :date="row.date"
+        :downloadable="isDownloadable(row)"
         :download-progress="getDownloadProgress(row.name)"
         @download="(onProgress) => $emit('download', row, onProgress)"
     />
@@ -31,7 +32,7 @@
 import {computed, nextTick, onBeforeUnmount, onMounted, ref, watch} from 'vue'
 import {NButton} from 'naive-ui'
 import VersionCard from './VersionCard.vue'
-import type {VersionItem} from '@/types'
+import type {BedrockVersionInfo, VersionItem} from '@/types'
 import type {DownloadProgress} from '@/composables/useDownload'
 
 /**
@@ -97,6 +98,19 @@ const getDownloadProgress = (name: string): DownloadProgress => {
     loaded: 0,
     total: 0
   }
+}
+
+/**
+ * 检查版本是否可下载
+ * @param item 版本项
+ */
+const isDownloadable = (item: VersionItem): boolean => {
+  // Bedrock 版本需要检查 MetaData
+  if (item.type === 'bedrock') {
+    const bedrockDetail = item.bedrockDetail as BedrockVersionInfo | undefined
+    return bedrockDetail?.Variations?.some(v => v.MetaData?.length > 0) ?? false
+  }
+  return true
 }
 
 /**

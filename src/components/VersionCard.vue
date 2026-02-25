@@ -29,8 +29,8 @@
       <button
           class="modern-card-btn download-btn"
           @click="handleClick"
-          :disabled="downloadProgress.loading"
-          :class="{ 'loading': downloadProgress.loading }"
+          :disabled="downloadProgress.loading || !props.downloadable"
+          :class="{ 'loading': downloadProgress.loading, 'disabled': !props.downloadable }"
       >
         <span class="btn-content">
           <span class="btn-icon" v-if="!downloadProgress.loading">⬇</span>
@@ -43,7 +43,7 @@
 </template>
 
 <script lang="ts" setup>
-import {reactive} from 'vue'
+import {computed, reactive} from 'vue'
 import type {DownloadProgress as DownloadProgressType} from '@/composables/useDownload'
 
 /**
@@ -56,6 +56,10 @@ interface Props {
   version?: string
   /** 日期 */
   date?: string
+  /** 是否可下载 */
+  downloadable?: boolean
+  /** 下载进度 */
+  downloadProgress?: DownloadProgressType
 }
 
 /**
@@ -66,18 +70,26 @@ interface Emits {
   (e: 'download', onProgress: (progress: DownloadProgressType) => void): void
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  downloadable: true,
+  downloadProgress: () => ({loading: false, percent: 0, loaded: 0, total: 0})
+})
 const emit = defineEmits<Emits>()
 
 /**
- * 下载进度状态
+ * 内部下载进度状态（当没有传入 prop 时使用）
  */
-const downloadProgress = reactive<DownloadProgressType>({
+const internalProgress = reactive<DownloadProgressType>({
   loading: false,
   percent: 0,
   loaded: 0,
   total: 0
 })
+
+/**
+ * 获取当前下载进度（优先使用 prop，否则使用内部状态）
+ */
+const downloadProgress = computed<DownloadProgressType>(() => props.downloadProgress ?? internalProgress)
 
 /**
  * 获取图标文字
@@ -105,10 +117,10 @@ const getRarityClass = (): string => {
  * 处理进度更新
  */
 const onProgress = (progress: DownloadProgressType): void => {
-  downloadProgress.loading = progress.loading
-  downloadProgress.percent = progress.percent
-  downloadProgress.loaded = progress.loaded
-  downloadProgress.total = progress.total
+  internalProgress.loading = progress.loading
+  internalProgress.percent = progress.percent
+  internalProgress.loaded = progress.loaded
+  internalProgress.total = progress.total
 }
 
 /**
@@ -281,9 +293,17 @@ const handleClick = (): void => {
 }
 
 @keyframes glow-move {
-  0% { transform: translateX(-20px); opacity: 0; }
-  50% { opacity: 1; }
-  100% { transform: translateX(20px); opacity: 0; }
+  0% {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(20px);
+    opacity: 0;
+  }
 }
 
 .progress-text {
@@ -337,15 +357,38 @@ const handleClick = (): void => {
 }
 
 @keyframes cube-rotate {
-  0% { transform: perspective(40px) rotateX(0deg) rotateY(0deg); }
-  25% { transform: perspective(40px) rotateX(90deg) rotateY(0deg); }
-  50% { transform: perspective(40px) rotateX(90deg) rotateY(90deg); }
-  75% { transform: perspective(40px) rotateX(180deg) rotateY(90deg); }
-  100% { transform: perspective(40px) rotateX(360deg) rotateY(180deg); }
+  0% {
+    transform: perspective(40px) rotateX(0deg) rotateY(0deg);
+  }
+  25% {
+    transform: perspective(40px) rotateX(90deg) rotateY(0deg);
+  }
+  50% {
+    transform: perspective(40px) rotateX(90deg) rotateY(90deg);
+  }
+  75% {
+    transform: perspective(40px) rotateX(180deg) rotateY(90deg);
+  }
+  100% {
+    transform: perspective(40px) rotateX(360deg) rotateY(180deg);
+  }
 }
 
 .btn-label {
   font-size: 11px;
+}
+
+/* 禁用状态 */
+.download-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.download-btn.disabled:hover {
+  transform: none;
+  box-shadow: none;
 }
 
 /* 下载中状态 */

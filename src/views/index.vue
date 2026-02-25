@@ -15,7 +15,7 @@
         </div>
         <n-tabs
             animated
-            :justify-content="isMobile ? 'flex-start' : 'space-evenly'"
+            :justify-content="tabJustifyContent"
             size="large"
             type="bar"
             class="game-tabs"
@@ -71,6 +71,12 @@
                       @error="(msg: string, cors: boolean) => handleError('native', msg, cors)"
                       :key="'native-tab'"
                   />
+                  <BedrockTab
+                      v-else-if="type === 'bedrock'"
+                      @update:loading="(v: boolean) => loading.bedrock = v"
+                      @error="(msg: string, cors: boolean) => handleError('bedrock', msg, cors)"
+                      :key="'bedrock-tab'"
+                  />
                   <FabricTab
                       v-else-if="type === 'fabric'"
                       @update:loading="(v: boolean) => loading.fabric = v"
@@ -111,7 +117,7 @@
 
 <script lang="ts" setup>
 import '@/common/css/index.css'
-import {defineAsyncComponent, onMounted, onUnmounted, ref} from 'vue'
+import {computed, defineAsyncComponent, onMounted, onUnmounted, ref} from 'vue'
 import {darkTheme, NConfigProvider, NLayout, NSpin, NTabPane, NTabs} from 'naive-ui'
 import ErrorAlert from '@/components/ErrorAlert.vue'
 import type {ServerType} from '@/types'
@@ -120,6 +126,7 @@ const PaperTab = defineAsyncComponent(() => import('./tabs/PaperTab.vue'))
 const FoliaTab = defineAsyncComponent(() => import('./tabs/FoliaTab.vue'))
 const ForgeTab = defineAsyncComponent(() => import('./tabs/ForgeTab.vue'))
 const NativeTab = defineAsyncComponent(() => import('./tabs/NativeTab.vue'))
+const BedrockTab = defineAsyncComponent(() => import('./tabs/BedrockTab.vue'))
 const FabricTab = defineAsyncComponent(() => import('./tabs/FabricTab.vue'))
 const PurpurTab = defineAsyncComponent(() => import('./tabs/PurpurTab.vue'))
 const BiologyTab = defineAsyncComponent(() => import('./tabs/BiologyTab.vue'))
@@ -127,7 +134,7 @@ const NeoForgeTab = defineAsyncComponent(() => import('./tabs/NeoForgeTab.vue'))
 const StructureTab = defineAsyncComponent(() => import('./tabs/StructureTab.vue'))
 
 /** 服务器类型列表 */
-const types: ServerType[] = ['native', 'fabric', 'forge', 'neoForge', 'paper', 'purpur', 'folia', 'biology', 'structure']
+const types: ServerType[] = ['native', 'bedrock', 'fabric', 'forge', 'neoForge', 'paper', 'purpur', 'folia', 'biology', 'structure']
 
 /** 主题配置 */
 const theme = {
@@ -143,6 +150,7 @@ const theme = {
 /** 错误信息 */
 const errorMessage = ref<Record<ServerType, string>>({
   native: '',
+  bedrock: '',
   fabric: '',
   forge: '',
   neoForge: '',
@@ -156,6 +164,7 @@ const errorMessage = ref<Record<ServerType, string>>({
 /** 加载状态 */
 const loading = ref<Record<ServerType, boolean>>({
   native: false,
+  bedrock: false,
   fabric: false,
   forge: false,
   neoForge: false,
@@ -169,6 +178,7 @@ const loading = ref<Record<ServerType, boolean>>({
 /** 错误状态 */
 const hasError = ref<Record<ServerType, boolean>>({
   native: false,
+  bedrock: false,
   fabric: false,
   forge: false,
   neoForge: false,
@@ -182,6 +192,7 @@ const hasError = ref<Record<ServerType, boolean>>({
 /** CORS 错误状态 */
 const isCorsError = ref<Record<ServerType, boolean>>({
   native: false,
+  bedrock: false,
   fabric: false,
   forge: false,
   neoForge: false,
@@ -199,6 +210,7 @@ const isCorsError = ref<Record<ServerType, boolean>>({
 const formatTabName = (type: ServerType): string => {
   const nameMap: Record<ServerType, string> = {
     native: 'Native',
+    bedrock: 'Bedrock',
     fabric: 'Fabric',
     forge: 'Forge',
     neoForge: 'NeoForge',
@@ -235,6 +247,9 @@ const handleTabChange = (value: string): void => {
 /** 是否为移动端 */
 const isMobile = ref<boolean>(false)
 
+/** Tab 对齐方式 */
+const tabJustifyContent = computed<'start' | 'space-evenly'>(() => isMobile.value ? 'start' : 'space-evenly')
+
 /**
  * 检查是否为移动端
  */
@@ -248,9 +263,7 @@ onMounted(() => {
   window.addEventListener('resize', checkMobile)
 })
 
-onUnmounted(() => {
-  window.removeEventListener('resize', checkMobile)
-})
+onUnmounted(() => window.removeEventListener('resize', checkMobile))
 </script>
 
 <style scoped>
