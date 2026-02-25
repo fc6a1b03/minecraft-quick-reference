@@ -18,7 +18,7 @@ import {usePagination} from '@/composables/usePagination'
 import type {DownloadProgress} from '@/composables/useDownload'
 import {useDownload} from '@/composables/useDownload'
 import {fetchBedrockVersions} from '@/api'
-import type {BedrockVersionInfo, ServerType, VersionItem} from '@/types'
+import type {ServerType, VersionItem} from '@/types'
 
 /**
  * 组件事件
@@ -78,15 +78,13 @@ const fetchVersions = async (): Promise<void> => {
  * @param item 版本项
  */
 const handleDownload = async (item: VersionItem): Promise<void> => {
-  const bedrockDetail = item.bedrockDetail as BedrockVersionInfo | undefined
-  if (!bedrockDetail?.Variations?.length) return
+  const downloads = item.bedrockDownloads
+  if (!downloads?.length) return
 
-  // 找到第一个可下载的变体
-  const downloadableVariation = bedrockDetail.Variations.find(v => v.MetaData?.length > 0)
-  if (!downloadableVariation) return
-
-  const downloadUrl = downloadableVariation.MetaData[0]
-  const fileName = `minecraft-bedrock-${item.name}-${downloadableVariation.Arch}.msixvc`
+  // 使用第一个可用的下载链接
+  const download = downloads[0]
+  const downloadUrl = download.downloadUrl!
+  const fileName = `minecraft-bedrock-${item.name}-${download.Arch}.msixvc`
 
   downloadProgress[item.name] = {
     loading: true,

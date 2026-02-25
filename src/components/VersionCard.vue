@@ -15,6 +15,25 @@
       <span class="meta-label">日期</span>
       <span class="meta-value">{{ date }}</span>
     </div>
+    <!-- UUID 列表（用于复制） -->
+    <div v-if="props.uuidList?.length" class="uuid-list">
+      <div class="uuid-item" v-for="item in props.uuidList" :key="item.uuid">
+        <span class="uuid-arch">{{ item.Arch }}</span>
+        <n-tooltip placement="top" trigger="hover">
+          <template #trigger>
+            <button
+                class="uuid-copy-btn"
+                @click="copyUuid(item.uuid)"
+                :class="{ 'copied': copiedUuid === item.uuid }"
+            >
+              <span class="uuid-text">{{ item.uuid.slice(0, 30) }}...</span>
+              <span class="copy-icon">📋</span>
+            </button>
+          </template>
+          <span>点击复制 UUID: {{ item.uuid }}</span>
+        </n-tooltip>
+      </div>
+    </div>
     <div class="card-footer">
       <template v-if="downloadProgress.loading">
         <div class="progress-wrapper">
@@ -27,10 +46,11 @@
         </div>
       </template>
       <button
+          v-if="props.downloadable"
           class="modern-card-btn download-btn"
           @click="handleClick"
-          :disabled="downloadProgress.loading || !props.downloadable"
-          :class="{ 'loading': downloadProgress.loading, 'disabled': !props.downloadable }"
+          :disabled="downloadProgress.loading"
+          :class="{ 'loading': downloadProgress.loading }"
       >
         <span class="btn-content">
           <span class="btn-icon" v-if="!downloadProgress.loading">⬇</span>
@@ -43,8 +63,17 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, reactive} from 'vue'
+import {computed, reactive, ref} from 'vue'
+import {NTooltip, useMessage} from 'naive-ui'
 import type {DownloadProgress as DownloadProgressType} from '@/composables/useDownload'
+
+/**
+ * UUID 信息
+ */
+interface UuidInfo {
+  Arch: string
+  uuid: string
+}
 
 /**
  * 组件属性
@@ -60,6 +89,8 @@ interface Props {
   downloadable?: boolean
   /** 下载进度 */
   downloadProgress?: DownloadProgressType
+  /** UUID 列表（用于显示和复制） */
+  uuidList?: UuidInfo[]
 }
 
 /**
@@ -72,9 +103,12 @@ interface Emits {
 
 const props = withDefaults(defineProps<Props>(), {
   downloadable: true,
-  downloadProgress: () => ({loading: false, percent: 0, loaded: 0, total: 0})
+  downloadProgress: () => ({loading: false, percent: 0, loaded: 0, total: 0}),
+  uuidList: () => []
 })
 const emit = defineEmits<Emits>()
+const message = useMessage()
+const copiedUuid = ref<string>('')
 
 /**
  * 内部下载进度状态（当没有传入 prop 时使用）
@@ -128,6 +162,25 @@ const onProgress = (progress: DownloadProgressType): void => {
  */
 const handleClick = (): void => {
   emit('download', onProgress)
+}
+
+/**
+ * 复制 UUID 到剪贴板
+ * @param uuid UUID 字符串
+ */
+const copyUuid = async (uuid: string): Promise<void> => {
+  try {
+    await navigator.clipboard.writeText(uuid)
+    copiedUuid.value = uuid
+    message.success('UUID 已复制到剪贴板')
+    setTimeout(() => {
+      if (copiedUuid.value === uuid) {
+        copiedUuid.value = ''
+      }
+    }, 2000)
+  } catch {
+    message.error('复制失败')
+  }
 }
 </script>
 
@@ -242,6 +295,66 @@ const handleClick = (): void => {
 .meta-value {
   color: var(--text-light);
   font-weight: 500;
+}
+
+/* UUID 列表样式 */
+.uuid-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 8px 0;
+  width: 100%;
+}
+
+.uuid-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+}
+
+.uuid-arch {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 10px;
+  min-width: 28px;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.uuid-copy-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  background: rgba(0, 245, 255, 0.1);
+  border: 1px solid rgba(0, 245, 255, 0.2);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex: 1;
+}
+
+.uuid-copy-btn:hover {
+  background: rgba(0, 245, 255, 0.2);
+  border-color: rgba(0, 245, 255, 0.4);
+}
+
+.uuid-copy-btn.copied {
+  background: rgba(34, 197, 94, 0.2);
+  border-color: rgba(34, 197, 94, 0.4);
+}
+
+.uuid-text {
+  color: var(--primary-color);
+  font-family: monospace;
+  font-size: 11px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 220px;
+}
+
+.copy-icon {
+  font-size: 10px;
 }
 
 /* 卡片底部 */

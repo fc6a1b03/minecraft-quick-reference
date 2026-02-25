@@ -1,7 +1,8 @@
 <template>
   <div class="main-center-wrapper">
     <n-config-provider :theme="darkTheme" :theme-overrides="theme.themeOverrides">
-      <n-layout class="main-center-content">
+      <n-message-provider>
+        <n-layout class="main-center-content">
         <div class="game-header">
           <h1 class="game-title">
             <span class="title-highlight">MINECRAFT</span>
@@ -111,6 +112,7 @@
           </n-tab-pane>
         </n-tabs>
       </n-layout>
+      </n-message-provider>
     </n-config-provider>
   </div>
 </template>
@@ -118,7 +120,7 @@
 <script lang="ts" setup>
 import '@/common/css/index.css'
 import {computed, defineAsyncComponent, onMounted, onUnmounted, ref} from 'vue'
-import {darkTheme, NConfigProvider, NLayout, NSpin, NTabPane, NTabs} from 'naive-ui'
+import {darkTheme, NConfigProvider, NLayout, NMessageProvider, NSpin, NTabPane, NTabs} from 'naive-ui'
 import ErrorAlert from '@/components/ErrorAlert.vue'
 import type {ServerType} from '@/types'
 

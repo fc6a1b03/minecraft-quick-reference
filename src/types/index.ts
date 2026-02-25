@@ -56,6 +56,15 @@ export interface NativeVersionDetail {
 }
 
 /**
+ * Bedrock 变体信息（简化版，用于下载）
+ */
+export interface BedrockVariationDownload {
+    Arch: string
+    downloadUrl?: string
+    uuid?: string
+}
+
+/**
  * 版本数据项
  */
 export interface VersionItem {
@@ -66,6 +75,10 @@ export interface VersionItem {
     url: string
     nativeDetail?: NativeVersionDetail
     bedrockDetail?: BedrockVersionInfo
+    /** Bedrock 下载变体列表（URL 类型） */
+    bedrockDownloads?: BedrockVariationDownload[]
+    /** Bedrock UUID 列表（用于复制） */
+    bedrockUuids?: BedrockVariationDownload[]
 }
 
 /**

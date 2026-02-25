@@ -417,6 +417,14 @@ interface BedrockVersionsData {
 }
 
 /**
+ * 判断是否为 URL
+ * @param str 字符串
+ */
+const isUrl = (str: string): boolean => {
+    return str.startsWith('http://') || str.startsWith('https://')
+}
+
+/**
  * 获取 Bedrock 版本列表
  * @returns 版本列表
  */
@@ -430,14 +438,33 @@ export const fetchBedrockVersions = async (): Promise<VersionItem[]> => {
         throw new Error('Bedrock 数据格式错误，无法解析')
     }
     return Object.entries(data['From_mcappx.com'])
-        .map(([key, value]) => ({
-            name: key,
-            version: `${value.Type} | ${value.BuildType}`,
-            date: value.Date,
-            type: 'bedrock',
-            url: '',
-            bedrockDetail: value
-        }))
+        .map(([key, value]) => {
+            // 分离 URL 和 UUID
+            const downloads: import('@/types').BedrockVariationDownload[] = []
+            const uuids: import('@/types').BedrockVariationDownload[] = []
+
+            value.Variations?.forEach((v) => {
+                const metaData = v.MetaData?.[0]
+                if (metaData) {
+                    if (isUrl(metaData)) {
+                        downloads.push({Arch: v.Arch, downloadUrl: metaData})
+                    } else {
+                        uuids.push({Arch: v.Arch, uuid: metaData})
+                    }
+                }
+            })
+
+            return {
+                name: key,
+                version: `${value.Type} | ${value.BuildType}`,
+                date: value.Date,
+                type: 'bedrock',
+                url: '',
+                bedrockDetail: value,
+                bedrockDownloads: downloads.length > 0 ? downloads : undefined,
+                bedrockUuids: uuids.length > 0 ? uuids : undefined
+            }
+        })
         .sort((a, b) => {
             // 优先按日期排序，然后按版本号排序
             const dateCompare = new Date(b.date).getTime() - new Date(a.date).getTime()
