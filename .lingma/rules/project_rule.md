@@ -23,7 +23,6 @@ Minecraft 服务器。
 | Naive UI   | 2.43.2 | UI 组件库 |
 | Vue Router | 4.6.4  | 路由管理   |
 
-
 ---
 
 ## 项目结构
@@ -116,9 +115,9 @@ const name = "fabric"
 const fetchVersions = async (type: ServerType): Promise<VersionItem[]> => // ...
 
 // ❌ 错误
-function fetchVersions(type: ServerType) {
-    // ...
-}
+    function fetchVersions(type: ServerType) {
+        // ...
+    }
 ```
 
 ### 3. TypeScript 规范
